@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class memberController {
 
 	@RequestMapping(value = "member/memberJoin/join")
-	public String reservation() {
+	public String reservation() { //hi
 		
 		return "member/memberJoin/join";
 	}
