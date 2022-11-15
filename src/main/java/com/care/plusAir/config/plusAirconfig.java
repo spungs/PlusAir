@@ -20,7 +20,7 @@ public class plusAirconfig {
 		HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setDriverClassName("oracle.jdbc.OracleDriver");
 		hikariConfig.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:xe");
-		hikariConfig.setUsername("oracle");
+		hikariConfig.setUsername("system");
 		hikariConfig.setPassword("oracle");
 
 		HikariDataSource dataSource = new HikariDataSource(hikariConfig); // DI(의존성 주입)
