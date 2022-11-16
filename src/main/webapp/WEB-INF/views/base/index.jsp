@@ -2,6 +2,239 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 달력 css -->
+<style>
+.sec_cal {
+    width: 360px;
+    margin: 0 auto;
+    font-family: "NotoSansR";
+}
+
+.sec_cal .cal_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 78px;
+}
+
+.sec_cal .cal_nav .year-month {
+    width: 300px;
+    text-align: center;
+    line-height: 1;
+}
+
+.sec_cal .cal_nav .nav {
+    display: flex;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+.sec_cal .cal_nav .go-prev,
+.sec_cal .cal_nav .go-next {
+    display: block;
+    width: 50px;
+    height: 78px;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec_cal .cal_nav .go-prev::before,
+.sec_cal .cal_nav .go-next::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #000;
+    border-width: 3px 3px 0 0;
+    transition: border 0.1s;
+}
+
+.sec_cal .cal_nav .go-prev:hover::before,
+.sec_cal .cal_nav .go-next:hover::before {
+    border-color: #ed2a61;
+}
+
+.sec_cal .cal_nav .go-prev::before {
+    transform: rotate(-135deg);
+}
+
+.sec_cal .cal_nav .go-next::before {
+    transform: rotate(45deg);
+}
+
+.sec_cal .cal_wrap {
+    padding-top: 40px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.sec_cal .cal_wrap .days {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sec_cal .cal_wrap::after {
+    top: 368px;
+}
+
+.sec_cal .cal_wrap .day {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    text-align: left;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    border-radius:5px
+}
+
+.current.today {background: rgb(242 242 242);background-color: yellow;}
+
+.sec_cal .cal_wrap .dates {
+    display: flex;
+    flex-flow: wrap;
+    height: 290px;
+}
+
+.sec_cal .cal_wrap .day:nth-child(7n -1) {
+    color: #3c6ffa;
+}
+
+.sec_cal .cal_wrap .day:nth-child(7n) {
+    color: #ed2a61;
+}
+
+.sec_cal .cal_wrap .day.disable {
+    color: #ddd;
+}
+.SelectDate {
+	background-color: white;
+}
+.SelectDate.active {
+	background-color: #AFE1FF;
+}
+.sec_cal_2 {
+    width: 360px;
+    margin: 0 auto;
+    font-family: "NotoSansR";
+}
+
+.sec_cal_2 .cal_nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 78px;
+}
+
+.sec_cal_2 .cal_nav .year-month {
+    width: 300px;
+    text-align: center;
+    line-height: 1;
+}
+
+.sec_cal_2 .cal_nav .nav {
+    display: flex;
+    border: 1px solid #333333;
+    border-radius: 5px;
+}
+
+.sec_cal_2 .cal_nav .go-prev,
+.sec_cal_2 .cal_nav .go-next {
+    display: block;
+    width: 50px;
+    height: 78px;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sec_cal_2 .cal_nav .go-prev::before,
+.sec_cal_2 .cal_nav .go-next::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #000;
+    border-width: 3px 3px 0 0;
+    transition: border 0.1s;
+}
+
+.sec_cal_2 .cal_nav .go-prev:hover::before,
+.sec_cal_2 .cal_nav .go-next:hover::before {
+    border-color: #ed2a61;
+}
+
+.sec_cal_2 .cal_nav .go-prev::before {
+    transform: rotate(-135deg);
+}
+
+.sec_cal_2 .cal_nav .go-next::before {
+    transform: rotate(45deg);
+}
+
+.sec_cal_2 .cal_wrap {
+    padding-top: 40px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.sec_cal_2 .cal_wrap .days {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sec_cal_2 .cal_wrap::after {
+    top: 368px;
+}
+
+.sec_cal_2 .cal_wrap .day {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    text-align: left;
+    color: #999;
+    font-size: 12px;
+    text-align: center;
+    border-radius:5px
+}
+
+.current.today {background: rgb(242 242 242);background-color: yellow;}
+
+.sec_cal_2 .cal_wrap .dates_2 {
+    display: flex;
+    flex-flow: wrap;
+    height: 290px;
+}
+
+.sec_cal_2 .cal_wrap .day:nth-child(7n -1) {
+    color: #3c6ffa;
+}
+
+.sec_cal_2 .cal_wrap .day:nth-child(7n) {
+    color: #ed2a61;
+}
+
+.sec_cal_2 .cal_wrap .day.disable {
+    color: #ddd;
+}
+
+
+
+</style>
 
 <script>
 function DepPlace() {//출발지 검색 버튼 액션
@@ -198,6 +431,134 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	personText.innerHTML="성인 : "+adtCount+" , 소아 : "+chdCount+" , 유아 : "+infCount
 	customerLayer.style.display = 'none';
 }
+function DatePicker(){//달력 div 오픈 버튼클릭
+	const dateLayer = document.getElementById('dateLayer');
+	if(dateLayer.style.display !== 'none'){
+		dateLayer.style.display = 'none';
+	}else{
+		dateLayer.style.display = 'block';
+		calendarInit();//달력 div가 열렸을때 달력 데이터 가져오는 함수 실행
+	}
+}
+function calendarInit() { //달력 데이터 가져오는 함수
+
+    // 날짜 정보 가져오기
+    var date = new Date(); // 현재 날짜(로컬 기준) 가져오기
+    var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000); // uct 표준시 도출
+    var kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
+    var today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
+  
+    var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    // 달력에서 표기하는 날짜 객체
+  
+    
+    var currentYear = thisMonth.getFullYear(); // 달력에서 표기하는 연
+    var currentMonth = thisMonth.getMonth(); // 달력에서 표기하는 월
+    var currentDate = thisMonth.getDate(); // 달력에서 표기하는 일
+
+    // kst 기준 현재시간
+    // console.log(thisMonth);
+
+    // 캘린더 렌더링
+    renderCalender(thisMonth);
+
+    function renderCalender(thisMonth) {
+
+        // 렌더링을 위한 데이터 정리
+        currentYear = thisMonth.getFullYear();
+        currentMonth = thisMonth.getMonth();
+        currentDate = thisMonth.getDate();
+
+        // 이전 달의 마지막 날 날짜와 요일 구하기
+        var startDay = new Date(currentYear, currentMonth, 0);
+        var prevDate = startDay.getDate();
+        var prevDay = startDay.getDay();
+
+        // 이번 달의 마지막날 날짜와 요일 구하기
+        var endDay = new Date(currentYear, currentMonth + 1, 0);
+        var nextDate = endDay.getDate();
+        var nextDay = endDay.getDay();
+
+        // console.log(prevDate, prevDay, nextDate, nextDay);
+
+        // 현재 월 표기
+        $('.year-month').text(currentYear + '.' + (currentMonth + 1));
+
+        // 렌더링 html 요소 생성
+        calendar = document.querySelector('.dates')
+        calendar_2 = document.querySelector('.dates_2')
+        calendar.innerHTML = '';
+        calendar_2.innerHTML = '';
+        
+        // 지난달
+        for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
+            calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
+            calendar_2.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
+        }
+        // 이번달
+        for (var i = 1; i <= nextDate; i++) {
+            calendar.innerHTML = calendar.innerHTML + '<div class="day current" onclick="Datesel(' + currentMonth + ',' + i + ',' + currentYear + ')">' + '<button class="SelectDate" style="height: 40px;width: 40px;">' +  i + '</button>' + '</div>'
+            calendar_2.innerHTML = calendar.innerHTML + '<div class="day current" onclick="Datesel(' + currentMonth + ',' + i + ',' + currentYear + ')">' + '<button class="SelectDate" style="height: 40px;width: 40px;">' +  i + '</button>' + '</div>'
+        }
+        // 다음달
+        for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
+            calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
+            calendar_2.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
+        }
+
+        // 오늘 날짜 표기
+        if (today.getMonth() == currentMonth) {
+            todayDate = today.getDate();
+            var currentMonthDate = document.querySelectorAll('.dates .current');
+            currentMonthDate[todayDate -1].classList.add('today');
+        }
+    }
+
+    // 이전달로 이동
+    $('.go-prev').on('click', function() {
+        thisMonth = new Date(currentYear, currentMonth - 1, 1);
+        renderCalender(thisMonth);
+    });
+
+    // 다음달로 이동
+    $('.go-next').on('click', function() {
+        thisMonth = new Date(currentYear, currentMonth + 1, 1);
+        renderCalender(thisMonth); 
+    });
+}
+function Datesel(currentMonth,i,currentYear){//달력 날짜  div
+	/* console.log(currentMonth);
+	console.log(i)
+	console.log(currentYear) */
+	var hidYear = document.getElementById('hidYear').value = currentYear
+	var hidMonth = document.getElementById('hidMonth').value = (currentMonth+1)
+	var hidDay = document.getElementById('hidDay').value = i
+	/* console.log(hidYear);
+	console.log(hidMonth)
+	console.log(hidDay) */
+	$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
+		if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+			$('.SelectDate.active').removeClass('active')
+		}
+		$(this).addClass('active')
+	});
+	$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+		$(this).removeClass('active')
+	});
+}
+function DepartureDate(){//출발날자 선택완료 버튼 함수
+	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
+	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
+	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
+	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
+	const dateLayer = document.getElementById('dateLayer'); //달력 div
+	DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' //출발날짜 텍스트에 년,월,일 추가
+	if(dateLayer.style.display !== 'none'){
+		dateLayer.style.display = 'none';
+	}
+}
+
+
 </script>
 <%@ include file="../common/include/header.jsp"%>
 	
@@ -224,7 +585,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 								<button type="button" class="btn-open js-target-pick" data-route="DEP" id="btnExchangeRoute1"><span class="blind">열기</span></button> <!--열기-->
 							</div>
 							<div class="ticketing-date">													
-								<button type="button" class="btn-date" id="btnDatePicker"><span class="txt">2022.12.08 (목)  ~ 2022.12.10 (토) </span></button>								
+								<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">2022.12.08 (목)  ~ 2022.12.10 (토) </span></button>								
 								<input type="hidden" id="departureDate" value="2022-12-08">
 								<input type="hidden" id="arrivalDate" value="2022-12-10">
 							</div>				
@@ -281,29 +642,6 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 								<a href="#a" class="layer-close on"><span class="blind">닫기</span></a> <!-- 닫기 -->		 	
 							</div>				
 							
-							<div class="date-layer" id="dateLayer" style="display: none;">
-								<div class="layer-header">								
-									<button type="button" class="header__button" name="header_btn">
-									<span class="hidden">이전으로</span> <!-- 이전으로 -->
-									</button>								
-									<h2 class="customer-layer__title">언제 떠나세요?</h2> <!-- 언제 떠나세요? -->	
-								</div>								
-								<div class="layer-content">
-									<div class="picker picker--full"> 
-										<div class="info-wrap"><span class="info">1인 편도 운임 기준</span><span class="currency" name="currency">통화 : 원</span></div> <!-- 1인 편도 운임  기준 -->
-										<div class="flatpickr-wrapper"><input type="text" class="picker__input flatpickr-input" id="selectDate" data-picker="range" data-text="1인 편도 운임 기준" data-locale="ko" data-min-date="today" data-format="Y.m.d (D)" data-selected="" data-range-text="{&quot;start&quot;: &quot;가는 날&quot;, &quot;end&quot;: &quot;오는날&quot;, &quot;current&quot;: &quot;왕복&quot;}" readonly="readonly"><div class="flatpickr-calendar rangeMode animate multiMonth inline" tabindex="-1" style=""><div class="flatpickr-months"><span class="flatpickr-prev-month"></span><div class="flatpickr-month"><div class="flatpickr-current-month"><div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" min="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div><span class="cur-month">12월 </span></div></div><div class="flatpickr-month"><div class="flatpickr-current-month"><div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" min="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div><span class="cur-month">1월 </span></div></div><span class="flatpickr-next-month"></span></div><div class="flatpickr-innerContainer"><div class="flatpickr-rContainer"><div class="flatpickr-weekdays"><div class="flatpickr-weekdaycontainer">
-<span class="flatpickr-weekday">
-일</span>
-</div></div></div></div></div></div>
-									</div>
-									<div class="booking-button cal-button">
-										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close">
-											<span class="button__text">선택</span> <!-- 선택 -->
-										</button>              
-									</div>
-								</div>
-								<a href="#a" class="layer-close on"><span class="blind">닫기</span></a> <!-- 닫기 -->
-							</div>
 																		
 							</div>
 							</div>
@@ -442,6 +780,11 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 								<a href="#a" class="layer-close on"><span class="blind">닫기</span></a> <!-- 닫기 -->		 	
 							</div>				
 							
+																		
+							</div>
+							</div>
+							</div>
+							<!-- 달력 선택 -->
 							<div class="date-layer" id="dateLayer" style="display: none;">
 								<div class="layer-header">								
 									<button type="button" class="header__button" name="header_btn">
@@ -452,23 +795,62 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 								<div class="layer-content">
 									<div class="picker picker--full"> 
 										<div class="info-wrap"><span class="info">1인 편도 운임 기준</span><span class="currency" name="currency">통화 : 원</span></div> <!-- 1인 편도 운임  기준 -->
-										<div class="flatpickr-wrapper"><input type="text" class="picker__input flatpickr-input" id="selectDate" data-picker="range" data-text="1인 편도 운임 기준" data-locale="ko" data-min-date="today" data-format="Y.m.d (D)" data-selected="" data-range-text="{&quot;start&quot;: &quot;가는 날&quot;, &quot;end&quot;: &quot;오는날&quot;, &quot;current&quot;: &quot;왕복&quot;}" readonly="readonly"><div class="flatpickr-calendar rangeMode animate multiMonth inline" tabindex="-1" style=""><div class="flatpickr-months"><span class="flatpickr-prev-month"></span><div class="flatpickr-month"><div class="flatpickr-current-month"><div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" min="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div><span class="cur-month">12월 </span></div></div><div class="flatpickr-month"><div class="flatpickr-current-month"><div class="numInputWrapper"><input class="numInput cur-year" type="number" tabindex="-1" aria-label="Year" min="2022"><span class="arrowUp"></span><span class="arrowDown"></span></div><span class="cur-month">1월 </span></div></div><span class="flatpickr-next-month"></span></div><div class="flatpickr-innerContainer"><div class="flatpickr-rContainer"><div class="flatpickr-weekdays"><div class="flatpickr-weekdaycontainer">
-<span class="flatpickr-weekday">
-일</span>
-</div></div></div></div></div></div>
+										<div class="flatpickr-wrapper">
+											
+										<!-- 출발날짜 선택 -->
+										  <div class="sec_cal" style="display : none;">
+											  <div class="cal_nav">
+											    <a href="javascript:;" class="nav-btn go-prev">prev</a>
+											    <div class="year-month"></div>
+											    <a href="javascript:;" class="nav-btn go-next">next</a>
+											  </div>
+											  <div class="cal_wrap">
+											    <div class="days">
+											      <div class="day">MON</div>
+											      <div class="day">TUE</div>
+											      <div class="day">WED</div>
+											      <div class="day">THU</div>
+											      <div class="day">FRI</div>
+											      <div class="day">SAT</div>
+											      <div class="day">SUN</div>
+											    </div>
+											    <div class="dates"></div>
+											  </div>
+										</div>
+										<!-- 돌아올 날짜 선택 -->
+										<div class="sec_cal_2" style="display : block;">
+											  <div class="cal_nav">
+											    <a href="javascript:;" class="nav-btn go-prev">prev</a>
+											    <div class="year-month"></div>
+											    <a href="javascript:;" class="nav-btn go-next">next</a>
+											  </div>
+											  <div class="cal_wrap">
+											    <div class="days">
+											      <div class="day">MON</div>
+											      <div class="day">TUE</div>
+											      <div class="day">WED</div>
+											      <div class="day">THU</div>
+											      <div class="day">FRI</div>
+											      <div class="day">SAT</div>
+											      <div class="day">SUN</div>
+											    </div>
+											    <div class="dates_2"></div>
+											  </div>
+											</div>
+										</div>
 									</div>
 									<div class="booking-button cal-button">
-										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close">
+										<input type="hidden" id="hidYear">
+										<input type="hidden" id="hidMonth">
+										<input type="hidden" id="hidDay">
+										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close" onclick="DepartureDate()">
 											<span class="button__text">선택</span> <!-- 선택 -->
 										</button>              
 									</div>
 								</div>
 								<a href="#a" class="layer-close on"><span class="blind">닫기</span></a> <!-- 닫기 -->
 							</div>
-																		
-							</div>
-							</div>
-							</div>
+							
 							<div class="customer-layer" id="customerLayer" style="display: none;">
 								<div class="layer-header">
 									<button type="button" class="header__button" name="header_btn"><span class="hidden">이전으로</span></button> <!-- 이전으로 -->
