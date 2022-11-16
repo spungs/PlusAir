@@ -18,30 +18,16 @@ function nextBtn(){
 		<!-- End Google Tag Manager (noscript) -->
 		
 		<div class="wrap wrap--button pc-small step-ui">
-			
-			
 				<div id="breadcrumb" class="breadcrumb pc-only" aria-label="breadcrumb">
 					<nav class="breadcrumb__inner">
 						<div class="breadcrumb__item">
 							<a href="javascript:;" class="breadcrumb__link" style="cursor: default;">홈</a>
 						</div>
-						
-						
-							
-								
-									<div class="breadcrumb__item">
-										<a href="javascript:;" class="breadcrumb__link" style="cursor: default;">회원가입</a>
-									</div>
-								
-								
-							
-						
-						
+							<div class="breadcrumb__item">
+								<a href="javascript:;" class="breadcrumb__link" style="cursor: default;">회원가입</a>
+							</div>
 					</nav>
 				</div>
-			
-
-			
 			<div class="content" id="content">
 				<main id="main" class="main ">
 					
@@ -53,8 +39,6 @@ function nextBtn(){
 			<div class="page-title">약관동의</div>
 			</div>
 			<!--//20210519 title영역 수정-->
-
-
 
 			<!-- 약관 동의 -->
 			<div class="agree-wrap pt30 mt0"><!--20210428 class추가-->
@@ -164,16 +148,7 @@ function nextBtn(){
 						<label for="inpAgree-07" class="checkbox__label">
 						<i class="checkbox__ico" aria-hidden="true"></i>
 						<span>
-							
-								
 									(필수) 14세 이상입니다
-								
-								
-								
-								
-								
-								
-								
 						</span>
 						</label>
 					</span>
@@ -189,16 +164,7 @@ function nextBtn(){
 						<label for="inpAgree-08" class="checkbox__label">
 							<i class="checkbox__ico" aria-hidden="true"></i>
 							<span>
-								
-									
 										14세 미만입니다
-									
-									
-									
-									
-									
-									
-									
 							</span>
 						</label>
 						</span>

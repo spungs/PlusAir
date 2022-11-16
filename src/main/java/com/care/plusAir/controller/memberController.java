@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class memberController {
+	//test
+	@RequestMapping("test")
+	public String test() {
+		return "test";
+	}
 	
 	// 회원가입 버튼 클릭 시 회원가입 화면
 	@RequestMapping(value = "member/memberJoin/join")

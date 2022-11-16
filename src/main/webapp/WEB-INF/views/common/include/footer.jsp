@@ -244,18 +244,18 @@ $(document).ready(function(){
 //타이틀 설정
 $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0).text());
 </script>
-<script type="text/javascript" src="<c:url value="/resources/js/plugin.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/common.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/vendor/lodash.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/vendor/handlebars.min-v4.7.6.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/handlebars.helpers.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/util/sUtil.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/util/dUtil.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/util/utils.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/amcharts/amcharts.core.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jj.helpers.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/bizjs/commons/bizCommons.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/" />"></script>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/plugin.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/common.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/vendor/lodash.min.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/vendor/handlebars.min-v4.7.6.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/handlebars.helpers.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/util/sUtil.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/util/dUtil.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/util/utils.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/amcharts/amcharts.core.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/jj.helpers.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/bizjs/commons/bizCommons.js" />"></script> --%>
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/" />"></script> --%>
 
 <!--필요시만 로드-->
 <!--사용되지 않음-->
