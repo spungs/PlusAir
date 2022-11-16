@@ -18,15 +18,19 @@ function DepPlace() {//출발지 검색 버튼 액션
 	}
 function selectICN() {//출발지 선택후 출발지 텍스트에 담아주는 함수
 	const Dep = document.getElementById('spanDepartureDesc');//출발지 텍스트
-	const depAirportLayer = document.getElementById('depAirportLayer');
+	const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	const departureData = document.getElementById('departureData').value='ICN';//출발지 공항정보 히든태그
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	Ari.innerHTML='도착지'//출발지를 선택할때마다 도착지는 초기화
 	Dep.innerHTML='서울(인천)'
 	depAirportLayer.style.display = 'none';
 }
 function selectGMP() {//출발지 선택후 출발지 텍스트에 담아주는 함수
 	const Dep = document.getElementById('spanDepartureDesc');//출발지 텍스트
-	const depAirportLayer = document.getElementById('depAirportLayer');
+	const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	const departureData = document.getElementById('departureData').value='GMP';//출발지 공항정보 히든태그
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	Ari.innerHTML='도착지'//출발지를 선택할때마다 도착지는 초기화
 	Dep.innerHTML='서울(김포)'
 	depAirportLayer.style.display = 'none';
 }
@@ -34,22 +38,30 @@ function selectGMP() {//출발지 선택후 출발지 텍스트에 담아주는 
 function AriPlace() {//도착지 검색 버튼 함수
 	  const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	  const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
-	  const koplace = document.getElementById('koplace');//국내 행성지 div
-	  var Dep = document.getElementById('spanDepartureDesc').innerHTML;
-
-	  if(Dep == '서울(인천)'){
-		  koplace.style.display = 'none';//출발지가 인천일땐 국내선 비행기가 없으므로 숨겨줌
-	  }
-	  if(Dep == '서울(김포)'){
-		  koplace.style.display = 'block';//출발지가 김포 선택시 국내선 보여줌
-	  }
+	  const koplace = document.getElementById('koplace');//국내 행성지 div 301번째줄
+	  const ItnPlace = document.getElementById('ItnPlace');//국제 행성지 div 316번째줄
+	  var Dep = document.getElementById('spanDepartureDesc').innerHTML;//출발지 텍스트
+	  
 	  if(AriAirportLayer.style.display !== 'none') {
 		  AriAirportLayer.style.display = 'none';
 	  }
-	  else {
+	  else if(Dep == '출발지'){
+		  alert('출발지를 먼저 선택해주세요');
+	  }
+	  else if(Dep == '서울(인천)'){
 		  AriAirportLayer.style.display = 'block';
 		  depAirportLayer.style.display = 'none';
-		}
+		  koplace.style.display = 'none';//출발지가 인천일땐 국내선 비행기가 없으므로 숨겨줌
+		  ItnPlace.style.display = 'block';//출발지가 인천일땐 국제선 보여줌
+	  }
+	  else if(Dep == '서울(김포)'){
+		  AriAirportLayer.style.display = 'block';
+		  depAirportLayer.style.display = 'none';
+		  koplace.style.display = 'block';//출발지가 김포 선택시 국내선 보여줌
+		  ItnPlace.style.display = 'none';//출발지가 김포일땐 국제선 비행기가 없으므로 숨겨줌
+	  }
+	  
+	  
 	}
 function selectPUS() {//도착지 선택후 도착지 텍스트에 담아주는 함수
 	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
@@ -75,18 +87,103 @@ function selectNRT() {//도착지 선택후 도착지 텍스트에 담아주는 
 	Ari.innerHTML='도쿄(나리타)'
 	AriAirportLayer.style.display = 'none';
 }
-function selectKIX() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+function selectPEK() {//도착지 선택후 도착지 텍스트에 담아주는 함수
 	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
 	const AriAirportLayer = document.getElementById('AriAirportLayer');
-	const arrivalData = document.getElementById('arrivalData').value='KIX';//도착지 공항정보 히든태그
+	const arrivalData = document.getElementById('arrivalData').value='PEK';//도착지 공항정보 히든태그
 	//console.log(arrivalData)
-	Ari.innerHTML='오사카(간사이)'
+	Ari.innerHTML='북경(베이징)'
+	AriAirportLayer.style.display = 'none';
+}
+function selectDPS() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='DPS';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='발리'
+	AriAirportLayer.style.display = 'none';
+}
+function selectBKK() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='BKK';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='방콕'
+	AriAirportLayer.style.display = 'none';
+}
+function selectJFK() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='JFK';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='뉴욕'
+	AriAirportLayer.style.display = 'none';
+}
+function selectLAX() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='LAX';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='로스앤젤레스'
+	AriAirportLayer.style.display = 'none';
+}
+function selectLHR() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='LHR';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='런던'
+	AriAirportLayer.style.display = 'none';
+}
+function selectCDG() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='CDG';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='파리'
+	AriAirportLayer.style.display = 'none';
+}
+function selectSYD() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='SYD';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='시드니'
+	AriAirportLayer.style.display = 'none';
+}
+function selectGUM() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='GUM';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='괌'
+	AriAirportLayer.style.display = 'none';
+}
+function selectDXB() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='DXB';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='두바이'
+	AriAirportLayer.style.display = 'none';
+}
+function selectAUH() {//도착지 선택후 도착지 텍스트에 담아주는 함수
+	const Ari = document.getElementById('spanArrivalDesc');//도착지 텍스트
+	const AriAirportLayer = document.getElementById('AriAirportLayer');
+	const arrivalData = document.getElementById('arrivalData').value='AUH';//도착지 공항정보 히든태그
+	//console.log(arrivalData)
+	Ari.innerHTML='아부다비'
 	AriAirportLayer.style.display = 'none';
 }
 function person() {//인원 추가 div 여는 버튼
-	const customerLayer = document.getElementById('customerLayer');
-	customerLayer.style.display = 'block';
-	
+	const customerLayer = document.getElementById('customerLayer');//인원추가 버튼
+	const Ari = document.getElementById('spanArrivalDesc').innerHTML;//도착지 텍스트
+	if(Ari == '도착지'){
+		alert('일정을 먼저 선택해 주세요.')
+	}
+	else{
+		customerLayer.style.display = 'block';
+	}
 }
 function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	const customerLayer = document.getElementById('customerLayer');
@@ -98,7 +195,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	console.log(adtCount)
 	console.log(chdCount)
 	console.log(infCount)
-	personText.innerHTML="성인 : "+adtCount+"소아 : "+chdCount+"유아 : "+infCount
+	personText.innerHTML="성인 : "+adtCount+" , 소아 : "+chdCount+" , 유아 : "+infCount
 	customerLayer.style.display = 'none';
 }
 </script>
@@ -149,37 +246,6 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 									<div id="divDEPAirportAC" name="search_auto" target="txtDepAirport"><ul class="predictive-search ui-menu ui-widget ui-widget-content" id="ui-id-1" tabindex="0" style="display: none;"></ul></div>
 								</div>
 								<div class="txt-list">
-									<div class="header-sub" data-element="tab">
-										<div class="tab__buttons">
-											<div data-element="tab__list" class="tab__button" role="presentation">
-												<button type="button" class="tab__anchor is-active" id="selectTab01" data-element="tab__anchor" data-index="0" role="tab" tabindex="" aria-selected="true" aria-expanded="true">최근 검색</button> <!-- 최근 검색 -->
-											</div>
-										</div>														
-										<div data-element="tab__panel" class="tab__panel is-active" aria-labelledby="selectTab01" role="tabpanel" tabindex="0">
-											<div data-element="tab">
-												<div class="tab__button-wrap">
-													<div class="tag-list" data-scroll="x" name="latelySearch">
-														<div class="tag-list__item tag-list__item--tag" data-element="tab__list" role="presentation">
-														<button type="button" name="btnLatelyAirport" class="tag-list__text">오사카(간사이)
-														<span class="airport" style="display: none;">KIX</span>
-														</button>
-														<button type="button" class="tag-list__remove" onclick="javascript:deletelatelySearch(this);">
-														<span class="hidden">적용할 조건을 선택해 주세요.</span>
-														</button>
-														</div>
-														<div class="tag-list__item tag-list__item--tag" data-element="tab__list" role="presentation">
-														<button type="button" name="btnLatelyAirport" class="tag-list__text">도쿄(나리타)
-														<span class="airport" style="display: none;">NRT</span>
-														</button>
-														<button type="button" class="tag-list__remove" onclick="javascript:deletelatelySearch(this);">
-														<span class="hidden">적용할 조건을 선택해 주세요.</span>
-														</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
 									<div class="main--destination-select">
 										<hr class="booking-line">
 										<div data-element="tab" class="tab tab--vertical tab--booking">
@@ -264,31 +330,6 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 												<button type="button" class="tab__anchor is-active" id="selectTab01" data-element="tab__anchor" data-index="0" role="tab" tabindex="" aria-selected="true" aria-expanded="true">최근 검색</button> <!-- 최근 검색 -->
 											</div>
 										</div>														
-										<div data-element="tab__panel" class="tab__panel is-active" aria-labelledby="selectTab01" role="tabpanel" tabindex="0">
-											<div data-element="tab">
-												<div class="tab__button-wrap">
-													<div class="tag-list" data-scroll="x" name="latelySearch">
-														<div class="tag-list__item tag-list__item--tag" data-element="tab__list" role="presentation">
-														<button type="button" name="btnLatelyAirport" class="tag-list__text">오사카(간사이)
-														<span class="airport" style="display: none;">KIX</span>
-														</button>
-														<button type="button" class="tag-list__remove" onclick="javascript:deletelatelySearch(this);">
-														<span class="hidden">적용할 조건을 선택해 주세요.</span>
-														</button>
-														</div>
-														<div class="tag-list__item tag-list__item--tag" data-element="tab__list" role="presentation">
-														<button type="button" name="btnLatelyAirport" class="tag-list__text">도쿄(나리타)
-														<span class="airport" style="display: none;">NRT</span>
-														</button>
-														<button type="button" class="tag-list__remove" onclick="javascript:deletelatelySearch(this);">
-														<span class="hidden">적용할 조건을 선택해 주세요.</span>
-														</button>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-																								
 									</div>
 									<div class="main--destination-select">
 										<hr class="booking-line">
@@ -300,6 +341,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 											<div class="tab__panel-wrap scrollbar-inner" data-element="tab__panel-wrap">
 											<div data-element="tab__panel" id="koplace" class="tab__panel is-active" aria-labelledby="plugin-DEPtab-2" role="tabpanel" tabindex="0" style="display: block;">
 											<div class="choise">
+											<!-- 국내항 도착지 -->
 												<button type="button" class="choise__button" onclick="selectPUS()">
 												<span class="stationName">부산</span>
 												<span class="airport">PUS</span>
@@ -312,7 +354,8 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 												</button>
 											</div>
 											</div>
-											<div data-element="tab__panel" class="tab__panel is-active" aria-labelledby="plugin-DEPtab-3" role="tabpanel" tabindex="0" style="">
+											<!-- 국제항 도착지 -->
+											<div data-element="tab__panel" id="ItnPlace" class="tab__panel is-active" aria-labelledby="plugin-DEPtab-3" role="tabpanel" tabindex="0" style="display: block">
 											<div class="choise">
 												<button type="button" class="choise__button" onclick="selectNRT()">
 												<span class="stationName">도쿄(나리타)</span>
@@ -320,11 +363,71 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 												</button>
 											</div>
 											<div class="choise">
-												<button type="button" class="choise__button" onclick="selectKIX()">
-												<span class="stationName">오사카(간사이)</span>
-												<span class="airport">KIX</span>
+												<button type="button" class="choise__button" onclick="selectPEK()">
+												<span class="stationName">북경(베이징)</span>
+												<span class="airport">PEK</span>
 												</button>
-											</div>									
+											</div>
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectDPS()">
+												<span class="stationName">발리</span>
+												<span class="airport">DPS</span>
+												</button>
+											</div>
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectBKK()">
+												<span class="stationName">방콕</span>
+												<span class="airport">BKK</span>
+												</button>
+											</div>
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectJFK()">
+												<span class="stationName">뉴욕</span>
+												<span class="airport">JFK</span>
+												</button>
+											</div>
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectLAX()">
+												<span class="stationName">로스앤젤레스</span>
+												<span class="airport">LAX</span>
+												</button>
+											</div>	
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectLHR()">
+												<span class="stationName">런던</span>
+												<span class="airport">LHR</span>
+												</button>
+											</div>		
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectCDG()">
+												<span class="stationName">파리</span>
+												<span class="airport">CDG</span>
+												</button>
+											</div>	
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectSYD()">
+												<span class="stationName">시드니</span>
+												<span class="airport">SYD</span>
+												</button>
+											</div>	
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectGUM()">
+												<span class="stationName">괌</span>
+												<span class="airport">GUM</span>
+												</button>
+											</div>		
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectDXB()">
+												<span class="stationName">두바이</span>
+												<span class="airport">DXB</span>
+												</button>
+											</div>	
+											<div class="choise">
+												<button type="button" class="choise__button" onclick="selectAUH()">
+												<span class="stationName">아부다비</span>
+												<span class="airport">AUH</span>
+												</button>
+											</div>			
 											</div>
 								</div>
 								<div class="map-list">
@@ -448,7 +551,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 										</div>
 									</div>
 								</div>
-				
+							
 				
 		</div>
 		
