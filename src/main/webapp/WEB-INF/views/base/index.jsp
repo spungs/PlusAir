@@ -118,7 +118,7 @@
 .SelectDate {
 	background-color: white;
 }
-.SelectDate.active {
+.SelectDate.asd {
 	background-color: #AFE1FF;
 }
 .sec_cal_2 {
@@ -246,8 +246,12 @@
 
 <script>
 function DepPlace() {//출발지 검색 버튼 액션
+	  var HidItem = $(".item.selected").find('.HidItem').val(); //선택된 운행정보를 가져옴
+	  var hiddenItem = document.getElementById('hiddenItem') // 선택된 운행정보 히든 태그
 	  const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	  const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
+	  
+	  hiddenItem.value = HidItem //왕복or편도 를 히든태그에 넣어줌
 	  
 	  if(depAirportLayer.style.display !== 'none') {
 		  depAirportLayer.style.display = 'none';
@@ -431,11 +435,19 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	const adtCount = document.getElementById('adtCount').value//어른수
 	const chdCount = document.getElementById('chdCount').value//소아수
 	const infCount = document.getElementById('infCount').value//유아수
+	const adtNum = document.getElementById('adtNum')//어른수 히든태그
+	const chdNum = document.getElementById('chdNum')//소아수 히든태그
+	const infNum = document.getElementById('infNum')//유아수 히든태그
 	const personText = document.getElementById('personText')//인원분류와 명수 텍스트  
 	
-	console.log(adtCount)
-	console.log(chdCount)
-	console.log(infCount)
+	adtNum.value = adtCount
+	chdNum.value = chdCount
+	infNum.value = infCount
+	
+	/* console.log(adtNum.value)
+	console.log(chdNum.value)
+	console.log(infNum.value) */
+	
 	personText.innerHTML="성인 : "+adtCount+" , 소아 : "+chdCount+" , 유아 : "+infCount
 	customerLayer.style.display = 'none';
 }
@@ -446,8 +458,13 @@ function DatePicker(){//달력 div 오픈 버튼클릭
 	const BackDiv = document.getElementById('BackDiv');//돌아올날짜 달력 바디 div
 	const DepSetBtn = document.getElementById('DepSetBtn');//출발날짜 결정 버튼 div
 	const BackSetBtn = document.getElementById('BackSetBtn');//돌아올날짜 결정 버튼 div
+	const Ari = document.getElementById('spanArrivalDesc').innerHTML;//도착지 텍스트
 	DepartureDate.innerHTML = '날짜를 선택해 주세요.'
-	if(dateLayer.style.display !== 'none'){
+	if(Ari == '도착지'){
+		alert('일정을 먼저 선택해 주세요.')
+	}
+	
+	else if(dateLayer.style.display !== 'none'){
 		dateLayer.style.display = 'none';
 	}
 	else{
@@ -569,7 +586,6 @@ function Datesel(currentMonth,i,currentYear){//달력 날짜  div
 	console.log(hidMonth)
 	console.log(hidDay) */
 	
-	
 	if(hidMonth == hidToMonth){
 		//console.log('첫번째 if')
 		if(hidDay < hidToDay){
@@ -579,27 +595,28 @@ function Datesel(currentMonth,i,currentYear){//달력 날짜  div
 		}else{
 			//console.log('첫번째 else')
 			$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
-				if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
-					$('.SelectDate.active').removeClass('active')
+				if($('.SelectDate').hasClass('asd') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+					$('.SelectDate.asd').removeClass('asd')
 				}
-				$(this).addClass('active')
+				$(this).addClass('asd')
 			});
-			$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
-				$(this).removeClass('active')
+			$('.SelectDate.asd').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+				$(this).removeClass('asd')
 			});
 		}
 		
 	}
 	else{
+		
 		//console.log('두번째 else')
 		$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
-			if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
-				$('.SelectDate.active').removeClass('active')
+			if($('.SelectDate').hasClass('asd') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+				$('.SelectDate.asd').removeClass('asd')
 			}
-			$(this).addClass('active')
+			$(this).addClass('asd')
 		});
-		$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
-			$(this).removeClass('active')
+		$('.SelectDate.asd').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+			$(this).removeClass('asd')
 		});
 	}
 	/* if(hidToYear == hidYear){
@@ -617,8 +634,6 @@ function Datesel(currentMonth,i,currentYear){//달력 날짜  div
 	if(hidToYear > hidYear){
 		alert('지난 날짜는 선택할수 없습니다.')
 	} */
-	
-	
 }
 function Datesel_2(currentMonth,i,currentYear){//달력 날짜  div
 	
@@ -630,13 +645,13 @@ function Datesel_2(currentMonth,i,currentYear){//달력 날짜  div
 	console.log(BackMonth)
 	console.log(BackDay) */
 	$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
-		if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
-			$('.SelectDate.active').removeClass('active')
+		if($('.SelectDate').hasClass('asd') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+			$('.SelectDate.asd').removeClass('asd')
 		}
-		$(this).addClass('active')
+		$(this).addClass('asd')
 	});
-	$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
-		$(this).removeClass('active')
+	$('.SelectDate.asd').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+		$(this).removeClass('asd')
 	});
 }
 function DepartureDate(){//출발날자 선택완료 버튼 함수
@@ -713,6 +728,7 @@ $(function(){//왕복 또는 편도 선택
        	 $(this).addClass('selected')
          
        	var HidItem = $(".item.selected").find('.HidItem').val(); //선택된 운행정보를 가져옴
+       	var hiddenItem = document.getElementById('hiddenItem') // 선택된 운행정보 히든 태그
        	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
        	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
        	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
@@ -728,7 +744,10 @@ $(function(){//왕복 또는 편도 선택
    	 	BackMonth = '';
    	 	BackDay = '';
    	 	DepartureDate.innerHTML=('출발날짜를 선택해 주세요')
-         //console.log(HidItem)
+   	 	
+   	 	hiddenItem.value = HidItem //왕복or편도 를 히든태그에 넣어줌
+   	 	
+   	 	//console.log(HidItem)
          if(dateLayer.style.display == 'block'){
         	 dateLayer.style.display = 'none';
         	 
@@ -741,7 +760,88 @@ $(function(){//왕복 또는 편도 선택
  	console.log(BackDay)  */
      })
  })
-
+$(function(){ //div 창의 X(닫기)버튼 클릭시 이벤트
+	const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
+	const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
+	const dateLayer = document.getElementById('dateLayer');//달력 상위 div
+	const customerLayer = document.getElementById('customerLayer');//인원추가 버튼
+	$('.layer-close.on').click(function(){
+		if(depAirportLayer.style.display == 'block'){
+			depAirportLayer.style.display = 'none';
+		}
+		else if(AriAirportLayer.style.display == 'block'){
+			AriAirportLayer.style.display = 'none';
+		}
+		else if(dateLayer.style.display == 'block'){
+			dateLayer.style.display = 'none';
+		}else if(customerLayer.style.display == 'block'){
+			customerLayer.style.display = 'none';
+		}
+	})
+})
+function adtMinus(){//어른수 감소 버튼 이벤트
+	var adtCount = document.getElementById('adtCount');
+	let mounusnumber = adtCount.value;
+	if(mounusnumber < 2){
+		mounusnumber = 1
+	}else{
+		mounusnumber = parseInt(mounusnumber) - 1;
+	}
+	adtCount.value = mounusnumber;
+}
+function adtPlus(){//어른수 증가 버튼 이벤트
+	const adtCount = document.getElementById('adtCount');
+	let plusnumber = adtCount.value;
+	if(plusnumber < 9){
+		plusnumber = parseInt(plusnumber) + 1;
+	}
+	else{
+		plusnumber = 9;
+	}
+	adtCount.value = plusnumber
+}
+function chdMinus(){//소아 감소 버튼 이벤트
+	var chdCount = document.getElementById('chdCount');
+	let mounusnumber = chdCount.value;
+	if(mounusnumber < 1){
+		mounusnumber = 0
+	}else{
+		mounusnumber = parseInt(mounusnumber) - 1;
+	}
+	chdCount.value = mounusnumber;
+}
+function chdPlus(){//소아 증가 버튼 이벤트
+	const chdCount = document.getElementById('chdCount');
+	let plusnumber = chdCount.value;
+	if(plusnumber < 9){
+		plusnumber = parseInt(plusnumber) + 1;
+	}
+	else{
+		plusnumber = 9;
+	}
+	chdCount.value = plusnumber
+}
+function infMinus(){//소아 감소 버튼 이벤트
+	var infCount = document.getElementById('infCount');
+	let mounusnumber = infCount.value;
+	if(mounusnumber < 1){
+		mounusnumber = 0
+	}else{
+		mounusnumber = parseInt(mounusnumber) - 1;
+	}
+	infCount.value = mounusnumber;
+}
+function infPlus(){//소아 증가 버튼 이벤트
+	const infCount = document.getElementById('infCount');
+	let plusnumber = infCount.value;
+	if(plusnumber < 9){
+		plusnumber = parseInt(plusnumber) + 1;
+	}
+	else{
+		plusnumber = 9;
+	}
+	infCount.value = plusnumber
+}
 
 </script>
 <%@ include file="../common/include/header.jsp"%>
@@ -752,28 +852,27 @@ $(function(){//왕복 또는 편도 선택
 			<!-- Google Tag Manager (noscript) -->
 			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PD2BQQ4" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			<!-- End Google Tag Manager (noscript) -->
-			
+			<!-- 	<form action="datatest" method="post"> -->
 				<div class="main-ticketing round open">
 					<div class="ticketing-in content-guide">
 						<ul class="ticketing-type">
 							<li class="item selected" data-triptype="RT"><input type="hidden" class="HidItem" value="왕복"><a href="#" class="item-btn">왕복</a></li> <!-- 왕복 -->
 							<li class="item" data-triptype="OW"><input type="hidden" class="HidItem" value="편도"><a href="#" class="item-btn">편도</a></li> <!-- 편도 --> 	
 						</ul>
-						<input type="hidden" id="test1">
-						<input type="hidden" id="test2">
-						<input type="hidden" id="hiddenItem">
+						<!-- <input type="hidden" id="test1">
+						<input type="hidden" id="test2"> -->
+						
 						<div class="ticketing-row-top single">
 							<div class="ticketing-target">
 								<button type="button" class="start js-target-pick active" onclick="DepPlace()"><span class="txt" id="spanDepartureDesc">출발지</span></button> <!-- 출발지 -->	
-								<input type="hidden" id="departureData" value="">
+								
 								<button type="button" class="target js-target-pick active" onclick="AriPlace()"><span class="txt" id="spanArrivalDesc">도착지</span></button> <!-- 도착지 -->
-								<input type="hidden" id="arrivalData">
+								
 								<button type="button" class="btn-open js-target-pick" data-route="DEP" id="btnExchangeRoute1"><span class="blind">열기</span></button> <!--열기-->
 							</div>
 							<div class="ticketing-date">													
 								<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">날짜를 선택해 주세요</span></button>								
-								<input type="hidden" id="departureDate" value="2022-12-08">
-								<input type="hidden" id="arrivalDate" value="2022-12-10">
+								
 							</div>				
 						</div>		
 										
@@ -1028,21 +1127,14 @@ $(function(){//왕복 또는 편도 선택
 										</div>
 									</div>
 									<div class="booking-button cal-button"  id="DepSetBtn" style="display:none">
-										<input type="hidden" id="hidYear">
-										<input type="hidden" id="hidMonth">
-										<input type="hidden" id="hidDay">
-										<input type="hidden" id="hidToYear">
-										<input type="hidden" id="hidToMonth">
-										<input type="hidden" id="hidToDay">
-										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close" onclick="DepartureDate()">
+										
+										<button type="button" class="button button--primary button--active" onclick="DepartureDate()">
 											<span class="button__text">선택</span> <!-- 선택 -->
 										</button>              
 									</div>
 									<div class="booking-button cal-button"  id="BackSetBtn" style="display:none">
-										<input type="hidden" id="BackYear">
-										<input type="hidden" id="BackMonth">
-										<input type="hidden" id="BackDay">
-										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close" onclick="ComeBackDate()">
+										
+										<button type="button" class="button button--primary button--active" onclick="ComeBackDate()">
 											<span class="button__text">선택</span> <!-- 선택 -->
 										</button>              
 									</div>
@@ -1067,33 +1159,33 @@ $(function(){//왕복 또는 편도 선택
 											<div class="input-row input-row--number input-row--icon">																
 												<label for="adtCount" class="input__label">성인</label> <!-- 성인 -->
 												<div data-element="form" class="input input--number is-active">
-												<button type="button" data-element="number__button" onclick="javascript:chkAdtCount('');" data-type="decrease" class="input__number input__number-minus" aria-label="빼기" disabled=""></button> <!-- 빼기 -->
-												<input type="text" id="adtCount" placeholder="숫자입력" data-element="number__input" value="1" data-max="9" data-min="1" data-string-number="" class="input__number"> <!-- 숫자입력 -->
-												<button type="button" data-element="number__button" data-type="increase" class="input__number input__number-plus" aria-label="더하기"></button> <!-- 더하기 -->
+												<button type="button" class="input__number input__number-minus" onclick='adtMinus()'></button> <!-- 빼기 -->
+												<input type="text" id="adtCount" placeholder="숫자입력" value="1" class="input__number"> <!-- 숫자입력 -->
+												<button type="button" class="input__number input__number-plus" onclick='adtPlus()'></button> <!-- 더하기 -->
 												</div>
 												<p class="text__small text--color-gray" id="adtMsg">12세 이상</p> <!-- 12세 이상 -->
 											</div>							
 											<div class="input-row input-row--number input-row--icon">
 												<label for="chdCount" class="input__label">소아</label> <!-- 소아 -->
 												<div data-element="form" class="input input--number is-active">
-												<button type="button" data-element="number__button" data-type="decrease" class="input__number input__number-minus" aria-label="빼기" disabled=""></button> <!-- 빼기 -->
-												<input type="text" id="chdCount" placeholder="숫자입력" data-element="number__input" value="0" data-max="9" data-min="0" data-string-number="" class="input__number"> <!-- 숫자입력 -->
-												<button type="button" data-element="number__button" data-type="increase" class="input__number input__number-plus" aria-label="더하기"></button> <!-- 더하기 -->
+												<button type="button" class="input__number input__number-minus" onclick='chdMinus()'></button> <!-- 빼기 -->
+												<input type="text" id="chdCount" placeholder="숫자입력" value="0" class="input__number"> <!-- 숫자입력 -->
+												<button type="button" class="input__number input__number-plus" onclick='chdPlus()'></button> <!-- 더하기 -->
 												</div>
 												<p class="text__small text--color-gray" name="chdMsg">국제선 기준 만 2세~12세 미만<br>(최초 출발일 기준)</p><!-- 국제선 기준<br>만 2세 ~ 만 12세 미만 -->
 											</div>						
 											<div class="input-row input-row--number input-row--icon">																
 												<label for="infCount" class="input__label">유아</label> <!-- 유아 -->
 												<div data-element="form" class="input input--number is-active">
-												<button type="button" data-element="number__button" data-type="decrease" class="input__number input__number-minus" aria-label="빼기" disabled=""></button> <!-- 빼기 -->
-												<input type="text" id="infCount" placeholder="숫자입력" data-element="number__input" value="0" data-max="9" data-min="0" data-string-number="" class="input__number"> <!-- 숫자입력 -->
-												<button type="button" id="btnInfCount" onclick="javascript:chkInfCount('');" data-element="number__button" data-type="increase" class="input__number input__number-plus" aria-label="더하기"></button> <!-- 더하기 -->
+												<button type="button" class="input__number input__number-minus" onclick='infMinus()'></button> <!-- 빼기 -->
+												<input type="text" id="infCount" placeholder="숫자입력" value="0" class="input__number"> <!-- 숫자입력 -->
+												<button type="button" id="btnInfCount" class="input__number input__number-plus" onclick='infPlus()'></button> <!-- 더하기 -->
 												</div>
 												<p class="text__small text--color-gray" name="infantDesc">생후 14일 이상~만 2세 미만<br>(만 24개월 미만/최종 탑승일 기준)<br>유아의 여정이 동반 성인과 일치하지 않으면 환불 후 재구매해야 합니다.</p> <!-- 생후 7일 이상~만 2세 미만<br>(만 24개월 미만) -->
 											</div>															
 										</div>
 									</div>
-																
+									
 								</div>
 								<div class="fixed-wrap fixed-wrap--multi-line border-none">
 									<div class="button-wrap">
@@ -1126,8 +1218,27 @@ $(function(){//왕복 또는 편도 선택
 													<select class="g-ticket-select" id="selectGifticket"></select>																																												
 													<div class="g-ticket-select nodata" style="display:none;" name="nodataGift">선택 가능한 기프티켓이 없습니다.</div>
 													<a href="/ko/additionalService/service/gifticket.do" target="_blank" class="go-detail" name="nodataGift" style="display:none;">기프티켓 자세히 보기 &gt;</a><!-- 선택 가능한 기프티켓이 없습니다. 기프티켓 자세히 보기  -->													
-												</div>						
-												<button type="button" id="searchFlight" onclick="javascript:setSearchAvailParam(true);" class="btn-flight-sch-again">항공권 검색</button> <!-- 항공권  검색 -->
+												</div>	
+												<form action="datatest" method="post">			
+												<input type="hidden" id="hiddenItem" name="hiddenItem">		
+												<input type="hidden" id="departureData" name="departureData" value="">
+												<input type="hidden" id="arrivalData" name="arrivalData">
+												<input type="hidden" id="departureDate" name="departureDate">
+												<input type="hidden" id="arrivalDate" name="arrivalDate">
+												<input type="hidden" id="hidYear" name="hidYear">
+												<input type="hidden" id="hidMonth" name="hidMonth">
+												<input type="hidden" id="hidDay" name="hidDay">
+												<input type="hidden" id="hidToYear" name="hidToYear">
+												<input type="hidden" id="hidToMonth" name="hidToMonth">
+												<input type="hidden" id="hidToDay" name="hidToDay">
+												<input type="hidden" id="BackYear" name="BackYear">
+												<input type="hidden" id="BackMonth" name="BackMonth">
+												<input type="hidden" id="BackDay" name="BackDay">
+												<input type="hidden" id="adtNum" name="adtNum">
+												<input type="hidden" id="chdNum" name="chdNum">
+												<input type="hidden" id="infNum" name="infNum">
+												<button type="submit" id="searchFlight" class="btn-flight-sch-again">항공권 검색</button> <!-- 항공권  검색 -->
+												</form>
 											</div>
 										</div>
 									</div>
@@ -1135,5 +1246,5 @@ $(function(){//왕복 또는 편도 선택
 							
 				
 		</div>
-		
+		<!-- </form> -->
 		<%@ include file="../common/include/footer.jsp"%>

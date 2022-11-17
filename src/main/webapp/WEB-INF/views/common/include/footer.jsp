@@ -203,19 +203,19 @@
 
 
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/lib.min.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/lib.min.js"></script> -->
 
 
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/moment-with-locales.min.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/moment-with-locales.min.js"></script> -->
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.js"></script>
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.messagestore.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.js"></script> -->
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.messagestore.js"></script> -->
 <!-- 메인페이지 스크립트 에러 발생으로 이전 소스로 변경합니다. 
 <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/booking/plugin.js"></script>
 <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/booking/common.js"></script>
 -->
-<script>
+<!-- <script>
 $(document).ready(function(){
 	
 		$.ajaxSetup({
@@ -243,8 +243,8 @@ $(document).ready(function(){
 
 //타이틀 설정
 $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0).text());
-</script>
-<script type="text/javascript" src="<c:url value="/resources/js/plugin.js" />"></script>
+</script> -->
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/plugin.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/common.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/vendor/lodash.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/vendor/handlebars.min-v4.7.6.js" />"></script>
@@ -255,7 +255,7 @@ $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0
 <script type="text/javascript" src="<c:url value="/resources/js/amcharts/amcharts.core.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jj.helpers.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/bizjs/commons/bizCommons.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/" />"></script> --%>
 
 <!--필요시만 로드-->
 <!--사용되지 않음-->
@@ -268,7 +268,7 @@ $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0
 
 	
         
-            <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/bizjs/memberBenefit/memberBenefit.js"></script>
+           <!--  <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/bizjs/memberBenefit/memberBenefit.js"></script> -->
         
     
 
