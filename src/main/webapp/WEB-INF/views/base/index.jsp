@@ -141,6 +141,14 @@
     text-align: center;
     line-height: 1;
 }
+.GoDate {
+    text-align: center;
+    line-height: 1;
+}
+.BackDate {
+    text-align: center;
+    line-height: 1;
+}
 
 .sec_cal_2 .cal_nav .nav {
     display: flex;
@@ -432,11 +440,22 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	customerLayer.style.display = 'none';
 }
 function DatePicker(){//달력 div 오픈 버튼클릭
-	const dateLayer = document.getElementById('dateLayer');
+	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
+	const dateLayer = document.getElementById('dateLayer');//달력 상위 div
+	const DepDiv = document.getElementById('DepDiv');//출발날짜 달력 바디 div
+	const BackDiv = document.getElementById('BackDiv');//돌아올날짜 달력 바디 div
+	const DepSetBtn = document.getElementById('DepSetBtn');//출발날짜 결정 버튼 div
+	const BackSetBtn = document.getElementById('BackSetBtn');//돌아올날짜 결정 버튼 div
+	DepartureDate.innerHTML = '날짜를 선택해 주세요.'
 	if(dateLayer.style.display !== 'none'){
 		dateLayer.style.display = 'none';
-	}else{
+	}
+	else{
 		dateLayer.style.display = 'block';
+		BackDiv.style.display = 'none';
+		DepDiv.style.display = 'block';
+		DepSetBtn.style.display = 'block';
+		BackSetBtn.style.display = 'none';
 		calendarInit();//달력 div가 열렸을때 달력 데이터 가져오는 함수 실행
 	}
 }
@@ -493,21 +512,30 @@ function calendarInit() { //달력 데이터 가져오는 함수
         // 지난달
         for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
-            calendar_2.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
+            calendar_2.innerHTML = calendar_2.innerHTML + '<div class="day prev disable">' + i + '</div>'
         }
         // 이번달
         for (var i = 1; i <= nextDate; i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day current" onclick="Datesel(' + currentMonth + ',' + i + ',' + currentYear + ')">' + '<button class="SelectDate" style="height: 40px;width: 40px;">' +  i + '</button>' + '</div>'
-            calendar_2.innerHTML = calendar.innerHTML + '<div class="day current" onclick="Datesel(' + currentMonth + ',' + i + ',' + currentYear + ')">' + '<button class="SelectDate" style="height: 40px;width: 40px;">' +  i + '</button>' + '</div>'
+            calendar_2.innerHTML = calendar_2.innerHTML + '<div class="day current" onclick="Datesel_2(' + currentMonth + ',' + i + ',' + currentYear + ')">' + '<button class="SelectDate" style="height: 40px;width: 40px;">' +  i + '</button>' + '</div>'
         }
         // 다음달
         for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
             calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
-            calendar_2.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
+            calendar_2.innerHTML = calendar_2.innerHTML + '<div class="day next disable">' + i + '</div>'
         }
 
         // 오늘 날짜 표기
         if (today.getMonth() == currentMonth) {
+        	var hidToYear = document.getElementById('hidToYear').value = today.getFullYear() //현제 년도 히든태그에 값을 넣어줌
+        	var hidToMonth = document.getElementById('hidToMonth').value = (today.getMonth()+1) //현제 월수 히든태그에 값을 넣어줌
+        	var hidToDay = document.getElementById('hidToDay').value = today.getDate() //현제 일수 히든태그에 값을 넣어줌
+        	/* 
+        	현제 날짜
+        	console.log(today.getFullYear()) 
+        	console.log((today.getMonth()+1)) 
+        	console.log(today.getDate())
+        	*/
             todayDate = today.getDate();
             var currentMonthDate = document.querySelectorAll('.dates .current');
             currentMonthDate[todayDate -1].classList.add('today');
@@ -530,12 +558,77 @@ function Datesel(currentMonth,i,currentYear){//달력 날짜  div
 	/* console.log(currentMonth);
 	console.log(i)
 	console.log(currentYear) */
-	var hidYear = document.getElementById('hidYear').value = currentYear
-	var hidMonth = document.getElementById('hidMonth').value = (currentMonth+1)
-	var hidDay = document.getElementById('hidDay').value = i
-	/* console.log(hidYear);
+	
+	var hidYear = document.getElementById('hidYear').value = currentYear //출발 년도 히든태그에 값을 넣어줌
+	var hidMonth = document.getElementById('hidMonth').value = (currentMonth+1) //출발 월의 히든태그에 값을 넣어줌
+	var hidDay = document.getElementById('hidDay').value = i //출발 일의 히든태그에 값을 넣어줌
+	var hidToYear = document.getElementById('hidToYear').value //현제 년도 히든태그 값
+	var hidToMonth = document.getElementById('hidToMonth').value //현제 월수 히든태그 값
+	var hidToDay = document.getElementById('hidToDay').value //현제 일수 히든태그 값
+	/* console.log('출발 : ' + hidYear)
 	console.log(hidMonth)
 	console.log(hidDay) */
+	
+	
+	if(hidMonth == hidToMonth){
+		//console.log('첫번째 if')
+		if(hidDay < hidToDay){
+			//console.log('두번째 if')
+			document.getElementById('hidYear').value = ""
+			alert('지난 날짜는 선택할수 없습니다')
+		}else{
+			//console.log('첫번째 else')
+			$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
+				if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+					$('.SelectDate.active').removeClass('active')
+				}
+				$(this).addClass('active')
+			});
+			$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+				$(this).removeClass('active')
+			});
+		}
+		
+	}
+	else{
+		//console.log('두번째 else')
+		$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
+			if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
+				$('.SelectDate.active').removeClass('active')
+			}
+			$(this).addClass('active')
+		});
+		$('.SelectDate.active').on('click',function(){//선택된 날짜를 한번더 클릭하면 active를 지워준다
+			$(this).removeClass('active')
+		});
+	}
+	/* if(hidToYear == hidYear){
+		if(hidToMonth == hidMonth){
+			if(hidToDay > hidDay){
+				alert('지난 날짜는 선택할수 없습니다.')
+			}
+		}
+	}
+	if(hidToYear == hidYear){
+		if(hidToMonth > hidMonth){
+			alert('지난 날짜는 선택할수 없습니다.')
+		}
+	}
+	if(hidToYear > hidYear){
+		alert('지난 날짜는 선택할수 없습니다.')
+	} */
+	
+	
+}
+function Datesel_2(currentMonth,i,currentYear){//달력 날짜  div
+	
+	var BackYear = document.getElementById('BackYear').value = currentYear //도착 년도 히든태그에 값을 넣어줌
+	var BackMonth = document.getElementById('BackMonth').value = (currentMonth+1) //도착 월의 히든태그에 값을 넣어줌
+	var BackDay = document.getElementById('BackDay').value = i //도착 일의 히든태그에 값을 넣어줌
+	
+	/* console.log('돌아올 : ' + BackYear)
+	console.log(BackMonth)
+	console.log(BackDay) */
 	$('.SelectDate').on('click',function(){//달력 날짜 div 안에 자녀개채인 button (달력안의 div끼리 와 button들끼리의  class명이 같기때문에  내가 선택한 날짜만 선택되게 만든 함수)
 		if($('.SelectDate').hasClass('active') == true){//이미 선택된 날짜가 잇다면 그 날짜의 active를 지워주고 새로 선택한 날짜에 active를 시켜준다
 			$('.SelectDate.active').removeClass('active')
@@ -551,12 +644,103 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
 	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
 	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
-	const dateLayer = document.getElementById('dateLayer'); //달력 div
-	DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' //출발날짜 텍스트에 년,월,일 추가
-	if(dateLayer.style.display !== 'none'){
+	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
+	const DepDiv = document.getElementById('DepDiv');//출발날짜 달력 바디 div
+	const BackDiv = document.getElementById('BackDiv');//돌아올날짜 달력 바디 div
+	const DepSetBtn = document.getElementById('DepSetBtn');//출발날짜 결정 버튼 div
+	const BackSetBtn = document.getElementById('BackSetBtn');//돌아올날짜 결정 버튼 div
+	var HidItem = $(".item.selected").find('.HidItem').val();//왕복 또는 편도 값이 담겨잇는 히든태그
+	console.log(document.getElementById('hidYear').value)
+	if(HidItem == '편도'){
+		DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay
 		dateLayer.style.display = 'none';
 	}
+	else if(document.getElementById('hidYear').value != ""){
+		DepDiv.style.display = 'none';
+		BackDiv.style.display = 'block';
+		DepSetBtn.style.display = 'none';
+		BackSetBtn.style.display = 'block';
+		DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' //출발날짜 텍스트에 년,월,일 추가
+	}
+	else{
+		alert('출발날짜를 선택해주세요')
+	}
 }
+function ComeBackDate(){
+	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
+	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
+	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
+	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
+	var BackYear = document.getElementById('BackYear').value //출발 년도 히든 태그
+	var BackMonth = document.getElementById('BackMonth').value // 출발 월 히든 태그
+	var BackDay = document.getElementById('BackDay').value // 출발 일 히든 태그
+	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
+	/* console.log(hidYear) 
+	console.log(hidMonth) 
+	console.log(hidDay) 
+	console.log(BackYear) 
+	console.log(BackMonth) 
+	console.log(BackDay)  */
+	console.log(hidDay)
+	console.log(BackDay)
+	if(hidMonth == BackMonth){
+		if(hidDay > BackDay){
+			alert('돌아오는 날짜를 정확히 선택해 주세요.')
+		}
+		else{
+			DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
+			dateLayer.style.display = 'none';
+			}
+	}
+	else if(hidMonth > BackMonth){
+		alert('돌아오는 날짜를 정확히 선택해 주세요.')
+	}
+	else if(hidYear > BackYear){
+		alert('돌아오는 날짜를 정확히 선택해 주세요.')
+	}
+	else if(BackYear == ""){
+		alert('돌아오는 날짜를 선택해주세요')
+	}
+	else{
+	DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
+	dateLayer.style.display = 'none';
+	}
+}
+$(function(){//왕복 또는 편도 선택
+	   $('.item').click(function(){//왕복 또는 편도 선택
+         
+       	 $('.item.selected').removeClass('selected')//왕복 또는 편도 선택 selected 클래스명 추가해서 표시함
+       	 $(this).addClass('selected')
+         
+       	var HidItem = $(".item.selected").find('.HidItem').val(); //선택된 운행정보를 가져옴
+       	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
+       	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
+       	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
+    	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
+    	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
+    	var BackYear = document.getElementById('BackYear').value //출발 년도 히든 태그
+    	var BackMonth = document.getElementById('BackMonth').value // 출발 월 히든 태그
+    	var BackDay = document.getElementById('BackDay').value // 출발 일 히든 태그
+    	hidYear = ''; //왕복 또는 편도로 운행정보를 변경할때마다 출발,돌아올 날짜 히든태그를 초기화시켜준다
+   	 	hidMonth = '';
+   	 	hidDay = '';
+   	 	BackYear = '';
+   	 	BackMonth = '';
+   	 	BackDay = '';
+   	 	DepartureDate.innerHTML=('출발날짜를 선택해 주세요')
+         //console.log(HidItem)
+         if(dateLayer.style.display == 'block'){
+        	 dateLayer.style.display = 'none';
+        	 
+         }
+   	/*  console.log(hidYear) 
+ 	console.log(hidMonth) 
+ 	console.log(hidDay) 
+ 	console.log(BackYear) 
+ 	console.log(BackMonth) 
+ 	console.log(BackDay)  */
+     })
+ })
 
 
 </script>
@@ -572,10 +756,12 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 				<div class="main-ticketing round open">
 					<div class="ticketing-in content-guide">
 						<ul class="ticketing-type">
-							<li class="item selected" data-triptype="RT"><a href="#" class="item-btn">왕복</a></li> <!-- 왕복 -->
-							<li class="item" data-triptype="OW"><a href="#" class="item-btn">편도</a></li> <!-- 편도 --> 	
+							<li class="item selected" data-triptype="RT"><input type="hidden" class="HidItem" value="왕복"><a href="#" class="item-btn">왕복</a></li> <!-- 왕복 -->
+							<li class="item" data-triptype="OW"><input type="hidden" class="HidItem" value="편도"><a href="#" class="item-btn">편도</a></li> <!-- 편도 --> 	
 						</ul>
-						
+						<input type="hidden" id="test1">
+						<input type="hidden" id="test2">
+						<input type="hidden" id="hiddenItem">
 						<div class="ticketing-row-top single">
 							<div class="ticketing-target">
 								<button type="button" class="start js-target-pick active" onclick="DepPlace()"><span class="txt" id="spanDepartureDesc">출발지</span></button> <!-- 출발지 -->	
@@ -585,7 +771,7 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 								<button type="button" class="btn-open js-target-pick" data-route="DEP" id="btnExchangeRoute1"><span class="blind">열기</span></button> <!--열기-->
 							</div>
 							<div class="ticketing-date">													
-								<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">2022.12.08 (목)  ~ 2022.12.10 (토) </span></button>								
+								<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">날짜를 선택해 주세요</span></button>								
 								<input type="hidden" id="departureDate" value="2022-12-08">
 								<input type="hidden" id="arrivalDate" value="2022-12-10">
 							</div>				
@@ -790,7 +976,7 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 									<button type="button" class="header__button" name="header_btn">
 									<span class="hidden">이전으로</span> <!-- 이전으로 -->
 									</button>								
-									<h2 class="customer-layer__title">언제 떠나세요?</h2> <!-- 언제 떠나세요? -->	
+									<h2 class="customer-layer__title">날짜를 선택해주세요</h2> <!-- 언제 떠나세요? -->	
 								</div>								
 								<div class="layer-content">
 									<div class="picker picker--full"> 
@@ -798,13 +984,14 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 										<div class="flatpickr-wrapper">
 											
 										<!-- 출발날짜 선택 -->
-										  <div class="sec_cal" style="display : none;">
+										  <div class="sec_cal" id="DepDiv" style="display : none;">
 											  <div class="cal_nav">
 											    <a href="javascript:;" class="nav-btn go-prev">prev</a>
 											    <div class="year-month"></div>
 											    <a href="javascript:;" class="nav-btn go-next">next</a>
 											  </div>
 											  <div class="cal_wrap">
+											  	<div class="GoDate">출발날짜 선택</div>
 											    <div class="days">
 											      <div class="day">MON</div>
 											      <div class="day">TUE</div>
@@ -818,13 +1005,14 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 											  </div>
 										</div>
 										<!-- 돌아올 날짜 선택 -->
-										<div class="sec_cal_2" style="display : block;">
+										<div class="sec_cal_2" id="BackDiv" style="display : none;">
 											  <div class="cal_nav">
 											    <a href="javascript:;" class="nav-btn go-prev">prev</a>
 											    <div class="year-month"></div>
 											    <a href="javascript:;" class="nav-btn go-next">next</a>
 											  </div>
 											  <div class="cal_wrap">
+											  	<div class="BackDate">돌아올 날짜 선택</div>
 											    <div class="days">
 											      <div class="day">MON</div>
 											      <div class="day">TUE</div>
@@ -839,11 +1027,22 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 											</div>
 										</div>
 									</div>
-									<div class="booking-button cal-button">
+									<div class="booking-button cal-button"  id="DepSetBtn" style="display:none">
 										<input type="hidden" id="hidYear">
 										<input type="hidden" id="hidMonth">
 										<input type="hidden" id="hidDay">
+										<input type="hidden" id="hidToYear">
+										<input type="hidden" id="hidToMonth">
+										<input type="hidden" id="hidToDay">
 										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close" onclick="DepartureDate()">
+											<span class="button__text">선택</span> <!-- 선택 -->
+										</button>              
+									</div>
+									<div class="booking-button cal-button"  id="BackSetBtn" style="display:none">
+										<input type="hidden" id="BackYear">
+										<input type="hidden" id="BackMonth">
+										<input type="hidden" id="BackDay">
+										<button type="button" class="button button--primary button--active" data-select-date="#selectDate" rel="modal:close" onclick="ComeBackDate()">
 											<span class="button__text">선택</span> <!-- 선택 -->
 										</button>              
 									</div>
@@ -899,7 +1098,7 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 								<div class="fixed-wrap fixed-wrap--multi-line border-none">
 									<div class="button-wrap">
 										<button type="button" class="button button--active" name="btnSetPassenger" onclick="SetPersonProc()"><span class="button__text">선택 완료</span></button> <!-- 선택 완료 -->
-									</div>													
+									</div>	
 								</div>
 									<a href="#a" class="layer-close on"><span class="blind">닫기</span></a> <!-- 닫기 -->
 								</div>
