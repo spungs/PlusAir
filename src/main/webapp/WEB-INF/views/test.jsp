@@ -6,81 +6,60 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<style type="text/css">
-button {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 120px;
-	height: 30px;
-	margin-top: -15px;
-	margin-left: -60px;
-	line-height: 15px;
-	cursor: pointer;
-}
 
-.modal {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.8);
-	top: 0;
-	left: 0;
-	display: none;
-}
-
-.modal_content {
-	width: 400px;
-	height: 200px;
-	background: #fff;
-	border-radius: 10px;
-	position: relative;
-	top: 50%;
-	left: 50%;
-	margin-top: -100px;
-	margin-left: -200px;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 74px 0;
-	line-height: 23px;
-	cursor: pointer;
-	overflow-y: auto;
-}
-</style>
 </head>
 <body>
 
-	<button>모달창</button>
+<script>
+$(function(){
+	// input 관련 function
+	$('#engFirstName').focus(function(){
+		$('#engFirstNameDiv').addClass('label-active');
+		$('#engFirstNameDiv div[class="input"]').addClass('is-focus');
+		if($('#engFirstName').val() != ""){
+			$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+			$('#engFirstNameDiv .input__remove-button').addClass('show');
+		}
+	}); //click event end
+	$('#engFirstName').keyup(function(){
+		if($('#engFirstName').val() == ""){
+			$('#engFirstNameDiv .input__remove-button').removeClass('show');
+			$('#engFirstNameDiv .input__remove-button').addClass('hide');
+		}
+		else if($('#engFirstName').val() != ""){
+			$('#engFirstNameDiv div[data-element="form"]').addClass('is-active');
+			$('#engFirstNameDiv .input__remove-button').addClass('show');
+			$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+			$('#errorText4').css('display','none');
+		}
+	}); //keydown event end
+	$('#engFirstName').blur(function(){
+		$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+		if($('#engFirstName').val() == ""){
+			$('#engFirstNameDiv .input__remove-button').removeClass('show');
+			$('#engFirstNameDiv .input__remove-button').addClass('hide');
+			$('#engFirstNameDiv').removeClass('label-active');
+			$('#errorText4').css('display','block');
+		}
+	}); //blur event end
+}); // input 관련 function end
 
-	<div class="modal">
-		<div class="modal_content" title="클릭하면 창이 닫힙니다.">
-			여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 이미지여도 좋고
-			글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br>
-			이미지여도 좋고 글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고
-			글이어도 좋습니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br>
-			이미지여도 좋고 글이어도 좋습니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 여기에 모달창 내용을
-			적어줍니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br>
-			여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 이미지여도 좋고
-			글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br>
-			이미지여도 좋고 글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br> 이미지여도 좋고
-			글이어도 좋습니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br> 여기에 모달창 내용을 적어줍니다.<br>
-			이미지여도 좋고 글이어도 좋습니다.<br> 이미지여도 좋고 글이어도 좋습니다.<br>
-		</div>
-	</div>
-
-	<script>
-		$(function() {
-
-			$("button").click(function() {
-				$(".modal").fadeIn();
-			});
-
-			$(".modal_content").click(function() {
-				$(".modal").fadeOut();
-			});
-
-		});
-	</script>
+$(function(){
+	// 취소버튼 관련 function
+	$('#engFirstNameDiv button[data-element="remove"]').on('click', function(){
+		$('#engFirstName').val('');
+		$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+		$('#engFirstNameDiv .input__remove-button').removeClass('show');
+		$('#engFirstNameDiv .input__remove-button').addClass('hide');
+		if($('#engFirstName').val() == ""){
+			$('#engFirstNameDiv').removeClass('label-active');
+			$('#errorText4').css('display','block');				
+		}
+	}); // 취소버튼 클릭 event end
+}); // 취소버튼 관련 function end
+</script>
+	
+	
 
 
 </body>

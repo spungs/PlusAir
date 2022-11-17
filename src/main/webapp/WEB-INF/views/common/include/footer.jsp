@@ -203,18 +203,19 @@
 
 
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/lib.min.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/lib.min.js"></script> -->
 
 
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/moment-with-locales.min.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/moment-with-locales.min.js"></script> -->
 
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.js"></script>
-<script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.messagestore.js"></script>
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.js"></script> -->
+<!-- <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/lib/jquery.i18n.messagestore.js"></script> -->
 <!-- 메인페이지 스크립트 에러 발생으로 이전 소스로 변경합니다. 
 <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/booking/plugin.js"></script>
 <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/js/booking/common.js"></script>
 -->
+<!-- 
 <script>
 $(document).ready(function(){
 	
@@ -244,6 +245,7 @@ $(document).ready(function(){
 //타이틀 설정
 $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0).text());
 </script>
+ -->
 <%-- <script type="text/javascript" src="<c:url value="/resources/js/plugin.js" />"></script> --%>
 <%-- <script type="text/javascript" src="<c:url value="/resources/js/common.js" />"></script> --%>
 <%-- <script type="text/javascript" src="<c:url value="/resources/js/vendor/lodash.min.js" />"></script> --%>
@@ -268,7 +270,7 @@ $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0
 
 	
         
-            <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/bizjs/memberBenefit/memberBenefit.js"></script>
+<!--             <script type="text/javascript" src="https://static.jejuair.net/hpgg/resources/bizjs/memberBenefit/memberBenefit.js"></script> -->
         
     
 
@@ -277,7 +279,7 @@ $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0
 	<div id="ifmWrap" style="height:100%; display:none; overflow:auto; text-align:center; -webkit-overflow-scrolling:touch;">
 		<iframe src="" width="100%" height="100%" name="popupChkApp"></iframe>    
 	</div>
-<script type="text/javascript" src="/nt2vCtJPw0GxCaSK28S2fbTXv8U/piEaS6pNXY/IjUxRBpiDAI/e3VUI3li/WUAB"></script>
+<!-- <script type="text/javascript" src="/nt2vCtJPw0GxCaSK28S2fbTXv8U/piEaS6pNXY/IjUxRBpiDAI/e3VUI3li/WUAB"></script> -->
 <div class="jjLoading" style="display: none;" data-load="Y">
 <!--
    <div class="loading">

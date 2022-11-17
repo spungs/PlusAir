@@ -7,11 +7,244 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- //Jquery -->
 <!-- modal -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<!-- Jquery 선언인데 위에껄로 사용하므로 주석처리 -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
+<!-- Jquery에서 modal 메서드를 사용하기 위한 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<!-- modal창 CSS -->
+<style>
+.blocker{position:fixed;top:0;right:0;bottom:0;left:0;width:100%;height:100%;overflow:auto;z-index:1;padding:20px;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,0.75);text-align:center}
+.blocker:before{content:"";display:inline-block;height:100%;vertical-align:middle;margin-right:-0.05em}
+.blocker.behind{background-color:transparent}
+.modal{display:none;vertical-align:middle;position:relative;z-index:2;max-width:500px;box-sizing:border-box;width:90%;background:#fff;padding:15px 30px;-webkit-border-radius:8px;-moz-border-radius:8px;-o-border-radius:8px;-ms-border-radius:8px;border-radius:8px;-webkit-box-shadow:0 0 10px #000;-moz-box-shadow:0 0 10px #000;-o-box-shadow:0 0 10px #000;-ms-box-shadow:0 0 10px #000;box-shadow:0 0 10px #000;text-align:left}
+.modal a.close-modal{position:absolute;top:-12.5px;right:-12.5px;display:block;width:30px;height:30px;text-indent:-9999px;background-size:contain;background-repeat:no-repeat;background-position:center center;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==')}
+.modal-spinner{display:none;position:fixed;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);padding:12px 16px;border-radius:5px;background-color:#111;height:20px}
+.modal-spinner>div{border-radius:100px;background-color:#fff;height:20px;width:2px;margin:0 1px;display:inline-block;-webkit-animation:sk-stretchdelay 1.2s infinite ease-in-out;animation:sk-stretchdelay 1.2s infinite ease-in-out}
+.modal-spinner .rect2{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}
+.modal-spinner .rect3{-webkit-animation-delay:-1.0s;animation-delay:-1.0s}
+.modal-spinner .rect4{-webkit-animation-delay:-0.9s;animation-delay:-0.9s}
+@-webkit-keyframes sk-stretchdelay{0%,40%,100%{-webkit-transform:scaleY(0.5)}
+20%{-webkit-transform:scaleY(1.0)}}
+@keyframes sk-stretchdelay
+{0%,40%,100%{transform:scaleY(0.5);-webkit-transform:scaleY(0.5)}
+20%{transform:scaleY(1.0);-webkit-transform:scaleY(1.0)}}
+</style>
 <!-- //modal -->
 <script>
+var chkKor = /[^가-힇]$/;
+var chkEng = /[^a-zA-Z]$/;
+
+	// korLastName
+	$(function(){
+		// input 관련 function
+		$('#korLastName').focus(function(){
+			$('#korLastNameDiv').addClass('label-active');
+			$('#korLastNameDiv div[class="input"]').addClass('is-focus');
+			if($('#korLastName').val() != ""){
+				$('#korLastNameDiv .input__remove-button').removeClass('hide');
+				$('#korLastNameDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#korLastName').keyup(function(){
+			if($('#korLastName').val() == ""){
+				$('#korLastNameDiv .input__remove-button').removeClass('show');
+				$('#korLastNameDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#korLastName').val() != ""){
+				$('#korLastNameDiv div[data-element="form"]').addClass('is-active');
+				$('#korLastNameDiv .input__remove-button').addClass('show');
+				$('#korLastNameDiv .input__remove-button').removeClass('hide');
+				$('#errorText1').css('display','none');
+			}
+		}); //keydown event end
+		$('#korLastName').blur(function(){
+			$('#korLastNameDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#korLastName').val() == ""){
+				$('#korLastNameDiv .input__remove-button').removeClass('show');
+				$('#korLastNameDiv .input__remove-button').addClass('hide');
+				$('#korLastNameDiv').removeClass('label-active');
+				$('#errorText1').css('display','block');
+			}
+			// 유효성검사
+			if(chkKor.test($('#korLastName').val())){
+				$('#errorText1').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+	
+	$(function(){
+		// 취소버튼 관련 function
+		$('#korLastNameDiv button[data-element="remove"]').on('click', function(){
+			$('#korLastName').val('');
+			$('#korLastNameDiv div[data-element="form"]').removeClass('is-focus');
+			$('#korLastNameDiv .input__remove-button').removeClass('show');
+			$('#korLastNameDiv .input__remove-button').addClass('hide');
+			if($('#korLastName').val() == ""){
+				$('#korLastNameDiv').removeClass('label-active');
+				$('#errorText1').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	// korFirstName
+	$(function(){
+		// input 관련 function
+		$('#korFirstName').focus(function(){
+			$('#korFirstNameDiv').addClass('label-active');
+			$('#korFirstNameDiv div[class="input"]').addClass('is-focus');
+			if($('#korFirstName').val() != ""){
+				$('#korFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#korFirstNameDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#korFirstName').keyup(function(){
+			if($('#korFirstName').val() == ""){
+				$('#korFirstNameDiv .input__remove-button').removeClass('show');
+				$('#korFirstNameDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#korFirstName').val() != ""){
+				$('#korFirstNameDiv div[data-element="form"]').addClass('is-active');
+				$('#korFirstNameDiv .input__remove-button').addClass('show');
+				$('#korFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#errorText2').css('display','none');
+			}
+		}); //keydown event end
+		$('#korFirstName').blur(function(){
+			$('#korFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#korFirstName').val() == ""){
+				$('#korFirstNameDiv .input__remove-button').removeClass('show');
+				$('#korFirstNameDiv .input__remove-button').addClass('hide');
+				$('#korFirstNameDiv').removeClass('label-active');
+				$('#errorText2').css('display','block');
+			}
+			// 유효성검사
+			if(chkKor.test($('#korFirstName').val())){
+				$('#errorText2').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('#korFirstNameDiv button[data-element="remove"]').on('click', function(){
+			$('#korFirstName').val('');
+			$('#korFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			$('#korFirstNameDiv .input__remove-button').removeClass('show');
+			$('#korFirstNameDiv .input__remove-button').addClass('hide');
+			if($('#korFirstName').val() == ""){
+				$('#korFirstNameDiv').removeClass('label-active');
+				$('#errorText2').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	// engLastName
+	$(function(){
+		// input 관련 function
+		$('#engLastName').focus(function(){
+			$('#engLastNameDiv').addClass('label-active');
+			$('#engLastNameDiv div[class="input"]').addClass('is-focus');
+			if($('#engLastName').val() != ""){
+				$('#engLastNameDiv .input__remove-button').removeClass('hide');
+				$('#engLastNameDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#engLastName').keyup(function(){
+			if($('#engLastName').val() == ""){
+				$('#engLastNameDiv .input__remove-button').removeClass('show');
+				$('#engLastNameDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#engLastName').val() != ""){
+				$('#engLastNameDiv div[data-element="form"]').addClass('is-active');
+				$('#engLastNameDiv .input__remove-button').addClass('show');
+				$('#engLastNameDiv .input__remove-button').removeClass('hide');
+				$('#errorText3').css('display','none');
+			}
+		}); //keydown event end
+		$('#engLastName').blur(function(){
+			$('#engLastNameDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#engLastName').val() == ""){
+				$('#engLastNameDiv .input__remove-button').removeClass('show');
+				$('#engLastNameDiv .input__remove-button').addClass('hide');
+				$('#engLastNameDiv').removeClass('label-active');
+				$('#errorText3').css('display','block');
+			}
+			// 유효성검사
+			if(chkEng.test($('#engLastName').val())){
+				$('#errorText3').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('#engLastNameDiv button[data-element="remove"]').on('click', function(){
+			$('#engLastName').val('');
+			$('#engLastNameDiv div[data-element="form"]').removeClass('is-focus');
+			$('#engLastNameDiv .input__remove-button').removeClass('show');
+			$('#engLastNameDiv .input__remove-button').addClass('hide');
+			if($('#engLastName').val() == ""){
+				$('#engLastNameDiv').removeClass('label-active');
+				$('#errorText3').css('display','block');
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	// engFirstName
+	$(function(){
+		// input 관련 function
+		$('#engFirstName').focus(function(){
+			$('#engFirstNameDiv').addClass('label-active');
+			$('#engFirstNameDiv div[class="input"]').addClass('is-focus');
+			if($('#engFirstName').val() != ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#engFirstNameDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#engFirstName').keyup(function(){
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('show');
+				$('#engFirstNameDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#engFirstName').val() != ""){
+				$('#engFirstNameDiv div[data-element="form"]').addClass('is-active');
+				$('#engFirstNameDiv .input__remove-button').addClass('show');
+				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#errorText4').css('display','none');
+			}
+		}); //keydown event end
+		$('#engFirstName').blur(function(){
+			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('show');
+				$('#engFirstNameDiv .input__remove-button').addClass('hide');
+				$('#engFirstNameDiv').removeClass('label-active');
+				$('#errorText4').css('display','block');
+			}
+			// 유효성검사
+			if(chkEng.test($('#engFirstName').val())){
+				$('#errorText4').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('#engFirstNameDiv button[data-element="remove"]').on('click', function(){
+			$('#engFirstName').val('');
+			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			$('#engFirstNameDiv .input__remove-button').removeClass('show');
+			$('#engFirstNameDiv .input__remove-button').addClass('hide');
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv').removeClass('label-active');
+				$('#errorText4').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	
+	
+	// input check alert
 	function joinBtn() {
 		korLastName = document.getElementById('korLastName').value;
 		korFirstName = document.getElementById('korFirstName').value;
@@ -37,6 +270,7 @@
 		// 	document.getElementById('frm').submit();
 	}
 
+	// 모달 내부 동의 동의안함 버튼 function
 	$(function() {
 		$('#inpAgree-All').click(function() {
 			var checked = $('#inpAgree-All').is(':checked');
@@ -83,49 +317,81 @@
 // 			});
 // 		});
 		
-		//modal
+		// modal 관련
+		// 잠시 다른거 먼저 하고 손대기로..
 		$('.agree-wrap__item').click(function(event){
-			event.preventDefault();
-			
+			event.preventDefault(); // 부모창 위로 올려주는거 막으려고 쓴건데 안먹고 있음
 			var target = $(this).attr('data-target');
+			
+			// heml에 class, css 추가
+			$('html').addClass('open-modal open-modal--full');
+			$('html').css({"height":"100%","overflow":"hidden","touch-action":"none"});
+			
+			// body id 변경 subLayoutBody > bookingLayoutBody
+			$('#subLayoutBody').attr('id','bookingLayoutBody');
+			
+			
+// 			$(target).wrap('<div calss="jquery-modal blocker current jquery-modal--full"></div>');
+// 			$('.modal .modal-full .modal-scroll .modal--fixed-multi').css('display','inline-block');
+			
+			//test
+// 			$('.modal').css('max-height', '500px'); 
+// 			$('.modal-header__title').css('position', 'fixed'); 
+// 			$('.button-wrap').css('position', 'fixed'); 
+			
+// 			$('.modal').css('overflow', 'auto'); // x축만 scroll
+// 			$('.open-modal').css('overflow', 'auto'); // 둘다 안됨
+// 			$('.modal-full').css('overflow', 'auto'); // x축만 scroll
+// 			$('.modal-content').css('overflow', 'auto'); // 둘다 안됨
+// 			$('.modal-scroll').css('overflow', 'auto');
+// 			$('.modal-wrapper').css('overflow', 'auto');
+
+// 			$('.modal-wrapper--picker').css('overflow', 'auto');
+// 			$('.modal-full').css('overflow', 'auto');
+// 			$('.modal-full--picker').css('overflow', 'auto');
+// 			$('.modal-header').css('overflow', 'auto');
+
+// 			$('.jquery-modal').css('overflow', 'auto');
+// 			$('.jquery-modal-picker').css('overflow', 'auto');
 			$(target).modal({
 				});
+			$('.jquery-modal').addClass('jquery-modal--full');
 		});
+		
+// 		$('.modal__close').click(function(event){
+// 			event.preventDefault();
+// 			$('div[class="jquery-modal blocker current"]').remove();
+// 		});
 	});
 </script>
-<script>
-
-</script>
 <style>
-.modal {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: rgba(0, 0, 0, 0.8);
-	top: 0;
-	left: 0;
-	display: none;
-}
+/* .modal { */
+/* 	position: absolute; */
+/* 	width: 100%; */
+/* 	height: 100%; */
+/* 	background: rgba(0, 0, 0, 0.8); */
+/* 	top: 0; */
+/* 	left: 0; */
+/* 	display: none; */
+/* } */
 
-.modal_content {
-	width: 400px;
-	height: 200px;
-	background: #fff;
-	border-radius: 10px;
-	position: relative;
-	top: 50%;
-	left: 50%;
-	margin-top: -100px;
-	margin-left: -200px;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 74px 0;
-	line-height: 23px;
-	cursor: pointer;
-	overflow-y: auto;
-}
-
-
+/* .modal_content { */
+/* 	width: 400px; */
+/* 	height: 200px; */
+/* 	background: #fff; */
+/* 	border-radius: 10px; */
+/* 	position: relative; */
+/* 	top: 50%; */
+/* 	left: 50%; */
+/* 	margin-top: -100px; */
+/* 	margin-left: -200px; */
+/* 	text-align: center; */
+/* 	box-sizing: border-box; */
+/* 	padding: 74px 0; */
+/* 	line-height: 23px; */
+/* 	cursor: pointer; */
+/* 	overflow-y: auto; */
+/* } */
 
 .step-ui .page-title-wrap .page-sub-title2 {
 	margin-top: 0;
@@ -167,7 +433,7 @@
 			<main id="main" class="main ">
 
 
-				<form id="frm" name="frm" method="post" action="emailWrite">
+				<form id="frm" name="frm" method="post" action="#">
 					<!-- 이름 -->
 					<div class="page-title-wrap">
 						<div class="page-title">이름 입력</div>
@@ -178,7 +444,7 @@
 
 							<div class="input-row">
 								<div class="input-item">
-									<div id="korLastNameDiv" class="input-box label-active">
+									<div id="korLastNameDiv" class="input-box">
 										<label for="korLastName" class="input__label">성(한글)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
@@ -197,7 +463,7 @@
 								</div>
 								<div class="input__mark"></div>
 								<div class="input-item">
-									<div id="korFirstNameDiv" class="input-box label-active">
+									<div id="korFirstNameDiv" class="input-box">
 										<label for="korFirstName" class="input__label">이름(한글)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
@@ -218,7 +484,7 @@
 
 							<div class="input-row">
 								<div class="input-item">
-									<div class="input-box">
+									<div id="engLastNameDiv" class="input-box">
 										<label for="engLastName" class="input__label">성(영문)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
@@ -235,7 +501,7 @@
 								</div>
 								<div class="input__mark"></div>
 								<div class="input-item">
-									<div class="input-box">
+									<div id="engFirstNameDiv" class="input-box">
 										<label for="engFirstName" class="input__label">이름(영문)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
@@ -268,7 +534,7 @@
 											<div class="eac-input-wrap"
 												style="display: block; position: relative; font-size: 14px;">
 												<input type="email" data-element="email" id="inputEmail1"
-													class="input__text" autocomplete="off"> <span
+													class="input__text" autocomplete="off" placeholder="example@gmail.com"> <span
 													class="email-auto"
 													style="display: block; box-sizing: content-box; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px; left: 0px;"></span>
 												<span class="eac-cval"
