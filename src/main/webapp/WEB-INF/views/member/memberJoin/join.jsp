@@ -44,7 +44,7 @@
 					<div class="container--default pc-30">
 						<div class="icon-link">
 
-							<a href="nameWrite" class="icon-link__item"
+							<a href="joinInfo" class="icon-link__item"
 								data-action="goCtfCheck"> <img
 								src="<c:url value="/resources/images/icon/icon-join-item-01.png" />"
 								alt="" aria-hidden="true"> <span class="icon-link__text">휴대전화

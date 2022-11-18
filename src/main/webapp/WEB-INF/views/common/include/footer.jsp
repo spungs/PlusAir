@@ -312,5 +312,7 @@ $('header.mobile-only h2.header__page-name').text($('#main div.page-title').eq(0
     
     <div class="loading2_dim"></div>
   </div>
+  <!-- sweetAlert2 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </div>
 </html>

@@ -33,6 +33,10 @@
 <script>
 var chkKor = /[^가-힇]$/;
 var chkEng = /[^a-zA-Z]$/;
+var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+var chkId = /^[a-z]+[a-z0-9]{5,19}$/g;
+var chkPw = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 
 	// korLastName
 	$(function(){
@@ -242,31 +246,116 @@ var chkEng = /[^a-zA-Z]$/;
 		}); // 취소버튼 클릭 event end
 	}); // 취소버튼 관련 function end
 	
-	
-	
-	// input check alert
-	function joinBtn() {
-		korLastName = document.getElementById('korLastName').value;
-		korFirstName = document.getElementById('korFirstName').value;
-		engLastName = document.getElementById('engLastName').value;
-		engFirstName = document.getElementById('engFirstName').value;
+	//=======================여기서부터=============================================
+	// 아이디
+	$(function(){
+		// input 관련 function
+		$('#inp-01').focus(function(){
+			$('.inp-01Div').addClass('label-active');
+			$('.inp-01Div div[class="input"]').addClass('is-focus');
+			if($('#inp-01').val() != ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#engFirstNameDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#engFirstName').keyup(function(){
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('show');
+				$('#engFirstNameDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#engFirstName').val() != ""){
+				$('#engFirstNameDiv div[data-element="form"]').addClass('is-active');
+				$('#engFirstNameDiv .input__remove-button').addClass('show');
+				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
+				$('#errorText4').css('display','none');
+			}
+		}); //keydown event end
+		$('#engFirstName').blur(function(){
+			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv .input__remove-button').removeClass('show');
+				$('#engFirstNameDiv .input__remove-button').addClass('hide');
+				$('#engFirstNameDiv').removeClass('label-active');
+				$('#errorText4').css('display','block');
+			}
+			// 유효성검사
+			if(chkEng.test($('#engFirstName').val())){
+				$('#errorText4').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
 
-		if (korLastName == "") {
-			alert('성(한글)을 입력해 주세요.\n한글은 5자까지 입력해주세요.')
+	$(function(){
+		// 취소버튼 관련 function
+		$('#engFirstNameDiv button[data-element="remove"]').on('click', function(){
+			$('#engFirstName').val('');
+			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
+			$('#engFirstNameDiv .input__remove-button').removeClass('show');
+			$('#engFirstNameDiv .input__remove-button').addClass('hide');
+			if($('#engFirstName').val() == ""){
+				$('#engFirstNameDiv').removeClass('label-active');
+				$('#errorText4').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	
+	
+	// 회원가입 버튼 클릭 시 input check alert
+	function joinBtn() {
+		// 성(한글)
+		if ($('#korLastName').val() == "" || chkKor.test($('#korLastName').val())) {
+			$("#korLastName").focus();
+			Swal.fire({
+				text:'성(한글)을 입력해 주세요.\n한글은 5자까지 입력해주세요.'
+			})
 			return;
 		}
-		if (korFirstName == "") {
-			alert('이름(한글)을 입력해 주세요.\n한글은 15자까지 입력해주세요.')
+		// 이름(한글)
+		if ($('#korFirstName').val() == "" || chkKor.test($('#korFirstName').val())) {
+			$("#korFirstName").focus();
+			Swal.fire({
+				text:'이름(한글)을 입력해 주세요.\n한글은 15자까지 입력해주세요.'
+			})
 			return;
 		}
-		if (engLastName == "") {
-			alert('성(영문)을 입력해 주세요.\n영문은 32자까지  입력해주세요.')
+		// 성(영문)
+		if ($('#engLastName').val() == "" || chkEng.test($('#engLastName').val())) {
+			$("#engLastName").focus();
+			Swal.fire({
+				text:'성(영문)을 입력해 주세요.\n영문은 32자까지  입력해주세요.'
+			})
 			return;
 		}
-		if (engFirstName == "") {
-			alert('이름(한글)을 입력해 주세요.\n영문은 32자까지  입력해주세요.')
+		// 이름(한글)
+		if ($('#engFirstName').val() == "" || chkEng.test($('#engFirstName').val())) {
+			$("#engFirstName").focus();
+			Swal.fire({
+				text:'이름(한글)을 입력해 주세요.\n영문은 32자까지  입력해주세요.'
+			})
 			return;
 		}
+		// 이메일
+		if ($('#inputEmail1').val() == "") {
+			$('#inputEmail1').focus();
+			Swal.fire({
+				text:'이메일을 확인 해주세요.'
+			})
+			return;
+		}
+		// 인증번호
+		if ($('#inputAuthNum').val() == "") {
+			$('#inputAuthNum').focus();
+			Swal.fire({
+				text:'인증번호를 입력해주세요.'
+			})
+			return;
+		}
+		// 아이디
+		
+		// 비밀번호
+		
+		
 		// 	document.getElementById('frm').submit();
 	}
 
@@ -364,6 +453,47 @@ var chkEng = /[^a-zA-Z]$/;
 // 		});
 	});
 </script>
+
+<!-- 이메일 유효성 검사 및 인증번호 전송 -->
+<script>
+var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+
+	function sendAuth(){
+		var reqData = document.getElementById('inputEmail1').value
+		if(reqData == ""){
+			Swal.fire({
+				text: '이메일을 입력해주세요.'
+				})
+		}
+		else if(!chkEmail.test(reqData)){
+			Swal.fire({
+				text: '이메일을 다시 확인해주세요.'
+				})
+		}
+		else{
+		req = new XMLHttpRequest();
+		req.onreadystatechange = Msg
+		req.open('post', 'sendAuth')
+		req.send(reqData)
+		}
+	}
+	
+	function checkAuth(){		// 인증번호를 확인하는 함수
+		req = new XMLHttpRequest();
+		req.onreadystatechange = Msg
+		req.open('post', 'checkAuth')
+		var reqData = document.getElementById('inputAuthNum').value
+		req.send(reqData)
+	}
+	
+	function Msg(){
+		if (req.readyState == 4 && req.status == 200) {
+			Swal.fire({
+				text: req.responseText
+				})
+		}
+	}
+</script>
 <style>
 /* .modal { */
 /* 	position: absolute; */
@@ -392,6 +522,26 @@ var chkEng = /[^a-zA-Z]$/;
 /* 	cursor: pointer; */
 /* 	overflow-y: auto; */
 /* } */
+
+#authBtn, #authConfirmBtn{
+	position: relative;
+	top: -30px;
+	border-radius: 12px;
+ 	color: white;
+	background-color: #1F50B5;
+	border-color: #1F50B5;
+	
+}
+
+.authConfirmBtn {
+	position: relative;
+	top: -50px !important;
+}
+
+.authNumDiv {
+	position: relative;
+	top: -20px;
+}
 
 .step-ui .page-title-wrap .page-sub-title2 {
 	margin-top: 0;
@@ -546,18 +696,47 @@ var chkEng = /[^a-zA-Z]$/;
 											</button>
 										</div>
 									</div>
-									<p tabindex="0" class="input__error">에러메세지</p>
+									<div align="right"><input type="button" id="authBtn" value="인증번호 전송" onclick="sendAuth()"></div>
+									<div></div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- test -->
+					<div class="section-wrap">
+						<div class="input-wrap input--line">
+							<div class="">
+								<div class="input-item authNumDiv">
+									<label for="inputAuthNum" class="input-label label-top authNumDiv">인증번호
+										<span title="required" class="input__label-asterisk">*</span>
+									</label>
+									<div class="input-box authNumDiv">
+										<div data-element="form" class="input">
+											<div class="eac-input-wrap"
+												style="display: block; position: relative; font-size: 14px;">
+												<input type="text" data-element="authNum" id="inputAuthNum"
+													class="input__text" autocomplete="off"> <span
+													class="authNum-auto"
+													style="display: block; box-sizing: content-box; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px; left: 0px;"></span>
+												<span class="eac-cval"
+													style="visibility: hidden; position: absolute; display: inline-block; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px;"></span>
+											</div>
+										</div>
+									</div>
+									<div align="right"><input type="button" id="authConfirmBtn" class="authConfirmBtn" value="인증번호 확인" onclick="checkAuth()"></div>
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- test -->
 					<!-- //이메일 -->
 					<br>
 					<!-- 아이디,비밀번호 -->
 					<div class="input-wrap input--line">
 						<div class="input-row">
 							<div class="input-item">
-								<div class="input-box">
+								<div class="input-box inp-01Div">
 									<label for="input-01" class="input__label">아이디<span
 										title="required" class="input__label-asterisk">*</span></label>
 									<div data-element="form" class="input">
@@ -587,7 +766,7 @@ var chkEng = /[^a-zA-Z]$/;
 						</div>
 						<div class="input-row input-row--password">
 							<div class="input-item">
-								<div class="input-box">
+								<div class="input-box inp-02Div">
 									<label for="inp-02" class="input__label">비밀번호<span
 										title="required" class="input__label-asterisk">*</span></label>
 									<div data-element="form" class="input">
