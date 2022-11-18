@@ -438,7 +438,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	const adtNum = document.getElementById('adtNum')//어른수 히든태그
 	const chdNum = document.getElementById('chdNum')//소아수 히든태그
 	const infNum = document.getElementById('infNum')//유아수 히든태그
-	const personText = document.getElementById('personText')//인원분류와 명수 텍스트  
+	const perText = document.getElementById('perText')//인원분류와 명수 텍스트  
 	
 	adtNum.value = adtCount
 	chdNum.value = chdCount
@@ -448,7 +448,7 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	console.log(chdNum.value)
 	console.log(infNum.value) */
 	
-	personText.innerHTML="성인 : "+adtCount+" , 소아 : "+chdCount+" , 유아 : "+infCount
+	perText.innerHTML="성인 : "+adtCount+" , 소아 : "+chdCount+" , 유아 : "+infCount
 	customerLayer.style.display = 'none';
 }
 function DatePicker(){//달력 div 오픈 버튼클릭
@@ -842,7 +842,42 @@ function infPlus(){//소아 증가 버튼 이벤트
 	}
 	infCount.value = plusnumber
 }
-
+var req
+function check(){
+	req = new XMLHttpRequest()
+	req.onreadystatechange = changeText
+	req.open('post',"check")
+	var hiddenItemCheck = document.getElementById('hiddenItem').value;
+	var departureDataCheck = document.getElementById('departureData').value;
+	var arrivalDataCheck = document.getElementById('arrivalData').value;
+	var hidYearCheck = document.getElementById('hidYear').value;
+	var hidMonthCheck = document.getElementById('hidMonth').value;
+	var hidDayCheck = document.getElementById('hidDay').value;
+	var hidToYearCheck = document.getElementById('hidToYear').value;
+	var hidToMonthCheck = document.getElementById('hidToMonth').value;
+	var hidToDayCheck = document.getElementById('hidToDay').value;
+	var BackYearCheck = document.getElementById('BackYear').value;
+	var BackMonthCheck = document.getElementById('BackMonth').value;
+	var BackDayCheck = document.getElementById('BackDay').value;
+	var adtNumCheck = document.getElementById('adtNum').value;
+	var chdNumCheck = document.getElementById('chdNum').value;
+	var infNumCheck = document.getElementById('infNum').value;
+	var reqData = {hiddenItem:hiddenItemCheck,departureData:departureDataCheck,arrivalData:arrivalDataCheck,hidYear:hidYearCheck,hidMonth:hidMonthCheck,hidDay:hidDayCheck,hidToYear:hidToYearCheck,
+			hidToMonth:hidToMonthCheck,hidToDay:hidToDayCheck,BackYear:BackYearCheck,BackMonth:BackMonthCheck,BackDay:BackDayCheck,adtNum:adtNumCheck,chdNum:chdNumCheck,infNum:infNumCheck}
+	reqData = JSON.stringify(reqData)
+	req.setRequestHeader('Content-Type',"application/json; charset=UTF-8")
+	req.send(reqData)
+}
+function changeText(){
+	if(req.readyState == 4 && req.status == 200){
+		if(req.responseText == '여행정보를 정확히 선택해 주세요.'){
+		alert(req.responseText)
+		}else{
+			location.href = req.responseText //url과 파라미터값을 가지고 페이지 이동
+		}
+	}
+	
+}
 </script>
 <%@ include file="../common/include/header.jsp"%>
 	
@@ -1200,25 +1235,11 @@ function infPlus(){//소아 증가 버튼 이벤트
 										<div class="ticketing-row-bot">
 											<div class="ticketing-row-sub">
 												<div class="ticketing-people">
-													<button type="button" class="btn-passengers" id="personText" onclick="person()"><span id="personText" class="txt" >성인1</span></button><!-- 성인1 -->
-												</div>
-												<div class="payment">
-												<div class="payment-head">
-													<div class="payment-tit">결제 방법</div> <!-- 결제 방법 -->
-													<span class="tooltip">
-														<button type="button" class="tooltip__button" data-element="modal_anchor" data-target="#toolTipModalLayer2" data-modal-type="full"></button>	
-													</span>
-												</div>
-												
+													<button type="button" class="btn-passengers" id="personText" onclick="person()"><span id="perText" class="txt" >인원선택</span></button><!-- 성인1 -->
 												</div>
 											</div>
 											<div class="ticketing-row-sub">
 												
-												<div class="g-ticket" style="display: none;">
-													<select class="g-ticket-select" id="selectGifticket"></select>																																												
-													<div class="g-ticket-select nodata" style="display:none;" name="nodataGift">선택 가능한 기프티켓이 없습니다.</div>
-													<a href="/ko/additionalService/service/gifticket.do" target="_blank" class="go-detail" name="nodataGift" style="display:none;">기프티켓 자세히 보기 &gt;</a><!-- 선택 가능한 기프티켓이 없습니다. 기프티켓 자세히 보기  -->													
-												</div>	
 												<form action="datatest" method="post">			
 												<input type="hidden" id="hiddenItem" name="hiddenItem">		
 												<input type="hidden" id="departureData" name="departureData" value="">
@@ -1237,7 +1258,7 @@ function infPlus(){//소아 증가 버튼 이벤트
 												<input type="hidden" id="adtNum" name="adtNum">
 												<input type="hidden" id="chdNum" name="chdNum">
 												<input type="hidden" id="infNum" name="infNum">
-												<button type="submit" id="searchFlight" class="btn-flight-sch-again">항공권 검색</button> <!-- 항공권  검색 -->
+												<button type="button" id="searchFlight" class="btn-flight-sch-again" onclick="check()">항공권 검색</button> <!-- 항공권  검색 -->
 												</form>
 											</div>
 										</div>
