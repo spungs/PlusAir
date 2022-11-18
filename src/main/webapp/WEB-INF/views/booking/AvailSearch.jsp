@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -868,6 +869,7 @@ function check(){
 	var koarCheck = document.getElementById('koar');
 	kodeCheck.value=spanDepartureDesc
 	koarCheck.value=spanArrivalDesc
+	
 	var reqData = {hiddenItem:hiddenItemCheck,departureData:departureDataCheck,arrivalData:arrivalDataCheck,hidYear:hidYearCheck,hidMonth:hidMonthCheck,hidDay:hidDayCheck,hidToYear:hidToYearCheck,
 			hidToMonth:hidToMonthCheck,hidToDay:hidToDayCheck,BackYear:BackYearCheck,BackMonth:BackMonthCheck,BackDay:BackDayCheck,adtNum:adtNumCheck,chdNum:chdNumCheck,infNum:infNumCheck,kode:kodeCheck.value,koar:koarCheck.value}
 	reqData = JSON.stringify(reqData)
@@ -897,22 +899,38 @@ function changeText(){
 				<div class="main-ticketing round open">
 					<div class="ticketing-in content-guide">
 						<ul class="ticketing-type">
+						<c:choose>
+							<c:when test="${param.hiddenItem == '왕복'}">
 							<li class="item selected" data-triptype="RT"><input type="hidden" class="HidItem" value="왕복"><a href="#" class="item-btn">왕복</a></li> <!-- 왕복 -->
 							<li class="item" data-triptype="OW"><input type="hidden" class="HidItem" value="편도"><a href="#" class="item-btn">편도</a></li> <!-- 편도 --> 	
+							</c:when>
+							<c:otherwise>
+							<li class="item" data-triptype="RT"><input type="hidden" class="HidItem" value="왕복"><a href="#" class="item-btn">왕복</a></li> <!-- 왕복 -->
+							<li class="item selected" data-triptype="OW"><input type="hidden" class="HidItem" value="편도"><a href="#" class="item-btn">편도</a></li> <!-- 편도 --> 
+							</c:otherwise>
+						</c:choose>
 						</ul>
 						<!-- <input type="hidden" id="test1">
 						<input type="hidden" id="test2"> -->
 						
 						<div class="ticketing-row-top single">
 							<div class="ticketing-target">
-								<button type="button" class="start js-target-pick active" onclick="DepPlace()"><span class="txt" id="spanDepartureDesc">출발지</span></button> <!-- 출발지 -->	
+								<button type="button" class="start js-target-pick active" onclick="DepPlace()"><span class="txt" id="spanDepartureDesc">${param.kode}</span></button> <!-- 출발지 -->	
 								
-								<button type="button" class="target js-target-pick active" onclick="AriPlace()"><span class="txt" id="spanArrivalDesc">도착지</span></button> <!-- 도착지 -->
+								<button type="button" class="target js-target-pick active" onclick="AriPlace()"><span class="txt" id="spanArrivalDesc">${param.koar}</span></button> <!-- 도착지 -->
 								
 								<button type="button" class="btn-open js-target-pick" data-route="DEP" id="btnExchangeRoute1"><span class="blind">열기</span></button> <!--열기-->
 							</div>
-							<div class="ticketing-date">													
-								<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">날짜를 선택해 주세요</span></button>								
+							<div class="ticketing-date">
+							<c:choose>
+								<c:when test="${param.hiddenItem == '편도'}">
+									<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">${param.hidYear}.${param.hidMonth}.${param.hidDay}</span></button>	
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn-date" id="btnDatePicker" onclick="DatePicker()"><span class="txt" id="DepartureDate">${param.hidYear}.${param.hidMonth}.${param.hidDay} ~ ${param.BackYear}.${param.BackMonth}.${param.BackDay}</span></button>
+								</c:otherwise>
+							</c:choose>													
+															
 								
 							</div>				
 						</div>		
@@ -1241,31 +1259,31 @@ function changeText(){
 										<div class="ticketing-row-bot">
 											<div class="ticketing-row-sub">
 												<div class="ticketing-people">
-													<button type="button" class="btn-passengers" id="personText" onclick="person()"><span id="perText" class="txt" >인원선택</span></button><!-- 성인1 -->
+													<button type="button" class="btn-passengers" id="personText" onclick="person()"><span id="perText" class="txt" >성인 : ${param.adtNum} , 소아 : ${param.chdNum} , 유아 : ${param.infNum}</span></button><!-- 성인1 -->
 												</div>
 											</div>
 											<div class="ticketing-row-sub">
 												
 												<form action="datatest" method="post">			
-												<input type="hidden" id="hiddenItem" name="hiddenItem">		
-												<input type="hidden" id="kode" name="kode">	<!-- 출발지 한국어 -->	
-												<input type="hidden" id="koar" name="koar">	<!-- 도착지 한국어 -->	
-												<input type="hidden" id="departureData" name="departureData" value="">
-												<input type="hidden" id="arrivalData" name="arrivalData">
-												<input type="hidden" id="departureDate" name="departureDate">
-												<input type="hidden" id="arrivalDate" name="arrivalDate">
-												<input type="hidden" id="hidYear" name="hidYear">
-												<input type="hidden" id="hidMonth" name="hidMonth">
-												<input type="hidden" id="hidDay" name="hidDay">
-												<input type="hidden" id="hidToYear" name="hidToYear">
-												<input type="hidden" id="hidToMonth" name="hidToMonth">
-												<input type="hidden" id="hidToDay" name="hidToDay">
-												<input type="hidden" id="BackYear" name="BackYear">
-												<input type="hidden" id="BackMonth" name="BackMonth">
-												<input type="hidden" id="BackDay" name="BackDay">
-												<input type="hidden" id="adtNum" name="adtNum">
-												<input type="hidden" id="chdNum" name="chdNum">
-												<input type="hidden" id="infNum" name="infNum">
+												<input type="hidden" id="hiddenItem" name="hiddenItem" value="${param.hiddenItem}">	
+												<input type="hidden" id="kode" name="kode" value="${param.kode}">	<!-- 출발지 한국어 -->	
+												<input type="hidden" id="koar" name="koar" value="${param.koar}">	<!-- 도착지 한국어 -->	
+												<input type="hidden" id="departureData" name="departureData" value="${param.departureData}">
+												<input type="hidden" id="arrivalData" name="arrivalData" value="${param.arrivalData}">
+												<input type="hidden" id="departureDate" name="departureDate" value="${param.departureDate}">
+												<input type="hidden" id="arrivalDate" name="arrivalDate" value="${param.arrivalDate}">
+												<input type="hidden" id="hidYear" name="hidYear" value="${param.hidYear}">
+												<input type="hidden" id="hidMonth" name="hidMonth" value="${param.hidMonth}">
+												<input type="hidden" id="hidDay" name="hidDay" value="${param.hidDay}">
+												<input type="hidden" id="hidToYear" name="hidToYear" value="${param.hidToYear}">
+												<input type="hidden" id="hidToMonth" name="hidToMonth" value="${param.hidToMonth}">
+												<input type="hidden" id="hidToDay" name="hidToDay" value="${param.hidToDay}">
+												<input type="hidden" id="BackYear" name="BackYear" value="${param.BackYear}">
+												<input type="hidden" id="BackMonth" name="BackMonth" value="${param.BackMonth}">
+												<input type="hidden" id="BackDay" name="BackDay" value="${param.BackDay}">
+												<input type="hidden" id="adtNum" name="adtNum" value="${param.adtNum}">
+												<input type="hidden" id="chdNum" name="chdNum" value="${param.chdNum}">
+												<input type="hidden" id="infNum" name="infNum" value="${param.infNum}">
 												<button type="button" id="searchFlight" class="btn-flight-sch-again" onclick="check()">항공권 검색</button> <!-- 항공권  검색 -->
 												</form>
 												
@@ -1277,4 +1295,107 @@ function changeText(){
 				
 		</div>
 		<!-- </form> -->
+		<div class="ticket-pare" name="DEP_area">
+			<div class="content-guide">
+				<div class="filter-row">
+					<div class="filter-row-sub">
+						<div class="select-wrap type01">
+							<select title="정렬방식 선택" class="select-wrap__select" name="selSort"><!-- 정렬방식 선택 -->
+								<option value="byDepTime" selected="">출발시간순</option><!-- 출발시간순 -->
+								<option value="byPrice">최저가순</option><!-- 최저가순 -->							
+							</select>
+		                </div>
+		            </div>					
+				</div>
+				<div class="finish-item-wrap" style="display:none;" id="DEP_empty">
+					<div class="finish-item">
+						<div class="finish-item__img"><img src="/images/icon/icon-result-none.png" alt=""></div>					
+						<p class="finish-item__title">조건에 맞는 <br class="mobile-only">항공편이 없습니다.</p><!--조건에 맞는 <br class="mobile-only">항공편이 없습니다. -->
+						<p class="finish-item__text">조건을 바꿔서 다시 검색해 주세요.</p><!-- 조건을 바꿔서 다시 검색해 주세요. -->
+					</div>
+				</div>
+				<ul class="fare-list">
+					<li class="list-item">
+							<div class="list-summary">				
+								<div class="head">														
+									<span class="tk-num">7C1602</span>
+										<div class="chips"><span class="chip lowest">최저가</span></div>
+									<ul class="util-menu">
+										<li class="util-menu-item">
+										<button type="button" aria-label="share" data-element="sns_share" class="util-menu-btn share" onclick="shareMyFavorites(this);"><span class="blind">공유</span></button>
+										</li><!-- 공유 -->
+										<li class="util-menu-item"><button type="button" onclick="javascript:insertFlightFavorites(this);" class="util-menu-btn wish"><span class="blind">찜하기</span></button></li><!--찜하기-->
+											</ul>
+								</div>
+								<div class="time">									
+									<span class="time-num start" data-gmt="202212160210">11:10</span>										
+									<span class="moving-time">1시간50분</span>							
+									<span class="time-num target" data-landingdate="2022-12-16">
+									13:00</span>									
+								</div>
+							</div>
+							<div class="fare-pare-tab">																										
+							<a href="#" class="tab-btn sold-out">
+								<div class="tab-btn-in">
+									<span class="grade fly">FLY</span>				
+									<span class="price"><strong class="point">마감</strong></span><!-- 매진 -->
+								</div>									
+							</a>
+							<a href="#" class="tab-btn grade-bag">
+								<div class="tab-btn-in">																																			
+									<span class="grade fly-bag">FLYBAG</span>																							
+									<span class="price">
+									<strong class="point">
+									<span class="price_txt">179,000</span>
+									<span class="unit">원</span></strong>															
+									</span>																		
+									<span class="remaining-seat">
+										1석</span>
+								</div>
+							</a>																																																																												
+							<a href="#" class="tab-btn sold-out">
+								<div class="tab-btn-in">
+									<span class="grade new-class">BIZ LITE</span>				
+									<span class="price"><strong class="point">마감</strong></span><!-- 매진 -->
+								</div>									
+							</a>
+							</div>								
+							<div class="grade-info fly-bag" style="">								
+								<ul class="rules">
+									<li class="rules-item">
+									<a href="#" class="rules-btn" data-element="modal_anchor" data-target="#fareRuleLayer" data-modal-type="full" data-databind="Y" onclick="javascript:openFareRule(this , 'DEP');">운임 및 수수료 규정</a><!-- 운임 및 수수료 규정 -->									
+									</li><!--20210608 버튼명 변경-->								
+								</ul>
+								<div class="grade-info-sub">
+									<ul class="benefit-list"><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png">기내수하물 10KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png">위탁수하물 15KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/hpgg/resources/images/ticketing/icon_point.png">리프레시 포인트 8,950P 적립</li></ul>
+									<p class="caution">FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요?</p><!-- FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요? -->
+									<a href="#none" class="btn-upgrade" onclick="javascript:upgradeFare(this);">FLYBAG으로 업그레이드 하기</a><!-- FLYBAG으로 업그레이드 하기 -->
+								</div>					
+							</div>
+						</li>
+					</ul>
+				
+			</div>
+			<input type="hidden" name="depLowestFareIdx" id="depLowestFareIdx" value="0">
+			<input type="hidden" name="currencyCode" id="currencyCode" value="KRW">
+			<input type="hidden" name="currencyCodeaaa" id="currencyCodeaaa" value="KRW">
+		</div>
+		<div class="booking-sticky booking-sticky--reservation" data-element="toggle" style="" data-options="{&quot;mode&quot;: &quot;slide&quot;}" id="divBottom">
+			<div class="reservation-container">
+				<div class="booking-sticky__top">
+					<div class="toggle-wrap toggle-wrap--button">									
+						<div class="label">
+							<span>예상 결제금액</span><!-- 예상 결제금액--> 
+						</div>									
+						<button type="button" class="summary" data-element="toggle__anchor" aria-controls="toggle-4" aria-expanded="false" id="btnTotAmount">
+							<span class="price_txt">244,800</span>
+							<span class="unit">원</span>
+						</button>				
+					</div>		
+					<button type="button" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
+						<span class="button__text">오는 편 선택하기</span><!--오는 편 선택하기 -->
+					</button>	
+				</div>
+			</div>
+		</div>
 		<%@ include file="../common/include/footer.jsp"%>

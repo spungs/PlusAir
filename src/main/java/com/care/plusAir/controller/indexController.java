@@ -3,6 +3,7 @@ package com.care.plusAir.controller;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,7 @@ public class indexController {
 //	}
 	@ResponseBody
 	@PostMapping(value="check",produces = "application/json; charset=UTF-8")
-	public String dataCheck(@RequestBody HashMap<String,String> map) {
+	public String dataCheck(@RequestBody HashMap<String,String> map,Model model) {//ArraylList값을 담아서 보낼 모델
 		System.out.println("운행정보 : " + map.get("hiddenItem"));
 		System.out.println("출발지 : " + map.get("departureData"));
 		System.out.println("도착지 : " + map.get("arrivalData"));
@@ -56,12 +57,23 @@ public class indexController {
 		System.out.println("어른 수 : " + map.get("adtNum"));
 		System.out.println("소아 수 : " + map.get("chdNum"));
 		System.out.println("유아 수 : " + map.get("infNum"));
+		System.out.println("출발지 한국어 : " + map.get("kode"));
+		System.out.println("도착지 한국어 : " + map.get("koar"));
+		
 		if(map.get("hiddenItem").isEmpty() || map.get("departureData").isEmpty() || map.get("hidYear").isEmpty()  || map.get("hidMonth").isEmpty() || 
 				map.get("hidDay").isEmpty() || map.get("hidYear").isEmpty() || map.get("hidMonth").isEmpty() || map.get("hidDay").isEmpty() || map.get("adtNum").isEmpty()) {
 			return "여행정보를 정확히 선택해 주세요.";
 		}
 		//service로가서 데이터 가공
 		String a = "오잉";//가공된 데이터
-		return "test?param=" + a;//가공된 데이터를  url에 파라미터로 담아 보냄
+		return "AvailSearch?hiddenItem=" + map.get("hiddenItem") +"&kode="+map.get("kode")+"&koar="+map.get("koar")
+		+ "&departureData=" + map.get("departureData") + "&arrivalData=" + map.get("arrivalData") + "&hidYear=" + map.get("hidYear") + "&hidMonth="+ map.get("hidMonth") 
+		+ "&hidDay=" + map.get("hidDay") + "&hidToYear=" +map.get("hidToYear") + "&hidToMonth=" + map.get("hidToMonth") + "&hidToDay=" + map.get("hidToDay") 
+		+ "&BackYear="+map.get("BackYear") + "&BackMonth=" + map.get("BackMonth") + "&BackDay=" + map.get("BackDay")
+		+ "&adtNum=" + map.get("adtNum") + "&chdNum=" + map.get("chdNum") + "&infNum=" + map.get("infNum");//가공된 데이터를  url에 파라미터로 담아 보냄
+	}
+	@GetMapping("AvailSearch")
+	public String AvailSearch() {
+		return "booking/AvailSearch";
 	}
 }
