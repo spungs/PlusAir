@@ -3,13 +3,16 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko" class="">
+<!-- 인증상태 default session -->
+<% session.setAttribute("authStatus", false); %>
+
 <!-- Jquery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- //Jquery -->
 <!-- modal -->
 <!-- Jquery 선언인데 위에껄로 사용하므로 주석처리 -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> -->
-<!-- Jquery에서 modal 메서드를 사용하기 위한 라이브러리 -->
+<!-- Jquery에서 modal메서드를 사용하기 위한 라이브러리 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <!-- modal창 CSS -->
 <style>
@@ -31,12 +34,12 @@
 </style>
 <!-- //modal -->
 <script>
-var chkKor = /[^가-힇]$/;
-var chkEng = /[^a-zA-Z]$/;
+var chkKor = /[^가-힇]/;
+var chkEng = /[^a-zA-Z]/;
 var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-var chkId = /^[a-z]+[a-z0-9]{5,19}$/g;
-var chkPw = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
-var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+var chkId = /^[a-z]+[a-z0-9]{5,}/;
+var chkPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@$%^&*~])[A-Za-z\d!@$%^&*~]{8,16}$/;
+var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 
 	// korLastName
 	$(function(){
@@ -60,6 +63,10 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#korLastNameDiv .input__remove-button').removeClass('hide');
 				$('#errorText1').css('display','none');
 			}
+			// 유효성검사
+			if(chkKor.test($('#korLastName').val())){
+				$('#errorText1').css('display','block');
+			}
 		}); //keydown event end
 		$('#korLastName').blur(function(){
 			$('#korLastNameDiv div[data-element="form"]').removeClass('is-focus');
@@ -67,10 +74,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#korLastNameDiv .input__remove-button').removeClass('show');
 				$('#korLastNameDiv .input__remove-button').addClass('hide');
 				$('#korLastNameDiv').removeClass('label-active');
-				$('#errorText1').css('display','block');
-			}
-			// 유효성검사
-			if(chkKor.test($('#korLastName').val())){
 				$('#errorText1').css('display','block');
 			}
 		}); //blur event end
@@ -112,6 +115,10 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#korFirstNameDiv .input__remove-button').removeClass('hide');
 				$('#errorText2').css('display','none');
 			}
+			// 유효성검사
+			if(chkKor.test($('#korFirstName').val())){
+				$('#errorText2').css('display','block');
+			}
 		}); //keydown event end
 		$('#korFirstName').blur(function(){
 			$('#korFirstNameDiv div[data-element="form"]').removeClass('is-focus');
@@ -119,10 +126,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#korFirstNameDiv .input__remove-button').removeClass('show');
 				$('#korFirstNameDiv .input__remove-button').addClass('hide');
 				$('#korFirstNameDiv').removeClass('label-active');
-				$('#errorText2').css('display','block');
-			}
-			// 유효성검사
-			if(chkKor.test($('#korFirstName').val())){
 				$('#errorText2').css('display','block');
 			}
 		}); //blur event end
@@ -164,6 +167,10 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#engLastNameDiv .input__remove-button').removeClass('hide');
 				$('#errorText3').css('display','none');
 			}
+			// 유효성검사
+			if(chkEng.test($('#engLastName').val())){
+				$('#errorText3').css('display','block');
+			}
 		}); //keydown event end
 		$('#engLastName').blur(function(){
 			$('#engLastNameDiv div[data-element="form"]').removeClass('is-focus');
@@ -171,10 +178,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#engLastNameDiv .input__remove-button').removeClass('show');
 				$('#engLastNameDiv .input__remove-button').addClass('hide');
 				$('#engLastNameDiv').removeClass('label-active');
-				$('#errorText3').css('display','block');
-			}
-			// 유효성검사
-			if(chkEng.test($('#engLastName').val())){
 				$('#errorText3').css('display','block');
 			}
 		}); //blur event end
@@ -216,6 +219,10 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
 				$('#errorText4').css('display','none');
 			}
+			// 유효성검사
+			if(chkEng.test($('#engFirstName').val())){
+				$('#errorText4').css('display','block');
+			}
 		}); //keydown event end
 		$('#engFirstName').blur(function(){
 			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
@@ -223,10 +230,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 				$('#engFirstNameDiv .input__remove-button').removeClass('show');
 				$('#engFirstNameDiv .input__remove-button').addClass('hide');
 				$('#engFirstNameDiv').removeClass('label-active');
-				$('#errorText4').css('display','block');
-			}
-			// 유효성검사
-			if(chkEng.test($('#engFirstName').val())){
 				$('#errorText4').css('display','block');
 			}
 		}); //blur event end
@@ -246,7 +249,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 		}); // 취소버튼 클릭 event end
 	}); // 취소버튼 관련 function end
 	
-	//=======================여기서부터=============================================
 	// 아이디
 	$(function(){
 		// input 관련 function
@@ -254,53 +256,186 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 			$('.inp-01Div').addClass('label-active');
 			$('.inp-01Div div[class="input"]').addClass('is-focus');
 			if($('#inp-01').val() != ""){
-				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
-				$('#engFirstNameDiv .input__remove-button').addClass('show');
+				$('.inp-01Div .input__remove-button').removeClass('hide');
+				$('.inp-01Div .input__remove-button').addClass('show');
 			}
 		}); //click event end
-		$('#engFirstName').keyup(function(){
-			if($('#engFirstName').val() == ""){
-				$('#engFirstNameDiv .input__remove-button').removeClass('show');
-				$('#engFirstNameDiv .input__remove-button').addClass('hide');
+		$('#inp-01').keyup(function(){
+			//아이디 중복 체크
+			req = new XMLHttpRequest();
+			req.onreadystatechange = changeText
+			req.open('post', 'isExistId')
+			var reqData = $('#inp-01').val()
+			req.send(reqData)
+				
+			function changeText() {
+				if (req.readyState == 4 && req.status == 200) {
+					console.log(req.responseText)
+					if(req.responseText == "중복 아이디"){
+					$('#txtIdChk2').css('display','none');
+					$('#txtIdChk1').css('display','block');
+					}
+					else
+						$('#txtIdChk1').css('display','none');
+				}
 			}
-			else if($('#engFirstName').val() != ""){
-				$('#engFirstNameDiv div[data-element="form"]').addClass('is-active');
-				$('#engFirstNameDiv .input__remove-button').addClass('show');
-				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
-				$('#errorText4').css('display','none');
+			
+			if($('#inp-01').val() == ""){
+				$('.inp-01Div .input__remove-button').removeClass('show');
+				$('.inp-01Div .input__remove-button').addClass('hide');
 			}
-		}); //keydown event end
-		$('#engFirstName').blur(function(){
-			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
-			if($('#engFirstName').val() == ""){
-				$('#engFirstNameDiv .input__remove-button').removeClass('show');
-				$('#engFirstNameDiv .input__remove-button').addClass('hide');
-				$('#engFirstNameDiv').removeClass('label-active');
-				$('#errorText4').css('display','block');
+			else if($('#inp-01').val() != ""){
+				$('.inp-01Div div[data-element="form"]').addClass('is-active');
+				$('.inp-01Div .input__remove-button').addClass('show');
+				$('.inp-01Div .input__remove-button').removeClass('hide');
+				$('#txtIdChk2').css('display','none');
 			}
 			// 유효성검사
-			if(chkEng.test($('#engFirstName').val())){
-				$('#errorText4').css('display','block');
+			if(!chkId.test($('#inp-01').val())){
+				$('#txtIdChk2').css('display','block');
+			}
+		}); //keydown event end
+		$('#inp-01').blur(function(){
+			$('.inp-01Div div[data-element="form"]').removeClass('is-focus');
+			if($('#inp-01').val() == ""){
+				$('.inp-01Div .input__remove-button').removeClass('show');
+				$('.inp-01Div .input__remove-button').addClass('hide');
+				$('.inp-01Div').removeClass('label-active');
+				$('#txtIdChk2').css('display','block');
 			}
 		}); //blur event end
 	}); // input 관련 function end
 
 	$(function(){
 		// 취소버튼 관련 function
-		$('#engFirstNameDiv button[data-element="remove"]').on('click', function(){
-			$('#engFirstName').val('');
-			$('#engFirstNameDiv div[data-element="form"]').removeClass('is-focus');
-			$('#engFirstNameDiv .input__remove-button').removeClass('show');
-			$('#engFirstNameDiv .input__remove-button').addClass('hide');
-			if($('#engFirstName').val() == ""){
-				$('#engFirstNameDiv').removeClass('label-active');
-				$('#errorText4').css('display','block');				
+		$('.inp-01Div button[data-element="remove"]').on('click', function(){
+			$('#inp-01').val('');
+			$('.inp-01Div div[data-element="form"]').removeClass('is-focus');
+			$('.inp-01Div .input__remove-button').removeClass('show');
+			$('.inp-01Div .input__remove-button').addClass('hide');
+			if($('#inp-01').val() == ""){
+				$('.inp-01Div').removeClass('label-active');
+				$('#txtIdChk2').css('display','block');				
 			}
 		}); // 취소버튼 클릭 event end
 	}); // 취소버튼 관련 function end
 	
+	// 비밀번호
+	$(function(){
+		// input 관련 function
+		$('#inp-02').focus(function(){
+			$('.inp-02Div').addClass('label-active');
+			$('.inp-02Div div[class="input"]').addClass('is-focus');
+			if($('#inp-02').val() != ""){
+				$('.inp-02Div .input__remove-button').removeClass('hide');
+				$('.inp-02Div .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#inp-02').keyup(function(){
+			if($('#inp-02').val() == ""){
+				$('.inp-02Div .input__remove-button').removeClass('show');
+				$('.inp-02Div .input__remove-button').addClass('hide');
+			}
+			else if($('#inp-02').val() != ""){
+				$('.inp-02Div div[data-element="form"]').addClass('is-active');
+				$('.inp-02Div .input__remove-button').addClass('show');
+				$('.inp-02Div .input__remove-button').removeClass('hide');
+				$('#txtPwChk1').css('display','none');
+			}
+			// 유효성검사
+			if(!chkPw.test($('#inp-02').val())){
+				$('#txtPwChk1').css('display','block');
+			}
+		}); //keydown event end
+		$('#inp-02').blur(function(){
+			$('.inp-02Div div[data-element="form"]').removeClass('is-focus');
+			if($('#inp-02').val() == ""){
+				$('.inp-02Div .input__remove-button').removeClass('show');
+				$('.inp-02Div .input__remove-button').addClass('hide');
+				$('.inp-02Div').removeClass('label-active');
+				$('#txtPwChk1').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('.inp-02Div button[data-element="remove"]').on('click', function(){
+			$('#inp-02').val('');
+			$('.inp-02Div div[data-element="form"]').removeClass('is-focus');
+			$('.inp-02Div .input__remove-button').removeClass('show');
+			$('.inp-02Div .input__remove-button').addClass('hide');
+			if($('#inp-02').val() == ""){
+				$('.inp-02Div').removeClass('label-active');
+				$('#txtPwChk1').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+	}); // 취소버튼 관련 function end
+	
+	//=======================여기서부터=============================================
+	// 비밀번호 확인
+	$(function(){
+		// input 관련 function
+		$('#inp-03').focus(function(){
+			$('.inp-03Div').addClass('label-active');
+			$('.inp-03Div div[class="input"]').addClass('is-focus');
+			if($('#inp-03').val() != ""){
+				$('.inp-03Div .input__remove-button').removeClass('hide');
+				$('.inp-03Div .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#inp-03').keyup(function(){
+			if($('#inp-03').val() == ""){
+				$('.inp-03Div .input__remove-button').removeClass('show');
+				$('.inp-03Div .input__remove-button').addClass('hide');
+			}
+			else if($('#inp-03').val() != ""){
+				$('.inp-03Div div[data-element="form"]').addClass('is-active');
+				$('.inp-03Div .input__remove-button').addClass('show');
+				$('.inp-03Div .input__remove-button').removeClass('hide');
+				$('#txtPwChk2').css('display','none');
+			}
+			// 유효성검사
+			if($('#inp-03').val() != $('#inp-03').val()){
+				$('#txtPwChk2').css('display','block');
+			}
+		}); //keydown event end
+		$('#inp-03').blur(function(){
+			$('.inp-03Div div[data-element="form"]').removeClass('is-focus');
+			if($('#inp-03').val() == ""){
+				$('.inp-03Div .input__remove-button').removeClass('show');
+				$('.inp-03Div .input__remove-button').addClass('hide');
+				$('.inp-03Div').removeClass('label-active');
+				$('#txtPwChk2').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('.inp-03Div button[data-element="remove"]').on('click', function(){
+			$('#inp-03').val('');
+			$('.inp-03Div div[data-element="form"]').removeClass('is-focus');
+			$('.inp-03Div .input__remove-button').removeClass('show');
+			$('.inp-03Div .input__remove-button').addClass('hide');
+			if($('#inp-03').val() == ""){
+				$('.inp-03Div').removeClass('label-active');
+				$('#txtPwChk2').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
+		// 눈동자 버튼
+		$('.input__show-button').click(function(){
+			//===============버튼 눌릴때마다 속성 조회해서 add remove class 해주면됨
+			if($('.inp-03Div div[data-check="1"]'))
+			$('.inp-03Div div[data-element="form"]').addClass('show-password');
+			$('.inp-03Div div[data-element="form"]').attr('data-check','1');
+			$('#inp-03').prop("type", "text");
+
+		});		
+	}); // 취소버튼 관련 function end
 	
 	
+	//=======================회원가입 버튼===========================
 	// 회원가입 버튼 클릭 시 input check alert
 	function joinBtn() {
 		// 성(한글)
@@ -351,12 +486,24 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
 			})
 			return;
 		}
-		// 아이디
-		
+		// 아이디 
+		if ($('#inp-01').val() == "") {
+			$('#inp-01').focus();
+			Swal.fire({
+				text:'아이디를 입력해주세요.'
+			})
+			return;
+		}
 		// 비밀번호
+		if ($('#inp-02').val() == "") {
+			$('#inp-02').focus();
+			Swal.fire({
+				text:'비밀번호를 입력해주세요.'
+			})
+			return;
+		}
 		
-		
-		// 	document.getElementById('frm').submit();
+		document.getElementById('frm').submit();
 	}
 
 	// 모달 내부 동의 동의안함 버튼 function
@@ -583,7 +730,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			<main id="main" class="main ">
 
 
-				<form id="frm" name="frm" method="post" action="#">
+				<form id="frm" name="frm" method="post" action="member/memberJoin/joinComplete">
 					<!-- 이름 -->
 					<div class="page-title-wrap">
 						<div class="page-title">이름 입력</div>
@@ -598,7 +745,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<label for="korLastName" class="input__label">성(한글)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
-											<input type="text" data-element="input" id="korLastName"
+											<input type="text" data-element="input" id="korLastName" value="${member.korLastName}"
 												name="korLastName" class="input__text" maxlength="5">
 											<button type="button" data-element="remove"
 												class="input__remove-button">
@@ -617,7 +764,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<label for="korFirstName" class="input__label">이름(한글)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
-											<input type="text" data-element="input" id="korFirstName"
+											<input type="text" data-element="input" id="korFirstName" value="${member.korFirstName}"
 												name="korFirstName" class="input__text" maxlength="15">
 											<button type="button" data-element="remove"
 												class="input__remove-button">
@@ -638,7 +785,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<label for="engLastName" class="input__label">성(영문)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
-											<input type="text" data-element="input" id="engLastName"
+											<input type="text" data-element="input" id="engLastName"  value="${member.engLastName}"
 												name="engLastName" class="input__text" maxlength="32">
 											<button type="button" data-element="remove"
 												class="input__remove-button">
@@ -655,7 +802,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<label for="engFirstName" class="input__label">이름(영문)<span
 											title="required" class="input__label-asterisk">*</span></label>
 										<div data-element="form" class="input">
-											<input type="text" data-element="input" id="engFirstName"
+											<input type="text" data-element="input" id="engFirstName" value="${member.engFirstName}"
 												name="engFirstName" class="input__text" maxlength="32">
 											<button type="button" data-element="remove"
 												class="input__remove-button">
@@ -683,7 +830,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<div data-element="form" class="input">
 											<div class="eac-input-wrap"
 												style="display: block; position: relative; font-size: 14px;">
-												<input type="email" data-element="email" id="inputEmail1"
+												<input type="email" data-element="email" id="inputEmail1" value="${member.inputEmail1}"
 													class="input__text" autocomplete="off" placeholder="example@gmail.com"> <span
 													class="email-auto"
 													style="display: block; box-sizing: content-box; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px; left: 0px;"></span>
@@ -715,7 +862,9 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 											<div class="eac-input-wrap"
 												style="display: block; position: relative; font-size: 14px;">
 												<input type="text" data-element="authNum" id="inputAuthNum"
-													class="input__text" autocomplete="off"> <span
+													class="input__text" autocomplete="off"> 
+													<input type="hidden" id="auth">
+													<span
 													class="authNum-auto"
 													style="display: block; box-sizing: content-box; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px; left: 0px;"></span>
 												<span class="eac-cval"
@@ -754,12 +903,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
 
 								<p tabindex="0" class="input__error" id="txtIdChk2"
-									style="display: none;">영문 소문자와 숫자 6자 이상을 조합해 주세요.</p>
-
-
-
-								<p tabindex="0" class="input__error" id="txtIdChk3"
-									style="display: none;">탈퇴 이력이 있는 아이디로 사용할 수 없습니다.</p>
+									style="display: none;">영문 소문자와 숫자 6자 이상을 조합해 주세요. (﻿※ 영문 소문자로 시작)</p>
 
 								<!-- //에러메세지 노출 텍스트 -->
 							</div>
@@ -779,37 +923,21 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 											class="input__show-button" aria-label="비밀번호 보기"></button>
 									</div>
 								</div>
-								<p class="input__sub-text">영문/숫자/특수문자 중 2가지 이상 조합하여 8~20자로
-									입력해 주세요.</p>
-								<!--20210519 문구 수정-->
+								<p class="input__sub-text">영문/숫자/특수문자 중 2가지 이상 조합하여 8~16자로
+									입력해 주세요.
+									(사용 가능한 특수문자 : !, @, $, %, ^, &amp;,
+									*, ~)</p>
 								<!-- 에러메세지 노출 텍스트 -->
 								<!-- 6자 이상 미입력 or 문자/숫자 각 1글자 미포함 시 -->
 								<p class="input__error" tabindex="0" id="txtPwChk1"
-									style="display: none;">영문/숫자/특수문자 중 2가지 이상 조합하여 8~20자로 입력해
-									주세요.</p>
+									style="display: none;">조합에 맞게 입력해주세요.</p>
 								<!-- //6자 이상 미입력 or 문자/숫자 각 1글자 미포함 시 -->
-
-								<!-- 3자 이상의 반복, 연속된 문자 or 숫자 입력 시-->
-								<p class="input__error" tabindex="0" id="txtPwChk2"
-									style="display: none;">반복되거나 연속된 문자/숫자는 사용할 수 없습니다.</p>
-								<!--  //3자 이상의 반복, 연속된 문자 or 숫자 입력 시 -->
-
-								<!-- 아이디와 4자 이상 동일한 문자 or 숫자 입력 시 -->
-								<p class="input__error" tabindex="0" id="txtPwChk3"
-									style="display: none;">아이디를 일부 포함한 비밀번호는 사용할 수 없습니다.</p>
-								<!--//아이디와 4자 이상 동일한 문자 or 숫자 입력 시 -->
-
-								<!-- 사용 불가능한 특수문자 입력 시-->
-								<p class="input__error" tabindex="0" id="txtPwChk4"
-									style="display: none;">“사용 가능한 특수문자 : !, @, $, %, ^, &amp;,
-									*, ~”</p>
-								<!--//사용 불가능한 특수문자 입력 시 -->
 								<!-- //에러메세지 노출 텍스트 -->
 							</div>
 						</div>
 						<div class="input-row input-row--password">
 							<div class="input-item">
-								<div class="input-box">
+								<div class="input-box inp-03Div">
 									<label for="inp-03" class="input__label">비밀번호 확인<span
 										title="required" class="input__label-asterisk">*</span></label>
 									<div data-element="form" class="input">
@@ -824,7 +952,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 									</div>
 								</div>
 								<!-- 비밀번호 확인 입력 값과 불일치 시 -->
-								<p tabindex="0" class="input__error" id="txtPwChk5"
+								<p tabindex="0" class="input__error" id="txtPwChk2"
 									style="display: none;">비밀번호가 일치하지 않습니다.</p>
 								<!-- //비밀번호 확인 입력 값과 불일치 시 -->
 							</div>

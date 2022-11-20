@@ -4,16 +4,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.care.plusAir.dto.memberDTO;
+import com.care.plusAir.service.IMemberService;
 import com.care.plusAir.service.MailService;
 
 @Controller
 public class memberController {
 	@Autowired HttpSession session;
+	@Autowired IMemberService service;
 
 	// 회원가입 버튼 클릭 시 회원가입 화면
 	@RequestMapping(value = "member/memberJoin/join")
@@ -47,23 +51,36 @@ public class memberController {
 	// 회원가입에서 인증번호 확인 버튼 클릭 시
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/checkAuth", produces = "text/html; charset=UTF-8")
-	public String checkAuth(@RequestBody(required = false) String inputNum) {
+	public String checkAuth(@RequestBody(required = false) String inputAuthNum) {
 		String authNum = (String) session.getAttribute("authNum");
 
 		session.setAttribute("authStatus", false); // 인증 체크여부 session 처음엔 false
-		if (inputNum == null)
+		if (inputAuthNum == null)
 			return "인증번호를 입력하세요 ";
-		if (inputNum.equals(authNum)) {
+		if (inputAuthNum.equals(authNum)) {
 			session.setAttribute("authStatus", true); // 인증 체크하면 true
 			return "인증 성공";
 		}
 		return "인증번호를 다시 확인해주세요.";
 	}
+	
+	// 회원가입에서 아이디 중복 확인 버튼 클릭 시
+	@ResponseBody
+	@PostMapping(value = "member/memberJoin/isExistId", produces = "text/html; charset=UTF-8")
+	public String isExistId(@RequestBody(required = false) String id) {
+		if(id == null)
+			return "입력해주세요.";
+		return service.isExistId(id);
+	}
 
 	// 회원가입 성공 페이지
 	@RequestMapping(value = "member/memberJoin/joinComplete")
-	public String joinComplete() {
-
+	public String joinComplete(memberDTO member, Model model) {
+		
+		model.addAttribute("member", member);
+		
+		
+		
 		return "member/memberJoin/joinComplete";
 	}
 

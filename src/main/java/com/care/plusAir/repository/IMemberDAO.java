@@ -3,6 +3,7 @@ package com.care.plusAir.repository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class DAO {
+public interface IMemberDAO {
 
+	public int isExistId(String id);
 }
