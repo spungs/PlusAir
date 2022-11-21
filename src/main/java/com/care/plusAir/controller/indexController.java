@@ -1,7 +1,9 @@
 package com.care.plusAir.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.care.plusAir.dto.indexDTO;
+import com.care.plusAir.service.indexService;
+
 @Controller
 public class indexController {
+	@Autowired indexService indexservice;
 	@GetMapping("index")
 	public String index() {
 		return "base/index";
@@ -64,9 +70,7 @@ public class indexController {
 				map.get("hidDay").isEmpty() || map.get("hidYear").isEmpty() || map.get("hidMonth").isEmpty() || map.get("hidDay").isEmpty() || map.get("adtNum").isEmpty()) {
 			return "여행정보를 정확히 선택해 주세요.";
 		}
-		//service로가서 데이터 가공
-		String a = "오잉";//가공된 데이터
-		return "AvailSearch?hiddenItem=" + map.get("hiddenItem") +"&kode="+map.get("kode")+"&koar="+map.get("koar")
+		return "test?hiddenItem=" + map.get("hiddenItem") +"&kode="+map.get("kode")+"&koar="+map.get("koar")
 		+ "&departureData=" + map.get("departureData") + "&arrivalData=" + map.get("arrivalData") + "&hidYear=" + map.get("hidYear") + "&hidMonth="+ map.get("hidMonth") 
 		+ "&hidDay=" + map.get("hidDay") + "&hidToYear=" +map.get("hidToYear") + "&hidToMonth=" + map.get("hidToMonth") + "&hidToDay=" + map.get("hidToDay") 
 		+ "&BackYear="+map.get("BackYear") + "&BackMonth=" + map.get("BackMonth") + "&BackDay=" + map.get("BackDay")
@@ -74,6 +78,12 @@ public class indexController {
 	}
 	@GetMapping("AvailSearch")
 	public String AvailSearch() {
+		return "booking/AvailSearch";
+	}
+	@GetMapping("test")//model에 ArrayList 데이터를담기위해 페이지 이동전에 DB데이터가공하는 곳
+	public String test(Model model) {
+		ArrayList<indexDTO> indexs = indexservice.searchService();//service로가서 데이터 가공
+		model.addAttribute("indexs", indexs);
 		return "booking/AvailSearch";
 	}
 }

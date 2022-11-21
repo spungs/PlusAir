@@ -251,7 +251,10 @@ function DepPlace() {//출발지 검색 버튼 액션
 	  var hiddenItem = document.getElementById('hiddenItem') // 선택된 운행정보 히든 태그
 	  const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	  const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
-	  
+	  var changeRout = document.getElementById('changeRout')//항공권 정보 변경 히든 태그
+	  changeRout.value="CHR" //운행정보가 변경됫다고 알리는 히든태그에 CHR를 넣어 탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭 이벤트 함수 에서 체크함
+	  $('.tab-btn.grade-bag.active').removeClass('active')//탑승(비지니스,퍼스트클래스 등)유형 버튼 액티브를 지워준다
+	  $('.booking-sticky.booking-sticky--reservation').css('display','none');//다음페이지으로 넘어가는 DIV를 숨긴다
 	  hiddenItem.value = HidItem //왕복or편도 를 히든태그에 넣어줌
 	  
 	  if(depAirportLayer.style.display !== 'none') {
@@ -287,6 +290,10 @@ function AriPlace() {//도착지 검색 버튼 함수
 	  const koplace = document.getElementById('koplace');//국내 행성지 div 301번째줄
 	  const ItnPlace = document.getElementById('ItnPlace');//국제 행성지 div 316번째줄
 	  var Dep = document.getElementById('spanDepartureDesc').innerHTML;//출발지 텍스트
+	  var changeRout = document.getElementById('changeRout')//항공권 정보 변경 히든 태그
+	  changeRout.value="CHR"
+	  $('.tab-btn.grade-bag.active').removeClass('active')//탑승(비지니스,퍼스트클래스 등)유형 버튼 액티브를 지워준다
+	  $('.booking-sticky.booking-sticky--reservation').css('display','none');//다음페이지으로 넘어가는 DIV를 숨긴다
 	  
 	  if(AriAirportLayer.style.display !== 'none') {
 		  AriAirportLayer.style.display = 'none';
@@ -440,6 +447,10 @@ function SetPersonProc(){//인원추가후 확인 버튼 클릭
 	const chdNum = document.getElementById('chdNum')//소아수 히든태그
 	const infNum = document.getElementById('infNum')//유아수 히든태그
 	const perText = document.getElementById('perText')//인원분류와 명수 텍스트  
+	var changeRout = document.getElementById('changeRout')//항공권 정보 변경 히든 태그
+	changeRout.value="CHR"
+	$('.tab-btn.grade-bag.active').removeClass('active')//탑승(비지니스,퍼스트클래스 등)유형 버튼 액티브를 지워준다
+	$('.booking-sticky.booking-sticky--reservation').css('display','none');//다음페이지으로 넘어가는 DIV를 숨긴다
 	
 	adtNum.value = adtCount
 	chdNum.value = chdCount
@@ -460,6 +471,10 @@ function DatePicker(){//달력 div 오픈 버튼클릭
 	const DepSetBtn = document.getElementById('DepSetBtn');//출발날짜 결정 버튼 div
 	const BackSetBtn = document.getElementById('BackSetBtn');//돌아올날짜 결정 버튼 div
 	const Ari = document.getElementById('spanArrivalDesc').innerHTML;//도착지 텍스트
+	var changeRout = document.getElementById('changeRout')//항공권 정보 변경 히든 태그
+	changeRout.value="CHR"
+	$('.tab-btn.grade-bag.active').removeClass('active')//탑승(비지니스,퍼스트클래스 등)유형 버튼 액티브를 지워준다
+	$('.booking-sticky.booking-sticky--reservation').css('display','none');//다음페이지으로 넘어가는 DIV를 숨긴다
 	DepartureDate.innerHTML = '날짜를 선택해 주세요.'
 	if(Ari == '도착지'){
 		alert('일정을 먼저 선택해 주세요.')
@@ -620,21 +635,7 @@ function Datesel(currentMonth,i,currentYear){//달력 날짜  div
 			$(this).removeClass('asd')
 		});
 	}
-	/* if(hidToYear == hidYear){
-		if(hidToMonth == hidMonth){
-			if(hidToDay > hidDay){
-				alert('지난 날짜는 선택할수 없습니다.')
-			}
-		}
-	}
-	if(hidToYear == hidYear){
-		if(hidToMonth > hidMonth){
-			alert('지난 날짜는 선택할수 없습니다.')
-		}
-	}
-	if(hidToYear > hidYear){
-		alert('지난 날짜는 선택할수 없습니다.')
-	} */
+	
 }
 function Datesel_2(currentMonth,i,currentYear){//달력 날짜  div
 	
@@ -666,7 +667,7 @@ function DepartureDate(){//출발날자 선택완료 버튼 함수
 	const DepSetBtn = document.getElementById('DepSetBtn');//출발날짜 결정 버튼 div
 	const BackSetBtn = document.getElementById('BackSetBtn');//돌아올날짜 결정 버튼 div
 	var HidItem = $(".item.selected").find('.HidItem').val();//왕복 또는 편도 값이 담겨잇는 히든태그
-	console.log(document.getElementById('hidYear').value)
+	
 	if(HidItem == '편도'){
 		DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay
 		dateLayer.style.display = 'none';
@@ -697,8 +698,7 @@ function ComeBackDate(){
 	console.log(BackYear) 
 	console.log(BackMonth) 
 	console.log(BackDay)  */
-	console.log(hidDay)
-	console.log(BackDay)
+	
 	if(hidMonth == BackMonth){
 		if(hidDay > BackDay){
 			alert('돌아오는 날짜를 정확히 선택해 주세요.')
@@ -727,29 +727,34 @@ $(function(){//왕복 또는 편도 선택
          
        	 $('.item.selected').removeClass('selected')//왕복 또는 편도 선택 selected 클래스명 추가해서 표시함
        	 $(this).addClass('selected')
-         
+        var changeRout = document.getElementById('changeRout')//왕복 또는 편도 정보 변경시 히든태그에 운행정보가 변경됫다고 알리는 히든태그
        	var HidItem = $(".item.selected").find('.HidItem').val(); //선택된 운행정보를 가져옴
        	var hiddenItem = document.getElementById('hiddenItem') // 선택된 운행정보 히든 태그
        	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
        	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
-       	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
-    	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
-    	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
-    	var BackYear = document.getElementById('BackYear').value //출발 년도 히든 태그
-    	var BackMonth = document.getElementById('BackMonth').value // 출발 월 히든 태그
-    	var BackDay = document.getElementById('BackDay').value // 출발 일 히든 태그
-    	hidYear = ''; //왕복 또는 편도로 운행정보를 변경할때마다 출발,돌아올 날짜 히든태그를 초기화시켜준다
-   	 	hidMonth = '';
-   	 	hidDay = '';
-   	 	BackYear = '';
-   	 	BackMonth = '';
-   	 	BackDay = '';
+       	var hidYear = document.getElementById('hidYear') //출발 년도 히든 태그
+    	var hidMonth = document.getElementById('hidMonth') // 출발 월 히든 태그
+    	var hidDay = document.getElementById('hidDay') // 출발 일 히든 태그
+    	var BackYear = document.getElementById('BackYear') //출발 년도 히든 태그
+    	var BackMonth = document.getElementById('BackMonth') // 출발 월 히든 태그
+    	var BackDay = document.getElementById('BackDay') // 출발 일 히든 태그
+    	hidYear.value = ''; //왕복 또는 편도로 운행정보를 변경할때마다 출발,돌아올 날짜 히든태그를 초기화시켜준다
+   	 	hidMonth.value = '';
+   	 	hidDay.value = '';
+   	 	BackYear.value = '';
+   	 	BackMonth.value = '';
+   	 	BackDay.value = '';
+   	    changeRout.value = "CHR"//운행정보가 변경됫다고 알리는 히든태그에 CHR를 넣어 탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭시 이벤트 함수 에서 체크함
    	 	DepartureDate.innerHTML=('출발날짜를 선택해 주세요')
-   	 	
    	 	hiddenItem.value = HidItem //왕복or편도 를 히든태그에 넣어줌
    	 	
    	 	//console.log(HidItem)
-         if(dateLayer.style.display == 'block'){
+	   	if($('.tab-btn.grade-bag').hasClass('active') == true){
+				$('.tab-btn.grade-bag.active').removeClass('active')
+				$('.booking-sticky.booking-sticky--reservation').css('display','none');
+				
+		 }
+	   	else if(dateLayer.style.display == 'block'){
         	 dateLayer.style.display = 'none';
         	 
          }
@@ -843,11 +848,11 @@ function infPlus(){//소아 증가 버튼 이벤트
 	}
 	infCount.value = plusnumber
 }
+//이전까진 index와 공통 js
+
 var req
 function check(){
-	req = new XMLHttpRequest()
-	req.onreadystatechange = changeText
-	req.open('post',"check")
+	
 	var spanDepartureDesc = document.getElementById('spanDepartureDesc').innerHTML//출발지 한국어
 	var spanArrivalDesc = document.getElementById('spanArrivalDesc').innerHTML//도착지 한국어
 	var hiddenItemCheck = document.getElementById('hiddenItem').value;
@@ -867,14 +872,25 @@ function check(){
 	var infNumCheck = document.getElementById('infNum').value;
 	var kodeCheck = document.getElementById('kode');
 	var koarCheck = document.getElementById('koar');
+	var DepartureDate = document.getElementById('DepartureDate').innerHTML;
+	console.log(BackYearCheck)
+	if(DepartureDate == "출발날짜를 선택해 주세요"){
+		alert('날짜를 선택해 주세요.')
+	}
+	else{
 	kodeCheck.value=spanDepartureDesc
 	koarCheck.value=spanArrivalDesc
+	console.log(BackYearCheck)
+	req = new XMLHttpRequest()
+	req.onreadystatechange = changeText
+	req.open('post',"check")
 	
 	var reqData = {hiddenItem:hiddenItemCheck,departureData:departureDataCheck,arrivalData:arrivalDataCheck,hidYear:hidYearCheck,hidMonth:hidMonthCheck,hidDay:hidDayCheck,hidToYear:hidToYearCheck,
 			hidToMonth:hidToMonthCheck,hidToDay:hidToDayCheck,BackYear:BackYearCheck,BackMonth:BackMonthCheck,BackDay:BackDayCheck,adtNum:adtNumCheck,chdNum:chdNumCheck,infNum:infNumCheck,kode:kodeCheck.value,koar:koarCheck.value}
 	reqData = JSON.stringify(reqData)
 	req.setRequestHeader('Content-Type',"application/json; charset=UTF-8")
 	req.send(reqData)
+	}
 }
 function changeText(){
 	if(req.readyState == 4 && req.status == 200){
@@ -886,6 +902,29 @@ function changeText(){
 	}
 	
 }
+
+
+//이후부턴 여기 페이지만의 js
+$(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭시 이벤트
+	$('.tab-btn.grade-bag').on('click',function(){
+		var changeRout = document.getElementById('changeRout')
+		if(changeRout.value == "CHR"){
+			alert('항공권 정보가 변경되었습니다.항공권을 다시 검색해주세요.')
+		}
+		else if($(this).hasClass('active') == true){//내가선택한 버튼에 active가 있다면 지워줌
+			$(this).removeClass('active')
+			$('.booking-sticky.booking-sticky--reservation').css('display','none');
+		}
+		else{
+			$('.tab-btn.grade-bag.active').removeClass('active')//이미 다른 버튼에 active가있다면 다른버튼 active를 지워주고 내가 선택한 버튼에 active만들어줌
+			$(this).addClass('active')
+			$('.booking-sticky.booking-sticky--reservation').css('display','block');
+		}
+	})
+})
+
+
+
 </script>
 <%@ include file="../common/include/header.jsp"%>
 	
@@ -1284,6 +1323,7 @@ function changeText(){
 												<input type="hidden" id="adtNum" name="adtNum" value="${param.adtNum}">
 												<input type="hidden" id="chdNum" name="chdNum" value="${param.chdNum}">
 												<input type="hidden" id="infNum" name="infNum" value="${param.infNum}">
+												<input type="hidden" id="changeRout" name="changeRout" value=""><!--기존에 선택한 왕복or편도 를 변경했을때 이곳에 값을 넣어서 판별할때 쓰임-->
 												<button type="button" id="searchFlight" class="btn-flight-sch-again" onclick="check()">항공권 검색</button> <!-- 항공권  검색 -->
 												</form>
 												
@@ -1295,6 +1335,7 @@ function changeText(){
 				
 		</div>
 		<!-- </form> -->
+		
 		<div class="ticket-pare" name="DEP_area">
 			<div class="content-guide">
 				<div class="filter-row">
@@ -1314,73 +1355,89 @@ function changeText(){
 						<p class="finish-item__text">조건을 바꿔서 다시 검색해 주세요.</p><!-- 조건을 바꿔서 다시 검색해 주세요. -->
 					</div>
 				</div>
+				<c:forEach var="index" items="${indexs}">
 				<ul class="fare-list">
 					<li class="list-item">
-							<div class="list-summary">				
-								<div class="head">														
-									<span class="tk-num">7C1602</span>
-										<div class="chips"><span class="chip lowest">최저가</span></div>
-									<ul class="util-menu">
-										<li class="util-menu-item">
-										<button type="button" aria-label="share" data-element="sns_share" class="util-menu-btn share" onclick="shareMyFavorites(this);"><span class="blind">공유</span></button>
-										</li><!-- 공유 -->
-										<li class="util-menu-item"><button type="button" onclick="javascript:insertFlightFavorites(this);" class="util-menu-btn wish"><span class="blind">찜하기</span></button></li><!--찜하기-->
-											</ul>
-								</div>
-								<div class="time">									
-									<span class="time-num start" data-gmt="202212160210">11:10</span>										
-									<span class="moving-time">1시간50분</span>							
-									<span class="time-num target" data-landingdate="2022-12-16">
-									13:00</span>									
-								</div>
+						<div class="list-summary">				
+							<div class="head">														
+								<span class="tk-num">${index.flightNo}</span>
+									<div class="chips"><span class="chip lowest">최저가</span></div>
+								<ul class="util-menu">
+									<li class="util-menu-item">
+									<button type="button" aria-label="share" data-element="sns_share" class="util-menu-btn share" onclick="shareMyFavorites(this);"><span class="blind">공유</span></button>
+									</li><!-- 공유 -->
+									<li class="util-menu-item"><button type="button" onclick="javascript:insertFlightFavorites(this);" class="util-menu-btn wish"><span class="blind">찜하기</span></button></li><!--찜하기-->
+										</ul>
 							</div>
-							<div class="fare-pare-tab">																										
-							<a href="#" class="tab-btn sold-out">
-								<div class="tab-btn-in">
-									<span class="grade fly">FLY</span>				
-									<span class="price"><strong class="point">마감</strong></span><!-- 매진 -->
-								</div>									
-							</a>
-							<a href="#" class="tab-btn grade-bag">
-								<div class="tab-btn-in">																																			
-									<span class="grade fly-bag">FLYBAG</span>																							
-									<span class="price">
-									<strong class="point">
-									<span class="price_txt">179,000</span>
-									<span class="unit">원</span></strong>															
-									</span>																		
-									<span class="remaining-seat">
-										1석</span>
-								</div>
-							</a>																																																																												
-							<a href="#" class="tab-btn sold-out">
-								<div class="tab-btn-in">
-									<span class="grade new-class">BIZ LITE</span>				
-									<span class="price"><strong class="point">마감</strong></span><!-- 매진 -->
-								</div>									
-							</a>
-							</div>								
-							<div class="grade-info fly-bag" style="">								
-								<ul class="rules">
-									<li class="rules-item">
-									<a href="#" class="rules-btn" data-element="modal_anchor" data-target="#fareRuleLayer" data-modal-type="full" data-databind="Y" onclick="javascript:openFareRule(this , 'DEP');">운임 및 수수료 규정</a><!-- 운임 및 수수료 규정 -->									
-									</li><!--20210608 버튼명 변경-->								
-								</ul>
-								<div class="grade-info-sub">
-									<ul class="benefit-list"><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png">기내수하물 10KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png">위탁수하물 15KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/hpgg/resources/images/ticketing/icon_point.png">리프레시 포인트 8,950P 적립</li></ul>
-									<p class="caution">FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요?</p><!-- FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요? -->
-									<a href="#none" class="btn-upgrade" onclick="javascript:upgradeFare(this);">FLYBAG으로 업그레이드 하기</a><!-- FLYBAG으로 업그레이드 하기 -->
-								</div>					
+							<div class="time">									
+								<span class="time-num start" data-gmt="202212160210">${index.flightDep}</span>										
+								<span class="moving-time">${index.flightTime}</span>							
+								<span class="time-num target" data-landingdate="2022-12-16">
+								${index.flightAri}</span>									
 							</div>
-						</li>
-					</ul>
-				
+						</div>
+						<div class="fare-pare-tab">																										
+						<a href="#" class="tab-btn sold-out">
+							<div class="tab-btn-in">
+								<span class="grade fly">ECONOMY</span>				
+								<span class="price">
+								<strong class="point">
+								<span class="price_txt">125,000</span>
+								<span class="unit">원</span>
+								</strong>
+								</span>
+								<span class="remaining-seat">
+									매진</span>
+							</div>									
+						</a>
+						<a href="#" class="tab-btn grade-bag">
+							<div class="tab-btn-in">																																			
+								<span class="grade fly">BUSINESS</span>																							
+								<span class="price">
+								<strong class="point">
+								<span class="price_txt">179,000</span>
+								<span class="unit">원</span>
+								</strong>															
+								</span>																		
+								<span class="remaining-seat">
+									8석</span>
+							</div>
+						</a>																																																																												
+						<a href="#" class="tab-btn grade-bag">
+							<div class="tab-btn-in">
+								<span class="grade new-class">FIRST CLASS</span>				
+								<span class="price">
+								<strong class="point">
+								<span class="price_txt">314,000</span>
+								<span class="unit">원</span>
+								</strong>
+								</span>
+								<span class="remaining-seat">
+									3석</span>
+							</div>									
+						</a>
+						</div>								
+						<div class="grade-info fly-bag" style="">								
+							<ul class="rules">
+								<li class="rules-item">
+								<a href="#" class="rules-btn" data-element="modal_anchor" data-target="#fareRuleLayer" data-modal-type="full" data-databind="Y" onclick="javascript:openFareRule(this , 'DEP');">운임 및 수수료 규정</a><!-- 운임 및 수수료 규정 -->									
+								</li><!--20210608 버튼명 변경-->								
+							</ul>
+							<div class="grade-info-sub">
+								<ul class="benefit-list"><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png">기내수하물 10KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png">위탁수하물 15KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/hpgg/resources/images/ticketing/icon_point.png">리프레시 포인트 8,950P 적립</li></ul>
+								<p class="caution">FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요?</p><!-- FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요? -->
+								<a href="#none" class="btn-upgrade" onclick="javascript:upgradeFare(this);">FLYBAG으로 업그레이드 하기</a><!-- FLYBAG으로 업그레이드 하기 -->
+							</div>					
+						</div>
+					</li>
+				</ul>
+				</c:forEach>
 			</div>
 			<input type="hidden" name="depLowestFareIdx" id="depLowestFareIdx" value="0">
 			<input type="hidden" name="currencyCode" id="currencyCode" value="KRW">
 			<input type="hidden" name="currencyCodeaaa" id="currencyCodeaaa" value="KRW">
 		</div>
-		<div class="booking-sticky booking-sticky--reservation" data-element="toggle" style="" data-options="{&quot;mode&quot;: &quot;slide&quot;}" id="divBottom">
+		<div class="booking-sticky booking-sticky--reservation" style="display:none" id="divBottom">
 			<div class="reservation-container">
 				<div class="booking-sticky__top">
 					<div class="toggle-wrap toggle-wrap--button">									
@@ -1391,10 +1448,19 @@ function changeText(){
 							<span class="price_txt">244,800</span>
 							<span class="unit">원</span>
 						</button>				
-					</div>		
-					<button type="button" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
-						<span class="button__text">오는 편 선택하기</span><!--오는 편 선택하기 -->
-					</button>	
+					</div>
+					<c:choose>
+						<c:when test="${param.hiddenItem == '왕복'}">		
+						<button type="button" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
+							<span class="button__text">오는 편 선택하기</span><!--오는 편 선택하기 -->
+						</button>	
+						</c:when>
+						<c:otherwise>
+						<button type="button" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
+							<span class="button__text">다음</span><!--오는 편 선택하기 -->
+						</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
