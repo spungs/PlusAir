@@ -3,9 +3,6 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko" class="">
-<!-- 인증상태 default session -->
-<% session.setAttribute("authStatus", false); %>
-
 <!-- Jquery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- //Jquery -->
@@ -40,6 +37,8 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 var chkId = /^[a-z]+[a-z0-9]{5,}/;
 var chkPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@$%^&*~])[A-Za-z\d!@$%^&*~]{8,16}$/;
 var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
+var num = /[^0-9]/;
+var kor = /[^ㄱ-ㅎ]/;
 
 	// korLastName
 	$(function(){
@@ -51,8 +50,15 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#korLastNameDiv .input__remove-button').removeClass('hide');
 				$('#korLastNameDiv .input__remove-button').addClass('show');
 			}
+			// 유효성검사
+			if(!chkKor.test($('#korLastName').val())){
+				$('#errorText1').css('display','none');
+			}
 		}); //click event end
 		$('#korLastName').keyup(function(){
+			if(kor.test($('#korLastName').val()) || chkKor.test($('#korLastName').val()))
+				$('#korLastName').val($('#korLastName').val().replace(/[A-Za-z0-9]/g,''))
+				
 			if($('#korLastName').val() == ""){
 				$('#korLastNameDiv .input__remove-button').removeClass('show');
 				$('#korLastNameDiv .input__remove-button').addClass('hide');
@@ -76,6 +82,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#korLastNameDiv').removeClass('label-active');
 				$('#errorText1').css('display','block');
 			}
+			$('#korLastName').val($('#korLastName').val().replace(/[ㄱ-ㅎ]/g,''))
 		}); //blur event end
 	}); // input 관련 function end
 	
@@ -103,8 +110,15 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#korFirstNameDiv .input__remove-button').removeClass('hide');
 				$('#korFirstNameDiv .input__remove-button').addClass('show');
 			}
+			// 유효성검사
+			if(!chkKor.test($('#korFirstName').val())){
+				$('#errorText2').css('display','none');
+			}
 		}); //click event end
 		$('#korFirstName').keyup(function(){
+			if(kor.test($('#korFirstName').val()) || chkKor.test($('#korFirstName').val()))
+				$('#korFirstName').val($('#korFirstName').val().replace(/[A-Za-z0-9]/g,''))
+				
 			if($('#korFirstName').val() == ""){
 				$('#korFirstNameDiv .input__remove-button').removeClass('show');
 				$('#korFirstNameDiv .input__remove-button').addClass('hide');
@@ -128,6 +142,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#korFirstNameDiv').removeClass('label-active');
 				$('#errorText2').css('display','block');
 			}
+			$('#korFirstName').val($('#korFirstName').val().replace(/[ㄱ-ㅎ]/g,''))
 		}); //blur event end
 	}); // input 관련 function end
 
@@ -155,8 +170,14 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#engLastNameDiv .input__remove-button').removeClass('hide');
 				$('#engLastNameDiv .input__remove-button').addClass('show');
 			}
+			if(!chkEng.test($('#engLastName').val())){ 
+				$('#errorText3').css('display','none'); 
+			}
 		}); //click event end
 		$('#engLastName').keyup(function(){
+			if(chkEng.test($('#engLastName').val()))
+				$('#engLastName').val($('#engLastName').val().replace(/[ㄱ-힣0-9]/g,''))
+			
 			if($('#engLastName').val() == ""){
 				$('#engLastNameDiv .input__remove-button').removeClass('show');
 				$('#engLastNameDiv .input__remove-button').addClass('hide');
@@ -207,8 +228,14 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#engFirstNameDiv .input__remove-button').removeClass('hide');
 				$('#engFirstNameDiv .input__remove-button').addClass('show');
 			}
+			if(!chkEng.test($('#engFirstName').val())){ 
+				$('#errorText4').css('display','none'); 
+			}
 		}); //click event end
 		$('#engFirstName').keyup(function(){
+			if(chkEng.test($('#engFirstName').val()))
+				$('#engFirstName').val($('#engFirstName').val().replace(/[ㄱ-힣0-9]/g,''))
+				
 			if($('#engFirstName').val() == ""){
 				$('#engFirstNameDiv .input__remove-button').removeClass('show');
 				$('#engFirstNameDiv .input__remove-button').addClass('hide');
@@ -249,6 +276,15 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 		}); // 취소버튼 클릭 event end
 	}); // 취소버튼 관련 function end
 	
+	// 인증번호
+	$(function(){
+		// input 관련 function
+		$('#inputAuthNum').keyup(function(){
+			if(num.test($('#inputAuthNum').val()))
+				$('#inputAuthNum').val($('#inputAuthNum').val().replace(/[ㄱ-힣A-Za-z]/g,''))
+		}); //keydown event end
+	}); // input 관련 function end
+	
 	// 아이디
 	$(function(){
 		// input 관련 function
@@ -270,7 +306,6 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				
 			function changeText() {
 				if (req.readyState == 4 && req.status == 200) {
-					console.log(req.responseText)
 					if(req.responseText == "중복 아이디"){
 					$('#txtIdChk2').css('display','none');
 					$('#txtIdChk1').css('display','block');
@@ -370,9 +405,22 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#txtPwChk1').css('display','block');				
 			}
 		}); // 취소버튼 클릭 event end
+		// 눈동자 버튼
+		$('.pwEyeBtn').click(function(){
+			var dataChk = $('.inp-02Div div').attr('data-check')
+			if(dataChk == 0){
+				$('.inp-02Div div[data-element="form"]').addClass('show-password');
+				$('.inp-02Div div[data-element="form"]').attr('data-check','1');
+				$('#inp-02').prop("type", "text");
+			}
+			if(dataChk == 1){
+				$('.inp-02Div div[data-element="form"]').removeClass('show-password');
+				$('.inp-02Div div[data-element="form"]').attr('data-check','0');
+				$('#inp-02').prop("type", "password");
+			}
+		});		
 	}); // 취소버튼 관련 function end
 	
-	//=======================여기서부터=============================================
 	// 비밀번호 확인
 	$(function(){
 		// input 관련 function
@@ -396,7 +444,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 				$('#txtPwChk2').css('display','none');
 			}
 			// 유효성검사
-			if($('#inp-03').val() != $('#inp-03').val()){
+			if($('#inp-03').val() != $('#inp-02').val()){
 				$('#txtPwChk2').css('display','block');
 			}
 		}); //keydown event end
@@ -424,14 +472,77 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 			}
 		}); // 취소버튼 클릭 event end
 		// 눈동자 버튼
-		$('.input__show-button').click(function(){
-			//===============버튼 눌릴때마다 속성 조회해서 add remove class 해주면됨
-			if($('.inp-03Div div[data-check="1"]'))
-			$('.inp-03Div div[data-element="form"]').addClass('show-password');
-			$('.inp-03Div div[data-element="form"]').attr('data-check','1');
-			$('#inp-03').prop("type", "text");
-
+		$('.pwConfirmEyeBtn').click(function(){
+			var dataChk = $('.inp-03Div div').attr('data-check')
+			if(dataChk == 0){
+				$('.inp-03Div div[data-element="form"]').addClass('show-password');
+				$('.inp-03Div div[data-element="form"]').attr('data-check','1');
+				$('#inp-03').prop("type", "text");
+			}
+			if(dataChk == 1){
+				$('.inp-03Div div[data-element="form"]').removeClass('show-password');
+				$('.inp-03Div div[data-element="form"]').attr('data-check','0');
+				$('#inp-03').prop("type", "password");
+			}
 		});		
+	}); // 취소버튼 관련 function end
+	
+	// 휴대전화번호
+	$(function(){
+		// input 관련 function
+		$('#inputPhone-02').focus(function(){
+			$('.inpPhoneDiv').addClass('label-active');
+			$('.inpPhoneDiv div[class="input"]').addClass('is-focus');
+			if($('#inputPhone-02').val() != ""){
+				$('.inpPhoneDiv .input__remove-button').removeClass('hide');
+				$('.inpPhoneDiv .input__remove-button').addClass('show');
+			}
+		}); //click event end
+		$('#inputPhone-02').keyup(function(){
+			// 000-0000-0000으로 바꿔주는 함수
+			$('#inputPhone-02').val($('#inputPhone-02').val()
+					.replace(/[^0-9]/g, '')
+				  	.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, ""))
+		  	// //000-0000-0000으로 바꿔주는 함수
+				
+			if($('#inputPhone-02').val() == ""){
+				$('.inpPhoneDiv .input__remove-button').removeClass('show');
+				$('.inpPhoneDiv .input__remove-button').addClass('hide');
+			}
+			else if($('#inputPhone-02').val() != ""){
+				$('.inpPhoneDiv div[data-element="form"]').addClass('is-active');
+				$('.inpPhoneDiv .input__remove-button').addClass('show');
+				$('.inpPhoneDiv .input__remove-button').removeClass('hide');
+				$('#inputErrMessage').css('display','none');
+			}
+			// 유효성검사
+			if(!chkMobile.test($('#inputPhone-02').val())){
+				$('#inputErrMessage').css('display','block');
+			}
+		}); //keydown event end
+		$('#inputPhone-02').blur(function(){
+			$('.inpPhoneDiv div[data-element="form"]').removeClass('is-focus');
+			if($('#inputPhone-02').val() == ""){
+				$('.inpPhoneDiv .input__remove-button').removeClass('show');
+				$('.inpPhoneDiv .input__remove-button').addClass('hide');
+				$('.inpPhoneDiv').removeClass('label-active');
+				$('#inputErrMessage').css('display','block');
+			}
+		}); //blur event end
+	}); // input 관련 function end
+
+	$(function(){
+		// 취소버튼 관련 function
+		$('.inpPhoneDiv button[data-element="remove"]').on('click', function(){
+			$('#inputPhone-02').val('');
+			$('.inpPhoneDiv div[data-element="form"]').removeClass('is-focus');
+			$('.inpPhoneDiv .input__remove-button').removeClass('show');
+			$('.inpPhoneDiv .input__remove-button').addClass('hide');
+			if($('#inputPhone-02').val() == ""){
+				$('.inpPhoneDiv').removeClass('label-active');
+				$('#inputErrMessage').css('display','block');				
+			}
+		}); // 취소버튼 클릭 event end
 	}); // 취소버튼 관련 function end
 	
 	
@@ -471,7 +582,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 			return;
 		}
 		// 이메일
-		if ($('#inputEmail1').val() == "") {
+		if ($('#inputEmail1').val() == "" || chkEmail.test($('#engFirstName').val())) {
 			$('#inputEmail1').focus();
 			Swal.fire({
 				text:'이메일을 확인 해주세요.'
@@ -479,26 +590,42 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 			return;
 		}
 		// 인증번호
-		if ($('#inputAuthNum').val() == "") {
+		if ($('#inputAuthNum').val() == "" || $('#authStatus').val() != 'true') {
 			$('#inputAuthNum').focus();
 			Swal.fire({
-				text:'인증번호를 입력해주세요.'
+				text:'인증번호를 입력 또는 인증 해주세요.'
 			})
 			return;
 		}
 		// 아이디 
-		if ($('#inp-01').val() == "") {
+		if ($('#inp-01').val() == "" || !chkId.test($('#inp-01').val())) {
 			$('#inp-01').focus();
 			Swal.fire({
-				text:'아이디를 입력해주세요.'
+				text:'아이디를 확인해주세요.'
 			})
 			return;
 		}
 		// 비밀번호
-		if ($('#inp-02').val() == "") {
+		if ($('#inp-02').val() == "" || !chkPw.test($('#inp-02').val())) {
 			$('#inp-02').focus();
 			Swal.fire({
 				text:'비밀번호를 입력해주세요.'
+			})
+			return;
+		}
+		// 비밀번호 확인
+		if ($('#inp-03').val() == "" || $('#inp-03').val() != $('#inp-02').val()) {
+			$('#inp-03').focus();
+			Swal.fire({
+				text:'비밀번호 확인을 해주세요.'
+			})
+			return;
+		}
+		// 휴대전화 확인
+		if ($('#inputPhone-02').val() == "" || $('#inputPhone-02').val().length != 13) {
+			$('#inputPhone-02').focus();
+			Swal.fire({
+				text:'휴대전화를 확인 해주세요.'
 			})
 			return;
 		}
@@ -508,7 +635,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 
 	// 모달 내부 동의 동의안함 버튼 function
 	$(function() {
-		$('#inpAgree-All').click(function() {
+		$('.check-wrap__all-check').click(function() {
 			var checked = $('#inpAgree-All').is(':checked');
 			if (checked) {
 				$('input:checkbox').prop('checked', true);
@@ -546,7 +673,7 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 		});
 		
 		// <a href="#modalLayer01>
-		//test	
+		// test	
 // 		$('a[href="#modalLayer01"]').click(function(e){
 // 			e.preventDefault();
 // 			$(this).modal({
@@ -554,7 +681,11 @@ var chkMobile = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}/;
 // 		});
 		
 		// modal 관련
-		// 잠시 다른거 먼저 하고 손대기로..
+		$('#inpAgree-All').click(function(event){
+			$('html').addClass('open-modal open-modal--full');
+			$('html').css({"height":"100%","overflow":"hidden","touch-action":"none"});
+		});
+		
 		$('.agree-wrap__item').click(function(event){
 			event.preventDefault(); // 부모창 위로 올려주는거 막으려고 쓴건데 안먹고 있음
 			var target = $(this).attr('data-target');
@@ -638,6 +769,8 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			Swal.fire({
 				text: req.responseText
 				})
+			if(req.responseText == '인증 성공')
+				$('#authStatus').val('true')
 		}
 	}
 </script>
@@ -730,7 +863,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 			<main id="main" class="main ">
 
 
-				<form id="frm" name="frm" method="post" action="member/memberJoin/joinComplete">
+				<form id="frm" name="frm" method="post" action="joinComplete">
 					<!-- 이름 -->
 					<div class="page-title-wrap">
 						<div class="page-title">이름 입력</div>
@@ -849,7 +982,8 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 							</div>
 						</div>
 					</div>
-					<!-- test -->
+					<!-- //이메일 -->
+					<!-- 이메일 인증번호 -->
 					<div class="section-wrap">
 						<div class="input-wrap input--line">
 							<div class="">
@@ -878,16 +1012,15 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 							</div>
 						</div>
 					</div>
-					<!-- test -->
-					<!-- //이메일 -->
-					<br>
+					<!-- //이메일 인증번호 -->
 					<!-- 아이디,비밀번호 -->
 					<div class="input-wrap input--line">
 						<div class="input-row">
 							<div class="input-item">
 								<div class="input-box inp-01Div">
-									<label for="input-01" class="input__label">아이디<span
-										title="required" class="input__label-asterisk">*</span></label>
+									<label for="input-01" class="input__label">아이디
+										<span title="required" class="input__label-asterisk">*</span>
+									</label>
 									<div data-element="form" class="input">
 										<input type="text" id="inp-01" class="input__text">
 										<button type="button" data-element="remove"
@@ -913,24 +1046,24 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 								<div class="input-box inp-02Div">
 									<label for="inp-02" class="input__label">비밀번호<span
 										title="required" class="input__label-asterisk">*</span></label>
-									<div data-element="form" class="input">
+									<div data-element="form" class="input" data-check="0">
 										<input type="password" class="input__text" id="inp-02">
 										<button type="button" data-element="remove"
 											class="input__remove-button">
 											<span class="hidden">삭제</span>
 										</button>
 										<button type="button" data-element="toggleShow"
-											class="input__show-button" aria-label="비밀번호 보기"></button>
+											class="input__show-button pwEyeBtn" aria-label="비밀번호 보기"></button>
 									</div>
 								</div>
-								<p class="input__sub-text">영문/숫자/특수문자 중 2가지 이상 조합하여 8~16자로
+								<p class="input__sub-text">영문/숫자/특수문자 각 하나 이상 사용하여 8~16자로
 									입력해 주세요.
 									(사용 가능한 특수문자 : !, @, $, %, ^, &amp;,
 									*, ~)</p>
 								<!-- 에러메세지 노출 텍스트 -->
 								<!-- 6자 이상 미입력 or 문자/숫자 각 1글자 미포함 시 -->
 								<p class="input__error" tabindex="0" id="txtPwChk1"
-									style="display: none;">조합에 맞게 입력해주세요.</p>
+									style="display: none;">조건에 맞게 입력해주세요.</p>
 								<!-- //6자 이상 미입력 or 문자/숫자 각 1글자 미포함 시 -->
 								<!-- //에러메세지 노출 텍스트 -->
 							</div>
@@ -940,7 +1073,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 								<div class="input-box inp-03Div">
 									<label for="inp-03" class="input__label">비밀번호 확인<span
 										title="required" class="input__label-asterisk">*</span></label>
-									<div data-element="form" class="input">
+									<div data-element="form" class="input" data-check="0">
 										<input type="password" class="input__text"
 											data-element="input" id="inp-03">
 										<button type="button" data-element="remove"
@@ -948,7 +1081,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 											<span class="hidden">삭제</span>
 										</button>
 										<button type="button" data-element="toggleShow"
-											class="input__show-button" aria-label="비밀번호 보기"></button>
+											class="input__show-button pwConfirmEyeBtn" aria-label="비밀번호 보기"></button>
 									</div>
 								</div>
 								<!-- 비밀번호 확인 입력 값과 불일치 시 -->
@@ -957,9 +1090,28 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 								<!-- //비밀번호 확인 입력 값과 불일치 시 -->
 							</div>
 						</div>
-					</div>
 					<!-- //아이디,비밀번호 -->
-
+					<!-- mobile -->
+					<div class="input-row input-row--mobile">
+						<div class="input-item">
+								<div class="input-box inpPhoneDiv">
+									<label for="inputPhone-02" class="input__label">휴대전화번호<span
+										title="required" class="input__label-asterisk">*</span></label>
+									<div data-element="form" class="input">
+										<input type="text" id="inputPhone-02" class="input__text"
+											maxlength="13" numberonly="">
+										<button type="button" data-element="remove"
+											class="input__remove-button">
+											<span class="hidden">삭제</span>
+										</button>
+									</div>
+								</div>
+							<p tabindex="0" class="input__error" id="inputErrMessage"
+								style="display: none;">입력하신 휴대전화번호를 다시 확인해주세요.</p>
+						</div>
+					</div>
+					<!-- //mobile -->
+					</div>
 					<!-- 약관 동의 -->
 					<div class="page-title-wrap">
 						<div class="page-title">약관 동의</div>
@@ -1366,7 +1518,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 		</div>
 	</div>
 </div>
-
+<input type="hidden" id="authStatus">
 
 <%@ include file="../../common/include/footer.jsp"%>
 </body>

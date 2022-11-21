@@ -56,7 +56,7 @@ public class memberController {
 
 		session.setAttribute("authStatus", false); // 인증 체크여부 session 처음엔 false
 		if (inputAuthNum == null)
-			return "인증번호를 입력하세요 ";
+			return "인증번호를 입력하세요. ";
 		if (inputAuthNum.equals(authNum)) {
 			session.setAttribute("authStatus", true); // 인증 체크하면 true
 			return "인증 성공";
@@ -75,11 +75,7 @@ public class memberController {
 
 	// 회원가입 성공 페이지
 	@RequestMapping(value = "member/memberJoin/joinComplete")
-	public String joinComplete(memberDTO member, Model model) {
-		
-		model.addAttribute("member", member);
-		
-		
+	public String joinComplete(memberDTO member) {
 		
 		return "member/memberJoin/joinComplete";
 	}
