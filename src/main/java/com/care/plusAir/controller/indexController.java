@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -80,8 +81,10 @@ public class indexController {
 	public String AvailSearch() {
 		return "booking/AvailSearch";
 	}
+	
 	@GetMapping("test")//model에 ArrayList 데이터를담기위해 페이지 이동전에 DB데이터가공하는 곳
-	public String test(Model model) {
+	public String test(String hiddenItem/*받아올 파라미터값 입력*/,Model model) {
+		//System.out.println("운행정보 : " + hiddenItem);
 		ArrayList<indexDTO> indexs = indexservice.searchService();//service로가서 데이터 가공
 		model.addAttribute("indexs", indexs);
 		return "booking/AvailSearch";
