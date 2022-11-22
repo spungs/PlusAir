@@ -1,9 +1,8 @@
 package com.care.plusAir.dto;
 
-public class indexDTO {
+public class FlightDTO {
 	private String flightNo;
-	private String flightDep;
-	private String flightAri;
+	private String flightRouteNo;
 	private String mon;
 	private String tue;
 	private String wed;
@@ -17,24 +16,17 @@ public class indexDTO {
 	private String startFlight;
 	private String endFlight;
 	private String flightDistance;
-	
 	public String getFlightNo() {
 		return flightNo;
 	}
 	public void setFlightNo(String flightNo) {
 		this.flightNo = flightNo;
 	}
-	public String getFlightDep() {
-		return flightDep;
+	public String getFlightRouteNo() {
+		return flightRouteNo;
 	}
-	public void setFlightDep(String flightDep) {
-		this.flightDep = flightDep;
-	}
-	public String getFlightAri() {
-		return flightAri;
-	}
-	public void setFlightAri(String flightAri) {
-		this.flightAri = flightAri;
+	public void setFlightRouteNo(String flightRouteNo) {
+		this.flightRouteNo = flightRouteNo;
 	}
 	public String getMon() {
 		return mon;
@@ -114,4 +106,5 @@ public class indexDTO {
 	public void setFlightDistance(String flightDistance) {
 		this.flightDistance = flightDistance;
 	}
+	
 }

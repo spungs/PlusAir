@@ -1,5 +1,6 @@
 package com.care.plusAir.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.care.plusAir.dto.indexDTO;
+import com.care.plusAir.dto.FlightDTO;
+import com.care.plusAir.dto.SearchServiceDTO;
 import com.care.plusAir.service.indexService;
 
 @Controller
@@ -83,10 +85,18 @@ public class indexController {
 	}
 	
 	@GetMapping("test")//model에 ArrayList 데이터를담기위해 페이지 이동전에 DB데이터가공하는 곳
-	public String test(String hiddenItem/*받아올 파라미터값 입력*/,Model model) {
-		//System.out.println("운행정보 : " + hiddenItem);
-		ArrayList<indexDTO> indexs = indexservice.searchService();//service로가서 데이터 가공
-		model.addAttribute("indexs", indexs);
+	public String test(String hiddenItem,String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,String BackYear,String BackMonth,String BackDay/*받아올 파라미터값 입력*/,Model model) {
+		
+		ArrayList<FlightDTO> flights = indexservice.searchService(departureData,arrivalData,hidYear,hidMonth,hidDay,BackYear,BackMonth,BackDay);//service로가서 데이터 가공
+//		for(FlightDTO f : flights) {
+//			String test = f.getFlightDistance();
+//			int test1 = Integer.parseInt(test);
+//			
+//			DecimalFormat decFormat = new DecimalFormat("###,###");
+//			String str = decFormat.format(test1 * 30);//곱셈은 나중에
+//			System.out.println(str);
+//		}
+		model.addAttribute("flights", flights);
 		return "booking/AvailSearch";
 	}
 }

@@ -904,7 +904,6 @@ function changeText(){
 }
 
 
-//이후부턴 여기 페이지만의 js
 $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭시 이벤트
 	$('.tab-btn.grade-bag').on('click',function(){
 		var changeRout = document.getElementById('changeRout')
@@ -1348,90 +1347,97 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		                </div>
 		            </div>					
 				</div>
-				<div class="finish-item-wrap" style="display:none;" id="DEP_empty">
+				<c:choose>
+					<c:when test="${empty flights}">
+				<div class="finish-item-wrap" style="display:block;" id="DEP_empty">
 					<div class="finish-item">
 						<div class="finish-item__img"><img src="/images/icon/icon-result-none.png" alt=""></div>					
 						<p class="finish-item__title">조건에 맞는 <br class="mobile-only">항공편이 없습니다.</p><!--조건에 맞는 <br class="mobile-only">항공편이 없습니다. -->
 						<p class="finish-item__text">조건을 바꿔서 다시 검색해 주세요.</p><!-- 조건을 바꿔서 다시 검색해 주세요. -->
 					</div>
 				</div>
-				<c:forEach var="index" items="${indexs}">
-				<ul class="fare-list">
-					<li class="list-item">
-						<div class="list-summary">				
-							<div class="head">														
-								<span class="tk-num">${index.flightNo}</span>
-									<div class="chips"><span class="chip lowest">최저가</span></div>
-								<ul class="util-menu">
-									<li class="util-menu-item">
-									<button type="button" aria-label="share" data-element="sns_share" class="util-menu-btn share" onclick="shareMyFavorites(this);"><span class="blind">공유</span></button>
-									</li><!-- 공유 -->
-									<li class="util-menu-item"><button type="button" onclick="javascript:insertFlightFavorites(this);" class="util-menu-btn wish"><span class="blind">찜하기</span></button></li><!--찜하기-->
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="flight" items="${flights}">
+							<ul class="fare-list">
+								<li class="list-item">
+									<div class="list-summary">				
+										<div class="head">														
+											<span class="tk-num">${flight.flightNo}</span>
+												<div class="chips"><span class="chip lowest">최저가</span></div>
+											<ul class="util-menu">
+												<li class="util-menu-item">
+												<button type="button" aria-label="share" data-element="sns_share" class="util-menu-btn share" onclick="shareMyFavorites(this);"><span class="blind">공유</span></button>
+												</li><!-- 공유 -->
+												<li class="util-menu-item"><button type="button" onclick="javascript:insertFlightFavorites(this);" class="util-menu-btn wish"><span class="blind">찜하기</span></button></li><!--찜하기-->
+													</ul>
+										</div>
+										<div class="time">									
+											<span class="time-num start" data-gmt="202212160210">${flight.departTime}</span>										
+											<span class="moving-time">${flight.flightTime}</span>							
+											<span class="time-num target" data-landingdate="2022-12-16">
+											${flight.arrivalTime}</span>									
+										</div>
+									</div>
+									<div class="fare-pare-tab">																										
+									<a href="#" class="tab-btn sold-out">
+										<div class="tab-btn-in">
+											<span class="grade fly">ECONOMY</span>				
+											<span class="price">
+											<strong class="point">
+											<span class="price_txt">125,000</span>
+											<span class="unit">원</span>
+											</strong>
+											</span>
+											<span class="remaining-seat">
+												매진</span>
+										</div>									
+									</a>
+									<a href="#" class="tab-btn grade-bag">
+										<div class="tab-btn-in">																																			
+											<span class="grade fly">BUSINESS</span>																							
+											<span class="price">
+											<strong class="point">
+											<span class="price_txt">179,000</span>
+											<span class="unit">원</span>
+											</strong>															
+											</span>																		
+											<span class="remaining-seat">
+												8석</span>
+										</div>
+									</a>																																																																												
+									<a href="#" class="tab-btn grade-bag">
+										<div class="tab-btn-in">
+											<span class="grade new-class">FIRST CLASS</span>				
+											<span class="price">
+											<strong class="point">
+											<span class="price_txt">314,000</span>
+											<span class="unit">원</span>
+											</strong>
+											</span>
+											<span class="remaining-seat">
+												3석</span>
+										</div>									
+									</a>
+									</div>								
+									<div class="grade-info fly-bag" style="">								
+										<ul class="rules">
+											<li class="rules-item">
+											<a href="#" class="rules-btn" data-element="modal_anchor" data-target="#fareRuleLayer" data-modal-type="full" data-databind="Y" onclick="javascript:openFareRule(this , 'DEP');">운임 및 수수료 규정</a><!-- 운임 및 수수료 규정 -->									
+											</li><!--20210608 버튼명 변경-->								
 										</ul>
-							</div>
-							<div class="time">									
-								<span class="time-num start" data-gmt="202212160210">${index.flightDep}</span>										
-								<span class="moving-time">${index.flightTime}</span>							
-								<span class="time-num target" data-landingdate="2022-12-16">
-								${index.flightAri}</span>									
-							</div>
-						</div>
-						<div class="fare-pare-tab">																										
-						<a href="#" class="tab-btn sold-out">
-							<div class="tab-btn-in">
-								<span class="grade fly">ECONOMY</span>				
-								<span class="price">
-								<strong class="point">
-								<span class="price_txt">125,000</span>
-								<span class="unit">원</span>
-								</strong>
-								</span>
-								<span class="remaining-seat">
-									매진</span>
-							</div>									
-						</a>
-						<a href="#" class="tab-btn grade-bag">
-							<div class="tab-btn-in">																																			
-								<span class="grade fly">BUSINESS</span>																							
-								<span class="price">
-								<strong class="point">
-								<span class="price_txt">179,000</span>
-								<span class="unit">원</span>
-								</strong>															
-								</span>																		
-								<span class="remaining-seat">
-									8석</span>
-							</div>
-						</a>																																																																												
-						<a href="#" class="tab-btn grade-bag">
-							<div class="tab-btn-in">
-								<span class="grade new-class">FIRST CLASS</span>				
-								<span class="price">
-								<strong class="point">
-								<span class="price_txt">314,000</span>
-								<span class="unit">원</span>
-								</strong>
-								</span>
-								<span class="remaining-seat">
-									3석</span>
-							</div>									
-						</a>
-						</div>								
-						<div class="grade-info fly-bag" style="">								
-							<ul class="rules">
-								<li class="rules-item">
-								<a href="#" class="rules-btn" data-element="modal_anchor" data-target="#fareRuleLayer" data-modal-type="full" data-databind="Y" onclick="javascript:openFareRule(this , 'DEP');">운임 및 수수료 규정</a><!-- 운임 및 수수료 규정 -->									
-								</li><!--20210608 버튼명 변경-->								
+										<div class="grade-info-sub">
+											<ul class="benefit-list"><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png">기내수하물 10KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png">위탁수하물 15KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/hpgg/resources/images/ticketing/icon_point.png">리프레시 포인트 8,950P 적립</li></ul>
+											<p class="caution">FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요?</p><!-- FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요? -->
+											<a href="#none" class="btn-upgrade" onclick="javascript:upgradeFare(this);">FLYBAG으로 업그레이드 하기</a><!-- FLYBAG으로 업그레이드 하기 -->
+										</div>					
+									</div>
+								</li>
 							</ul>
-							<div class="grade-info-sub">
-								<ul class="benefit-list"><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211012131128759.png">기내수하물 10KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png" data-src="https://static.jejuair.net/cms/images/fare_service_option/20211014165204436.png">위탁수하물 15KG 제공</li><li class="benefit-list-item"><img src="https://static.jejuair.net/hpgg/resources/images/ticketing/icon_point.png">리프레시 포인트 8,950P 적립</li></ul>
-								<p class="caution">FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요?</p><!-- FLY는 위탁 수하물이 제공되지 않습니다. 맡기실 짐이 더 필요하신가요? -->
-								<a href="#none" class="btn-upgrade" onclick="javascript:upgradeFare(this);">FLYBAG으로 업그레이드 하기</a><!-- FLYBAG으로 업그레이드 하기 -->
-							</div>					
-						</div>
-					</li>
-				</ul>
-				</c:forEach>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				
 			</div>
 			<input type="hidden" name="depLowestFareIdx" id="depLowestFareIdx" value="0">
 			<input type="hidden" name="currencyCode" id="currencyCode" value="KRW">

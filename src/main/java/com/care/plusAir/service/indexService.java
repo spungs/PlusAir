@@ -1,61 +1,140 @@
 package com.care.plusAir.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.care.plusAir.dto.indexDTO;
+import com.care.plusAir.dto.FlightDTO;
+import com.care.plusAir.dto.SearchServiceDTO;
+import com.care.plusAir.repository.FlightDAO;
 
 @Service
 public class indexService {
-	public ArrayList<indexDTO> searchService(){
-		indexDTO indexDto = new indexDTO();
-		ArrayList<indexDTO> indexs = new ArrayList<>();
-		indexDto.setFlightNo("KE645");
-		indexDto.setFlightDep("ICN");
-		indexDto.setFlightAri("PEK");
-		indexDto.setMon("월");
-		indexDto.setTue("화");
-		indexDto.setWed("수");
-		indexDto.setThu("목");
-		indexDto.setFri("금");
-		indexDto.setSat("토");
-		indexDto.setSun("일");
-		indexDto.setDepartTime("14:20");
-		indexDto.setArrivalTime("15:50");
-		indexDto.setFlightTime("1시간30분");
-		indexs.add(indexDto);
-		indexDTO indexDto2 = new indexDTO();
-		indexDto2.setFlightNo("KE345");
-		indexDto2.setFlightDep("ICN");
-		indexDto2.setFlightAri("PEK");
-		indexDto2.setMon("월");
-		indexDto2.setTue("화");
-		indexDto2.setWed("수");
-		indexDto2.setThu("목");
-		indexDto2.setFri("금");
-		indexDto2.setSat("토");
-		indexDto2.setSun("일");
-		indexDto2.setDepartTime("16:30");
-		indexDto2.setArrivalTime("18:00");
-		indexDto2.setFlightTime("1시간30분");
-		indexs.add(indexDto2);
-		indexDTO indexDto3 = new indexDTO();
-		indexDto3.setFlightNo("KE325");
-		indexDto3.setFlightDep("ICN");
-		indexDto3.setFlightAri("JFK");
-		indexDto3.setMon("월");
-		indexDto3.setTue("화");
-		indexDto3.setWed("수");
-		indexDto3.setThu("목");
-		indexDto3.setFri("금");
-		indexDto3.setSat("토");
-		indexDto3.setSun("일");
-		indexDto3.setDepartTime("06:40");
-		indexDto3.setArrivalTime("20:50");
-		indexDto3.setFlightTime("14시간10분");
-		indexs.add(indexDto3);
-		return indexs;
-	}
+	@Autowired FlightDAO fightDao;
+	public ArrayList<FlightDTO> searchService(String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,String BackYear,String BackMonth,String BackDay){
+		String flightRouteNo = departureData + arrivalData;
+		String stringYear = hidYear;
+		String stringMonth = hidMonth;
+		String stringDay = hidDay;
+		int year = Integer.parseInt(stringYear);
+		int month = Integer.parseInt(stringMonth);
+		int days = Integer.parseInt(stringDay);
+		LocalDate now = LocalDate.of(year, month, days);
+		DayOfWeek dayOfWeek = now.getDayOfWeek();
+		String day = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.US);
+		if(day.equals("Monday")) {
+			day = "mon";
+		}
+		if(day.equals("Tuesday")) {
+			day = "tue";
+		}
+		if(day.equals("Wednesday")) {
+			day = "wed";
+		}
+		if(day.equals("Thursday")) {
+			day = "thu";
+		}
+		if(day.equals("Friday")) {
+			day = "fri";
+		}
+		if(day.equals("Saturday")) {
+			day = "sat";
+		}
+		if(day.equals("Sunday")) {
+			day = "sun";
+		}
+//		if(운항년도 > 현재년도) {
+//			담기
+//		}else if(운항년도 == 현재년도){
+//			if(운항월 > 현재월) {
+//			담기
+//			}else if(운항일 >= 현재일){
+//			담기
+//			}else{
+//			버리기
+//			}
+//		}else if(운항년도 < 현재년도){
+//			버리기
+//			}
+		SearchServiceDTO ssdto = new SearchServiceDTO();
+		ssdto.setDay(day);
+		ssdto.setFlightRouteNo(flightRouteNo);
+		ArrayList<FlightDTO> flights = fightDao.selectCityAll(ssdto);
+		String msg="";
+		for(int i = 0;i<flights.size();i++) {
+			
+			String startsub = flights.get(i).getStartFlight();
+			String startYearString = startsub.substring(0, 4);
+			String startMonthString = startsub.substring(5,7);
+			String startDayString = startsub.substring(8,10);
+			
+			String endsub = flights.get(i).getEndFlight();
+			String endYearString = endsub.substring(0, 4);
+			String endMonthString = endsub.substring(5, 7);
+			String endDayString = endsub.substring(8,10);
+			
+			String yearString = hidYear;
+			String monthString = hidMonth;
+			String dayString = hidDay;
+			System.out.println(yearString);
+			System.out.println(endYearString);
+			if(Integer.parseInt(yearString) > Integer.parseInt(endYearString) || Integer.parseInt(yearString) < Integer.parseInt(startYearString)) {
+				msg = "버리기";
+			}else if(Integer.parseInt(yearString) == Integer.parseInt(startYearString) && Integer.parseInt(yearString) == Integer.parseInt(endYearString)) {
+				if(Integer.parseInt(monthString) >= Integer.parseInt(startMonthString) && Integer.parseInt(monthString) <= Integer.parseInt(endMonthString)) {
+					msg = "담기";
+					if(Integer.parseInt(monthString) == Integer.parseInt(startMonthString)) {
+						if(Integer.parseInt(dayString) >= Integer.parseInt(startDayString)) {
+							msg = "담기";
+						}else {
+							msg = "버리기";
+						}
+					}else if(Integer.parseInt(monthString) == Integer.parseInt(endMonthString)) {
+						if(Integer.parseInt(dayString) <= Integer.parseInt(endDayString)) {
+							msg = "담기";
+						}else {
+							msg = "버리기";
+						}
+					}
+				}else {
+					msg = "버리기";
+				}
+			}else if(Integer.parseInt(yearString) == Integer.parseInt(startYearString) && Integer.parseInt(yearString) != Integer.parseInt(endYearString)){
+				if(Integer.parseInt(monthString) >= Integer.parseInt(startMonthString)) {
+					if(Integer.parseInt(dayString) >= Integer.parseInt(startDayString)) {
+						msg = "담기";
+					}else {
+						msg = "버리기";
+					}
+				}else {
+					msg = "버리기";
+				}
+			}else if(Integer.parseInt(yearString) == Integer.parseInt(endYearString) && Integer.parseInt(yearString) != Integer.parseInt(startYearString)) {
+				if(Integer.parseInt(monthString) <= Integer.parseInt(endMonthString)) {
+					if(Integer.parseInt(dayString) <= Integer.parseInt(endDayString)) {
+						msg = "담기";
+					}else {
+						msg = "버리기";
+					}
+				}else {
+					msg = "버리기";
+				}
+			}else {
+				msg = "담기";
+			}
+			System.out.println(msg);
+			if(msg.equals("버리기")) {
+				//System.out.println(flights.get(i));
+				flights.remove(i);
+				i--;
+			}
+		}
+		return flights;
+		}
 
 }
