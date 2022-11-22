@@ -350,7 +350,7 @@
 	
 <!-- 비상구 좌석 안내 팝업 -->
 <div id="exitSeatInfoLayer" class="modal modal-full modal--fixed-multi modal-scroll NA_1_63"></div>
-<!-- 제휴카드 할인 레이어 -->
+<!-- 제휴카드 할인 레이어  -->
 <div id="partnerCardDiscountLayer" class="modal modal-full modal-scroll NA_1_31"></div>
 
 <button type="button" id="btnModalOpen" data-element="modal_anchor" style="display: none;"></button>
