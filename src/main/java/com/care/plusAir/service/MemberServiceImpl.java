@@ -3,17 +3,21 @@ package com.care.plusAir.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.care.plusAir.dto.memberDTO;
+import com.care.plusAir.dto.member.memberDTO;
 import com.care.plusAir.repository.IMemberDAO;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
 	@Autowired
 	IMemberDAO dao;
+	@Autowired
+	HttpSession session;
 
 	@Override
 	public String isExistId(String id) {
@@ -32,12 +36,10 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public String register(memberDTO member) {
-		// 중복가입 방지,새로고침 시 계속 insert되는거 방지 return (전화번호 하나에 회원가입 하나)
-		if(dao.isExistMobile(member.getMobile()) != 0 || dao.isExistId(member.getId()) != 0) {
-			System.out.println("in");
+		// 새로고침 시 계속 insert되는거 방지 return
+		if(dao.isExistId(member.getId()) != 0) {
 			return "이미 가입되어 있습니다.";
 		}
-		System.out.println("out");
 		// 비밀번호 암호화
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String cipherPassword = encoder.encode(member.getPw());
@@ -56,6 +58,7 @@ public class MemberServiceImpl implements IMemberService {
 				continue;
 		}
 		member.setMemberNo(memberNo);
+		session.setAttribute("authNum", memberNo);
 		
 		// korName = korLastName + korFirstName;
 		String korName = member.getKorLastName()+member.getKorFirstName();
@@ -68,8 +71,30 @@ public class MemberServiceImpl implements IMemberService {
 		member.setRegDate(today);
 		
 		dao.register(member);
-		
+		dao.coupon(member);
+		dao.coupon2(member);
 		return "가입완료";
+	}
+	
+	@Override
+	public String login(memberDTO member) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		memberDTO getLogin = dao.login(member);
+		if(dao.login(member) != null && encoder.matches(member.getPw(), getLogin.getPw())) {
+			session.setAttribute("memberNo", member.getMemberNo());
+			session.setAttribute("id", member.getId());
+			session.setAttribute("korFirstName", member.getKorFirstName());
+			session.setAttribute("korLastName", member.getKorLastName());
+			session.setAttribute("engFirstName", member.getEngFirstName());
+			session.setAttribute("engLastName", member.getEngLastName());
+			session.setAttribute("birth", member.getBirth());
+			session.setAttribute("mobile", member.getMobile());
+			session.setAttribute("email", member.getEmail());
+			session.setAttribute("gender", member.getGender());
+			return "로그인 완료";
+		}
+		else
+			return "아이디 또는 비밀번호를 확인하세요.";
 	}
 
 }

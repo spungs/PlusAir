@@ -1,22 +1,22 @@
-package com.care.plusAir.dto;
+package com.care.plusAir.dto.member;
 
 /*
-CREATE TABLE passenger(	
-memberNo varchar2(8),	
-id varchar2(16),	
-pw varchar2(16),	
-point NUMBER,	
-korName	varchar2(10),
-birth varchar2(10),	
-gender varchar2(2),	
-mobile varchar2(13),	
-email varchar2(50),	
-firstName varchar2(32),	
-lastName varchar2(32),	
-nationality varchar2(85),	
-totalSales NUMBER,	
-regDate varchar2(10),	
-constraint pk_passenger primary key(memberNo)	
+CREATE TABLE passenger(
+memberNo varchar2(10),
+id varchar2(20),
+pw varchar2(70),
+point NUMBER,
+korName varchar2(60),
+birth varchar2(20),
+gender varchar2(10),
+mobile varchar2(15),
+email varchar2(50),
+firstName varchar2(32),
+lastName varchar2(32),
+nationality varchar2(100),
+totalSales NUMBER,
+regDate varchar2(20),
+constraint pk_passenger primary key(memberNo)
 );	
  */
 

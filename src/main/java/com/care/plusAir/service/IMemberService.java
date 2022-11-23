@@ -1,6 +1,6 @@
 package com.care.plusAir.service;
 
-import com.care.plusAir.dto.memberDTO;
+import com.care.plusAir.dto.member.memberDTO;
 
 public interface IMemberService {
 	
@@ -11,4 +11,7 @@ public interface IMemberService {
 	
 	// 회원가입
 	public String register(memberDTO member);
+	
+	// 로그인
+	public String login(memberDTO member);
 }

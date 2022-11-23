@@ -2,7 +2,7 @@ package com.care.plusAir.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.care.plusAir.dto.memberDTO;
+import com.care.plusAir.dto.member.memberDTO;
 
 @Repository
 public interface IMemberDAO {
@@ -16,4 +16,8 @@ public interface IMemberDAO {
 	// 회원가입
 	public void register(memberDTO member);
 	// 신규 쿠폰
+	public void coupon(memberDTO member);
+	public void coupon2(memberDTO member);
+	// 로그인
+	public memberDTO login(memberDTO member);
 }

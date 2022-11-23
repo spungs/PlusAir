@@ -14,7 +14,17 @@
 		SELECT count(id) FROM passenger WHERE mobile=#{mobile}
 	</select>
 	
-	<insert id="register" parameterType="com.care.plusAir.dto.memberDTO">
+	<insert id="register" parameterType="com.care.plusAir.dto.member.memberDTO">
 		INSERT INTO passenger VALUES(#{memberNo},#{id},#{pw},1000,#{korName},null,null,#{mobile},#{email},#{engFirstName},#{engLastName},null,0,#{regDate})
 	</insert>
+	<insert id="coupon" parameterType="com.care.plusAir.dto.member.memberDTO">
+		INSERT INTO coupon VALUES('A1',null,'신규회원 국내선 할인쿠폰',7,30,#{memberNo},#{regDate},'n')
+	</insert>
+	<insert id="coupon2" parameterType="com.care.plusAir.dto.member.memberDTO">
+		INSERT INTO coupon VALUES('A1',null,'신규회원 국제선 할인쿠폰',5,30,#{memberNo},#{regDate},'n')
+	</insert>
+	
+	<select id="login" parameterType="com.care.plusAir.dto.member.memberDTO" resultType="com.care.plusAir.dto.member.memberDTO">
+		SELECT * FROM passenger WHERE id=#{id}
+	</select>
 </mapper>

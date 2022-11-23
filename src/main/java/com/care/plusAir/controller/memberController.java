@@ -4,27 +4,35 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.care.plusAir.dto.memberDTO;
+import com.care.plusAir.dto.member.memberDTO;
 import com.care.plusAir.service.IMemberService;
 import com.care.plusAir.service.MailService;
 
 @Controller
 public class memberController {
-	@Autowired HttpSession session;
-	@Autowired IMemberService service;
+	@Autowired
+	HttpSession session;
+	@Autowired
+	IMemberService service;
 
 	// 회원가입 버튼 클릭 시 회원가입 화면
-	@RequestMapping(value = "member/memberJoin/join")
+	@GetMapping("member/memberJoin/join")
 	public String join() {
 
 		return "member/memberJoin/join";
+	}
+
+	// 메인페이지
+	@GetMapping("booking/index")
+	public String index() {
+		return "booking/index";
 	}
 
 	// join페이지 휴대폰으로 회원가입 클릭 시 이름 입력 화면
@@ -34,7 +42,9 @@ public class memberController {
 	}
 
 	// 회원가입페이지 인증번호 전송 버튼 클릭 시
-	@Autowired private MailService mailService;
+	@Autowired
+	private MailService mailService;
+
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/sendAuth", produces = "text/html; charset=UTF-8")
 	public String sendAuth(@RequestBody(required = false) String email) {
@@ -64,46 +74,68 @@ public class memberController {
 		}
 		return "인증번호를 다시 확인해주세요.";
 	}
-	
+
 	// 회원가입페이지 아이디 중복 확인 ajax
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/isExistId", produces = "text/html; charset=UTF-8")
 	public String isExistId(@RequestBody(required = false) String id) {
-		if(id == null)
+		if (id == null)
 			return "입력해주세요.";
 		return service.isExistId(id);
 	}
+
 	// 회원가입에서 전화번호 중복 확인 버튼 클릭 시
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/isExistMobile", produces = "text/html; charset=UTF-8")
 	public String isExistMobile(@RequestBody(required = false) String mobile) {
-		if(mobile == null)
+		if (mobile == null)
 			return "입력해주세요.";
 		return service.isExistMobile(mobile);
 	}
 
 	// 회원가입 성공 페이지
 	@RequestMapping("member/memberJoin/joinComplete")
-	public String joinComplete(memberDTO member) {
+	public String joinComplete(memberDTO member, RedirectAttributes ra) {
 		String result = service.register(member);
-		System.out.println(result);
-		if(result == "이미 가입되어 있습니다.") {
-			return "member/memberJoin/already";
+		// id 검증멘트 css none으로 바꿔서 가입 방지 하는 if문(너무 디테일이라 redirect만 해주고 alert나 안내 Msg는
+		// 없음..)
+		if (result == "이미 가입되어 있습니다.") {
+			ra.addFlashAttribute("member", member);
+			return "redirect:joinInfo";
 		}
-		
+		// 가입 성공 시 회원가입 관련된 session 삭제
+		session.invalidate();
 		return "member/memberJoin/joinComplete";
 	}
-	
+
 	// 추가정보 입력하는 페이지
 	@GetMapping("member/memberJoin/optionalInfoWrite")
 	public String optionalInfoWrite() {
 		return "member/memberJoin/optionalInfoWrite";
 	}
-	
+
 	// 로그인 페이지
 	@GetMapping("member/auth/login")
 	public String login() {
-		
+
 		return "member/auth/login";
 	}
+
+	// 로그인페이지에서 로그인버튼 클릭
+	@RequestMapping("member/auth/loginChk")
+	public String loginChk(memberDTO member, RedirectAttributes ra) {
+		String result = service.login(member);
+		if (result != "로그인 완료") {
+			ra.addFlashAttribute("Msg", result);
+			return "redirect:login";
+		}
+		return "redirect:../../booking/index";
+	}
+	
+	// 비회원 로그인 페이지
+	@GetMapping("member/auth/nonUserLogin")
+	public String nonUserLogin() {
+		return "member/auth/nonUserLogin";
+	}
+	
 }

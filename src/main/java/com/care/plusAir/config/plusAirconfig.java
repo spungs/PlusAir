@@ -12,7 +12,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@MapperScan(basePackages = { "com.care.plusAir.repository" })
+@MapperScan(basePackages = { "com.care.plusAir.repository"})
 public class plusAirconfig {
 
 	@Bean

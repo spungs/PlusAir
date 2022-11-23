@@ -5,7 +5,6 @@
 <html lang="ko" class="">
 <script>
 	function nextBtn() {
-// 		location.href = '../main/base/index';
 		location.href = '../auth/login';
 	}
 
@@ -68,7 +67,7 @@
 						<div class="page-title">가입완료</div>
 						<div class="page-sub-title">환영합니다! 가입이 완료되었습니다.</div>
 						<div class="section-sub-txt">
-							제주항공 회원만의 특별한 이벤트와 프로모션,<br>포인트 적립 등 각종 회원 전용 혜택을 누려 보세요.
+							더한항공 회원만의 특별한 이벤트와 프로모션,<br>포인트 적립 등 각종 회원 전용 혜택을 누려 보세요.
 						</div>
 					</div>
 					<!--//20210519 title영역 수정-->
