@@ -85,17 +85,13 @@ public class indexController {
 	}
 	
 	@GetMapping("test")//model에 ArrayList 데이터를담기위해 페이지 이동전에 DB데이터가공하는 곳
-	public String test(String hiddenItem,String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,String BackYear,String BackMonth,String BackDay/*받아올 파라미터값 입력*/,Model model) {
+	public String test(String hiddenItem,String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,String BackYear,String BackMonth,String BackDay,Model model) {
 		
-		ArrayList<FlightDTO> flights = indexservice.searchService(departureData,arrivalData,hidYear,hidMonth,hidDay,BackYear,BackMonth,BackDay);//service로가서 데이터 가공
-//		for(FlightDTO f : flights) {
-//			String test = f.getFlightDistance();
-//			int test1 = Integer.parseInt(test);
-//			
-//			DecimalFormat decFormat = new DecimalFormat("###,###");
-//			String str = decFormat.format(test1 * 30);//곱셈은 나중에
-//			System.out.println(str);
-//		}
+		ArrayList<FlightDTO> flights = indexservice.searchService(departureData,arrivalData,hidYear,hidMonth,hidDay);//service로가서 데이터 가공
+		if(hiddenItem.equals("왕복")) {
+		ArrayList<FlightDTO> backflights = indexservice.searchBackService(departureData,arrivalData,BackYear,BackMonth,BackDay);//service로가서 데이터 가공
+		model.addAttribute("backflights", backflights);
+		}
 		model.addAttribute("flights", flights);
 		return "booking/AvailSearch";
 	}

@@ -16,6 +16,23 @@ public class FlightDTO {
 	private String startFlight;
 	private String endFlight;
 	private String flightDistance;
+//		CREATE TABLE flight(
+//				flightNo varchar2(20),
+//				flightRouteNo varchar2(50),
+//				mon varchar2(10),
+//				tue varchar2(10),
+//				wed varchar2(10),
+//				thu varchar2(10),
+//				fri varchar2(10),
+//				sat varchar2(10),
+//				sun varchar2(10),
+//				departTime varchar2(20),
+//				arrivalTime varchar2(20),
+//				flightTime varchar2(20),
+//				startFlight varchar2(50),
+//				endFlight varchar2(50),
+//				flightDistance varchar2(20)
+//				);
 	public String getFlightNo() {
 		return flightNo;
 	}

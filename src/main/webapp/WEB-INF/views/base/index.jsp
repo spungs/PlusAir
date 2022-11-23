@@ -250,6 +250,7 @@ function DepPlace() {//출발지 검색 버튼 액션
 	  var hiddenItem = document.getElementById('hiddenItem') // 선택된 운행정보 히든 태그
 	  const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	  const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
+	  const dateLayer = document.getElementById('dateLayer');//달력 상위 div
 	  
 	  hiddenItem.value = HidItem //왕복or편도 를 히든태그에 넣어줌
 	  
@@ -259,6 +260,7 @@ function DepPlace() {//출발지 검색 버튼 액션
 	  else {
 		  depAirportLayer.style.display = 'block';
 		  AriAirportLayer.style.display = 'none';
+		  dateLayer.style.display = 'none';
 		}
 	}
 function selectICN() {//출발지 선택후 출발지 텍스트에 담아주는 함수
@@ -283,6 +285,7 @@ function selectGMP() {//출발지 선택후 출발지 텍스트에 담아주는 
 function AriPlace() {//도착지 검색 버튼 함수
 	  const depAirportLayer = document.getElementById('depAirportLayer');//출발지 선택 div
 	  const AriAirportLayer = document.getElementById('AriAirportLayer');//도착지 선택 div
+	  const dateLayer = document.getElementById('dateLayer');//달력 상위 div
 	  const koplace = document.getElementById('koplace');//국내 행성지 div 301번째줄
 	  const ItnPlace = document.getElementById('ItnPlace');//국제 행성지 div 316번째줄
 	  var Dep = document.getElementById('spanDepartureDesc').innerHTML;//출발지 텍스트
@@ -296,12 +299,14 @@ function AriPlace() {//도착지 검색 버튼 함수
 	  else if(Dep == '서울(인천)'){
 		  AriAirportLayer.style.display = 'block';
 		  depAirportLayer.style.display = 'none';
+		  dateLayer.style.display = 'none';
 		  koplace.style.display = 'none';//출발지가 인천일땐 국내선 비행기가 없으므로 숨겨줌
 		  ItnPlace.style.display = 'block';//출발지가 인천일땐 국제선 보여줌
 	  }
 	  else if(Dep == '서울(김포)'){
 		  AriAirportLayer.style.display = 'block';
 		  depAirportLayer.style.display = 'none';
+		  dateLayer.style.display = 'none';
 		  koplace.style.display = 'block';//출발지가 김포 선택시 국내선 보여줌
 		  ItnPlace.style.display = 'none';//출발지가 김포일땐 국제선 비행기가 없으므로 숨겨줌
 	  }
