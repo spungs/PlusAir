@@ -1,9 +1,32 @@
 package com.care.plusAir.dto;
 
+/*
+CREATE TABLE passenger(	
+memberNo varchar2(8),	
+id varchar2(16),	
+pw varchar2(16),	
+point NUMBER,	
+korName	varchar2(10),
+birth varchar2(10),	
+gender varchar2(2),	
+mobile varchar2(13),	
+email varchar2(50),	
+firstName varchar2(32),	
+lastName varchar2(32),	
+nationality varchar2(85),	
+totalSales NUMBER,	
+regDate varchar2(10),	
+constraint pk_passenger primary key(memberNo)	
+);	
+ */
+
 public class memberDTO {
+	private String memberNo;
 	private String id;
 	private String pw;
 	private String pwConfirm;
+	private int point;
+	private String korName;
 	private String korFirstName;
 	private String korLastName;
 	private String engFirstName;
@@ -12,6 +35,57 @@ public class memberDTO {
 	private String mobile;
 	private String gender;
 	private String email;
+	private String nationality;
+	private int totalSales;
+	private String regDate;
+
+	public String getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+	public String getKorName() {
+		return korName;
+	}
+
+	public void setKorName(String korName) {
+		this.korName = korName;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public int getTotalSales() {
+		return totalSales;
+	}
+
+	public void setTotalSales(int totalSales) {
+		this.totalSales = totalSales;
+	}
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 
 	public String getId() {
 		return id;

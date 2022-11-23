@@ -597,8 +597,8 @@ var kor = /[^ㄱ-ㅎ]/;
 			})
 			return;
 		}
-		// 아이디 
-		if ($('#inp-01').val() == "" || !chkId.test($('#inp-01').val())) {
+		// 아이디
+		if ($('#inp-01').val() == "" || !chkId.test($('#inp-01').val()) || $('#txtIdChk1').css('display') === 'block') {
 			$('#inp-01').focus();
 			Swal.fire({
 				text:'아이디를 확인해주세요.'
@@ -628,6 +628,23 @@ var kor = /[^ㄱ-ㅎ]/;
 				text:'휴대전화를 확인 해주세요.'
 			})
 			return;
+		}
+		
+		req = new XMLHttpRequest();
+		req.onreadystatechange = changeText
+		req.open('post', 'isExistMobile')
+		var reqData = $('#inputPhone-02').val()
+		req.send(reqData)
+			
+		function changeText() {
+			if (req.readyState == 4 && req.status == 200) {
+				if(req.responseText == "이미 가입된 전화번호"){
+					Swal.fire({
+						text:'이미 가입된 전화번호입니다.'
+					})
+					return;
+				}
+			}
 		}
 		
 		document.getElementById('frm').submit();
@@ -964,7 +981,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 											<div class="eac-input-wrap"
 												style="display: block; position: relative; font-size: 14px;">
 												<input type="email" data-element="email" id="inputEmail1" value="${member.inputEmail1}"
-													class="input__text" autocomplete="off" placeholder="example@gmail.com"> <span
+													name="email" class="input__text" autocomplete="off" placeholder="example@gmail.com"> <span
 													class="email-auto"
 													style="display: block; box-sizing: content-box; font-family: SpoqaHanSansNeo, roboto, sans-serif, Arial; font-weight: 400; letter-spacing: 0px; left: 0px;"></span>
 												<span class="eac-cval"
@@ -1022,7 +1039,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										<span title="required" class="input__label-asterisk">*</span>
 									</label>
 									<div data-element="form" class="input">
-										<input type="text" id="inp-01" class="input__text">
+										<input type="text" id="inp-01" class="input__text" name="id">
 										<button type="button" data-element="remove"
 											class="input__remove-button">
 											<span class="hidden">삭제</span>
@@ -1047,7 +1064,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 									<label for="inp-02" class="input__label">비밀번호<span
 										title="required" class="input__label-asterisk">*</span></label>
 									<div data-element="form" class="input" data-check="0">
-										<input type="password" class="input__text" id="inp-02">
+										<input type="password" class="input__text" id="inp-02" name="pw">
 										<button type="button" data-element="remove"
 											class="input__remove-button">
 											<span class="hidden">삭제</span>
@@ -1099,7 +1116,7 @@ var chkEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 										title="required" class="input__label-asterisk">*</span></label>
 									<div data-element="form" class="input">
 										<input type="text" id="inputPhone-02" class="input__text"
-											maxlength="13" numberonly="">
+											maxlength="13" numberonly="" name="mobile">
 										<button type="button" data-element="remove"
 											class="input__remove-button">
 											<span class="hidden">삭제</span>

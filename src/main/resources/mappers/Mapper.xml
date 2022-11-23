@@ -3,6 +3,18 @@
 
 <mapper namespace="com.care.plusAir.repository.IMemberDAO">
 	<select id="isExistId" parameterType="String" resultType="integer">
-		SELECT count(id) FROM member2 WHERE id=#{id}
+		SELECT count(id) FROM passenger WHERE id=#{id}
 	</select>
+	
+	<select id="isExistMemberNo" parameterType="String" resultType="integer">
+		SELECT count(id) FROM passenger WHERE memberNo=#{memberNo}
+	</select>
+	
+	<select id="isExistMobile" parameterType="String" resultType="integer">
+		SELECT count(id) FROM passenger WHERE mobile=#{mobile}
+	</select>
+	
+	<insert id="register" parameterType="com.care.plusAir.dto.memberDTO">
+		INSERT INTO passenger VALUES(#{memberNo},#{id},#{pw},1000,#{korName},null,null,#{mobile},#{email},#{engFirstName},#{engLastName},null,0,#{regDate})
+	</insert>
 </mapper>

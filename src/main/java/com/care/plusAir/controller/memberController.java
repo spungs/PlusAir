@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +27,13 @@ public class memberController {
 		return "member/memberJoin/join";
 	}
 
-	// 회원가입 화면에서 휴대폰으로 회원가입 클릭 시 이름 입력 화면
+	// join페이지 휴대폰으로 회원가입 클릭 시 이름 입력 화면
 	@RequestMapping(value = "member/memberJoin/joinInfo")
 	public String nameWrite(String korFirstName) {
 		return "member/memberJoin/joinInfo";
 	}
 
-	// 회원가입에서 인증번호 전송 버튼 클릭 시
+	// 회원가입페이지 인증번호 전송 버튼 클릭 시
 	@Autowired private MailService mailService;
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/sendAuth", produces = "text/html; charset=UTF-8")
@@ -48,7 +49,7 @@ public class memberController {
 		return "인증번호를 이메일로 전송했습니다.";
 	}
 
-	// 회원가입에서 인증번호 확인 버튼 클릭 시
+	// 회원가입페이지 인증번호 확인 버튼 클릭 시
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/checkAuth", produces = "text/html; charset=UTF-8")
 	public String checkAuth(@RequestBody(required = false) String inputAuthNum) {
@@ -64,7 +65,7 @@ public class memberController {
 		return "인증번호를 다시 확인해주세요.";
 	}
 	
-	// 회원가입에서 아이디 중복 확인 버튼 클릭 시
+	// 회원가입페이지 아이디 중복 확인 ajax
 	@ResponseBody
 	@PostMapping(value = "member/memberJoin/isExistId", produces = "text/html; charset=UTF-8")
 	public String isExistId(@RequestBody(required = false) String id) {
@@ -72,12 +73,37 @@ public class memberController {
 			return "입력해주세요.";
 		return service.isExistId(id);
 	}
+	// 회원가입에서 전화번호 중복 확인 버튼 클릭 시
+	@ResponseBody
+	@PostMapping(value = "member/memberJoin/isExistMobile", produces = "text/html; charset=UTF-8")
+	public String isExistMobile(@RequestBody(required = false) String mobile) {
+		if(mobile == null)
+			return "입력해주세요.";
+		return service.isExistMobile(mobile);
+	}
 
 	// 회원가입 성공 페이지
-	@RequestMapping(value = "member/memberJoin/joinComplete")
+	@RequestMapping("member/memberJoin/joinComplete")
 	public String joinComplete(memberDTO member) {
+		String result = service.register(member);
+		System.out.println(result);
+		if(result == "이미 가입되어 있습니다.") {
+			return "member/memberJoin/already";
+		}
 		
 		return "member/memberJoin/joinComplete";
 	}
-
+	
+	// 추가정보 입력하는 페이지
+	@GetMapping("member/memberJoin/optionalInfoWrite")
+	public String optionalInfoWrite() {
+		return "member/memberJoin/optionalInfoWrite";
+	}
+	
+	// 로그인 페이지
+	@GetMapping("member/auth/login")
+	public String login() {
+		
+		return "member/auth/login";
+	}
 }
