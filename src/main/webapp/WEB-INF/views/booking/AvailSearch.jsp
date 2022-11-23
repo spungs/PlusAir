@@ -1372,7 +1372,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 		            </div>					
 				</div>
 				<c:choose>
-					<c:when test="${empty flights}">
+					<c:when test="${empty priceflights}">
 				<div class="finish-item-wrap" style="display:block;" id="DEP_empty">
 					<div class="finish-item">
 						<div class="finish-item__img"><img src="/images/icon/icon-result-none.png" alt=""></div>					
@@ -1382,12 +1382,12 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 				</div>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="flight" items="${flights}">
+						<c:forEach var="priceflight" items="${priceflights}">
 							<ul class="fare-list">
 								<li class="list-item">
 									<div class="list-summary">				
 										<div class="head">														
-											<span class="tk-num">${flight.flightNo}</span>
+											<span class="tk-num">${priceflight.flightNo}</span>
 												<div class="chips"><span class="chip lowest">최저가</span></div>
 											<ul class="util-menu">
 												<li class="util-menu-item">
@@ -1397,10 +1397,10 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 													</ul>
 										</div>
 										<div class="time">									
-											<span class="time-num start" data-gmt="202212160210">${flight.departTime}</span>										
-											<span class="moving-time">${flight.flightTime}</span>							
+											<span class="time-num start" data-gmt="202212160210">${priceflight.departTime}</span>										
+											<span class="moving-time">${priceflight.flightTime}</span>							
 											<span class="time-num target" data-landingdate="2022-12-16">
-											${flight.arrivalTime}</span>									
+											${priceflight.arrivalTime}</span>									
 										</div>
 									</div>
 									<div class="fare-pare-tab">																										
@@ -1409,7 +1409,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade fly">ECONOMY</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">125,000</span>
+											<span class="price_txt">${priceflight.price},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>
@@ -1422,7 +1422,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade fly">BUSINESS</span>																							
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">179,000</span>
+											<span class="price_txt">${priceflight.price+100},000</span>
 											<span class="unit">원</span>
 											</strong>															
 											</span>																		
@@ -1435,7 +1435,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade new-class">FIRST CLASS</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">314,000</span>
+											<span class="price_txt">${priceflight.price+210},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>
@@ -1518,7 +1518,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade fly">ECONOMY</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">125,000</span>
+											<span class="price_txt">${flight.price},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>
@@ -1531,7 +1531,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade fly">BUSINESS</span>																							
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">179,000</span>
+											<span class="price_txt">${flight.price+100},000</span>
 											<span class="unit">원</span>
 											</strong>															
 											</span>																		
@@ -1544,7 +1544,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											<span class="grade new-class">FIRST CLASS</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">314,000</span>
+											<span class="price_txt">${flight.price+210},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>

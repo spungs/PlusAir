@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.care.plusAir.dto.FlightDTO;
+import com.care.plusAir.dto.PirceFlightDTO;
 import com.care.plusAir.dto.SearchServiceDTO;
 import com.care.plusAir.service.indexService;
 
@@ -24,28 +25,6 @@ public class indexController {
 	public String index() {
 		return "base/index";
 	}
-//	@ResponseBody
-//	@PostMapping(value="check",produces = "application/json; charset=UTF-8")
-//	public void dataCheck(String hiddenItem,String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,
-//			String hidToYear,String hidToMonth,String hidToDay,String BackYear,String BackMonth,String BackDay,String adtNum,String chdNum,String infNum) {
-//		System.out.println("운행정보 : " + hiddenItem);
-//		System.out.println("출발지 : " + departureData);
-//		System.out.println("도착지 : " + arrivalData);
-//		System.out.println("돌아올때 출발지 : " + arrivalData);//왕복일때
-//		System.out.println("돌아올때 도착지 : " + departureData);//왕복일때
-//		System.out.println("출발년도 : " + hidYear);
-//		System.out.println("출발 월 : " + hidMonth);
-//		System.out.println("출발 일 : " + hidDay);
-//		System.out.println("현제 년도 : " + hidToYear);
-//		System.out.println("현제 월 : " + hidToMonth);
-//		System.out.println("현제 일 : " + hidToDay);
-//		System.out.println("돌아올 년도 : " + BackYear);
-//		System.out.println("돌아올 월 : " + BackMonth);
-//		System.out.println("돌아올 일 : " + BackDay);
-//		System.out.println("어른 수 : " + adtNum);
-//		System.out.println("소아 수 : " + chdNum);
-//		System.out.println("유아 수 : " + infNum);
-//	}
 	@ResponseBody
 	@PostMapping(value="check",produces = "application/json; charset=UTF-8")
 	public String dataCheck(@RequestBody HashMap<String,String> map,Model model) {//ArraylList값을 담아서 보낼 모델
@@ -87,12 +66,13 @@ public class indexController {
 	@GetMapping("test")//model에 ArrayList 데이터를담기위해 페이지 이동전에 DB데이터가공하는 곳
 	public String test(String hiddenItem,String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay,String BackYear,String BackMonth,String BackDay,Model model) {
 		
-		ArrayList<FlightDTO> flights = indexservice.searchService(departureData,arrivalData,hidYear,hidMonth,hidDay);//service로가서 데이터 가공
+		ArrayList<PirceFlightDTO> priceflights = indexservice.searchService(departureData,arrivalData,hidYear,hidMonth,hidDay);//service로가서 데이터 가공
 		if(hiddenItem.equals("왕복")) {
-		ArrayList<FlightDTO> backflights = indexservice.searchBackService(departureData,arrivalData,BackYear,BackMonth,BackDay);//service로가서 데이터 가공
+		ArrayList<PirceFlightDTO> backflights = indexservice.searchBackService(departureData,arrivalData,BackYear,BackMonth,BackDay);//service로가서 데이터 가공
 		model.addAttribute("backflights", backflights);
 		}
-		model.addAttribute("flights", flights);
+
+		model.addAttribute("priceflights", priceflights);
 		return "booking/AvailSearch";
 	}
 }

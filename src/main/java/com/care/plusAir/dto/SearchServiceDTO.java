@@ -9,6 +9,7 @@ public class SearchServiceDTO {
 	private String BackYear;
 	private String BackMonth;
 	private String BackDay;
+	private String price;
 	public String getBackYear() {
 		return BackYear;
 	}
@@ -56,5 +57,11 @@ public class SearchServiceDTO {
 	}
 	public void setDay(String day) {
 		this.day = day;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 }

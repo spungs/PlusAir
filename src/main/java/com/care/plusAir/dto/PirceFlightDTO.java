@@ -1,6 +1,6 @@
 package com.care.plusAir.dto;
 
-public class FlightDTO {
+public class PirceFlightDTO {
 	private String flightNo;
 	private String flightRouteNo;
 	private String mon;
@@ -16,24 +16,9 @@ public class FlightDTO {
 	private String startFlight;
 	private String endFlight;
 	private String flightDistance;
+	private String price;
 	
-//		CREATE TABLE flight(
-//				flightNo varchar2(20),
-//				flightRouteNo varchar2(50),
-//				mon varchar2(10),
-//				tue varchar2(10),
-//				wed varchar2(10),
-//				thu varchar2(10),
-//				fri varchar2(10),
-//				sat varchar2(10),
-//				sun varchar2(10),
-//				departTime varchar2(20),
-//				arrivalTime varchar2(20),
-//				flightTime varchar2(20),
-//				startFlight varchar2(50),
-//				endFlight varchar2(50),
-//				flightDistance varchar2(20)
-//				);
+
 	public String getFlightNo() {
 		return flightNo;
 	}
@@ -123,6 +108,12 @@ public class FlightDTO {
 	}
 	public void setFlightDistance(String flightDistance) {
 		this.flightDistance = flightDistance;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	
 	

@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.care.plusAir.dto.FlightDTO;
+import com.care.plusAir.dto.PirceFlightDTO;
 import com.care.plusAir.dto.SearchServiceDTO;
 import com.care.plusAir.repository.FlightDAO;
 
 @Service
 public class indexService {
 	@Autowired FlightDAO fightDao;
-	public ArrayList<FlightDTO> searchService(String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay){
+	public ArrayList<PirceFlightDTO> searchService(String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay){
 		String flightRouteNo = departureData + arrivalData;
 		String stringYear = hidYear;
 		String stringMonth = hidMonth;
@@ -80,17 +81,58 @@ public class indexService {
 			int st = Integer.parseInt(start);
 			int ed = Integer.parseInt(end);
 			int se = Integer.parseInt(sel);
-			System.out.println("시작일 : " + st);
-			System.out.println("끝나는일 : " + ed);
-			System.out.println("내가 선택한 날 : " + se);
+			
 			if(st>=se || se>=ed) {//선택한 날이 항공기 시작일과 끝나는일 밖이면 해당 항공기 dto를 지워준다
 				flights.remove(i);
 				i--;
 			}
 		}
-		return flights;
+		ArrayList<PirceFlightDTO> priceflights = new ArrayList<>();
+		if(flights.size() > 0) {
+			int FlightDistance = Integer.parseInt(flights.get(0).getFlightDistance());
+			int DistancePrice = FlightDistance*30;
+			for(int i=0;i<flights.size();i++) {
+				PirceFlightDTO priceflight = new PirceFlightDTO();
+				
+				String stringtime = flights.get(i).getDepartTime().substring(0,2);
+				int inttime = Integer.parseInt(stringtime);
+				
+				if(inttime > 13 && inttime <18) {
+					String stringprice = Integer.toString(DistancePrice + 50000);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}
+				else if(inttime >18) {
+					String stringprice = Integer.toString(DistancePrice + 80000);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}else {
+					String stringprice = Integer.toString(DistancePrice);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}
+				priceflight.setArrivalTime(flights.get(i).getArrivalTime());
+				priceflight.setDepartTime(flights.get(i).getDepartTime());
+				priceflight.setStartFlight(flights.get(i).getStartFlight());
+				priceflight.setEndFlight(flights.get(i).getEndFlight());
+				priceflight.setFlightDistance(flights.get(i).getFlightDistance());
+				priceflight.setFlightNo(flights.get(i).getFlightNo());
+				priceflight.setFlightRouteNo(flights.get(i).getFlightRouteNo());
+				priceflight.setFlightTime(flights.get(i).getFlightTime());
+				priceflight.setMon(flights.get(i).getMon());
+				priceflight.setTue(flights.get(i).getTue());
+				priceflight.setWed(flights.get(i).getWed());
+				priceflight.setThu(flights.get(i).getThu());
+				priceflight.setFri(flights.get(i).getFri());
+				priceflight.setSat(flights.get(i).getSat());
+				priceflight.setSun(flights.get(i).getSun());
+				priceflights.add(priceflight);
+			}
 		}
-	public ArrayList<FlightDTO> searchBackService(String departureData,String arrivalData,String BackYear,String BackMonth,String BackDay){
+		return priceflights;
+		}
+	
+	public ArrayList<PirceFlightDTO> searchBackService(String departureData,String arrivalData,String BackYear,String BackMonth,String BackDay){
 		String flightRouteNo = arrivalData + departureData;
 		String stringYear = BackYear;
 		String stringMonth = BackMonth;
@@ -160,7 +202,49 @@ public class indexService {
 				i--;
 			}
 		}
-		return backflights;
+		ArrayList<PirceFlightDTO> priceflights = new ArrayList<>();
+		if(backflights.size() > 0) {
+			int FlightDistance = Integer.parseInt(backflights.get(0).getFlightDistance());
+			int DistancePrice = FlightDistance*30;
+			for(int i=0;i<backflights.size();i++) {
+				PirceFlightDTO priceflight = new PirceFlightDTO();
+				
+				String stringtime = backflights.get(i).getDepartTime().substring(0,2);
+				int inttime = Integer.parseInt(stringtime);
+				
+				if(inttime > 13 && inttime <18) {
+					String stringprice = Integer.toString(DistancePrice + 50000);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}
+				else if(inttime >18) {
+					String stringprice = Integer.toString(DistancePrice + 80000);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}else {
+					String stringprice = Integer.toString(DistancePrice);
+					String lastprice = stringprice.substring(0,3);
+					priceflight.setPrice(lastprice);
+				}
+				priceflight.setArrivalTime(backflights.get(i).getArrivalTime());
+				priceflight.setDepartTime(backflights.get(i).getDepartTime());
+				priceflight.setStartFlight(backflights.get(i).getStartFlight());
+				priceflight.setEndFlight(backflights.get(i).getEndFlight());
+				priceflight.setFlightDistance(backflights.get(i).getFlightDistance());
+				priceflight.setFlightNo(backflights.get(i).getFlightNo());
+				priceflight.setFlightRouteNo(backflights.get(i).getFlightRouteNo());
+				priceflight.setFlightTime(backflights.get(i).getFlightTime());
+				priceflight.setMon(backflights.get(i).getMon());
+				priceflight.setTue(backflights.get(i).getTue());
+				priceflight.setWed(backflights.get(i).getWed());
+				priceflight.setThu(backflights.get(i).getThu());
+				priceflight.setFri(backflights.get(i).getFri());
+				priceflight.setSat(backflights.get(i).getSat());
+				priceflight.setSun(backflights.get(i).getSun());
+				priceflights.add(priceflight);
+			}
+		}
+		return priceflights;
 		}
 
 }
