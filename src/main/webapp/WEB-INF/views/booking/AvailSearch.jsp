@@ -915,6 +915,8 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		var checkbackticket = document.getElementById('checkbackticket')//돌아오는편 선택하기 버튼
 		var next = document.getElementById('next')//다음페이지 버튼
 		var backcheck = document.getElementById('backcheck')//돌아오는편 선택하기 버튼을 클릭시 히든태그backcheck의 값이 N 에서 Y로 변경됨
+		var selprice = $(this).find('.price_txt');//내가선택한 유형의 가격
+		var lastpirce = document.getElementById('pricetxt')//맨 하단 div에 내가 선택한 유형의 가격 띄워주기
 		if(changeRout.value == "CHR"){
 			alert('항공권 정보가 변경되었습니다.항공권을 다시 검색해주세요.')
 		}
@@ -925,6 +927,7 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		else{
 			$('.tab-btn.grade-bag.active').removeClass('active')//이미 다른 버튼에 active가있다면 다른버튼 active를 지워주고 내가 선택한 버튼에 active만들어줌
 			$(this).addClass('active')
+			lastpirce.innerHTML = selprice.html();
 			if(backcheck.value=="N")
 				$('.booking-sticky.booking-sticky--reservation').css('display','block');
 			else{
@@ -1584,7 +1587,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 							<span>예상 결제금액</span><!-- 예상 결제금액--> 
 						</div>									
 						<button type="button" class="summary" data-element="toggle__anchor" aria-controls="toggle-4" aria-expanded="false" id="btnTotAmount">
-							<span class="price_txt">244,800</span>
+							<span class="price_txt" id="pricetxt"></span>
 							<span class="unit">원</span>
 						</button>				
 					</div>

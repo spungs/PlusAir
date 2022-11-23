@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.care.plusAir.repository.FlightDAO">
-	<select id="selectCityAll" parameterType="com.care.plusAir.dto.SearchServiceDTO" resultType="com.care.plusAir.dto.FlightDTO">
+<mapper namespace="com.care.plusAir.booking.repository.FlightDAO">
+	<select id="selectCityAll" parameterType="com.care.plusAir.booking.dto.SearchServiceDTO" resultType="com.care.plusAir.booking.dto.FlightDTO">
 		SELECT * FROM flight WHERE ${day}='Y'
 		<if test="flightRouteNo != null">AND flightRouteNo like '%'||#{flightRouteNo}||'%'</if>
 	</select>
