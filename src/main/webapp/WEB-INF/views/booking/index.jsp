@@ -700,20 +700,22 @@ function ComeBackDate(){
 	console.log(hidDay) 
 	console.log(BackYear) 
 	console.log(BackMonth) 
-	console.log(BackDay)  */
-	console.log(hidDay)
 	console.log(BackDay)
-	if(hidMonth == BackMonth){
-		if(hidDay > BackDay){
+	console.log(hidDay)
+	console.log(BackDay) */
+	if(hidYear == BackYear){
+		if(hidMonth == BackMonth){
+			if(hidDay > BackDay){
+				alert('돌아오는 날짜를 정확히 선택해 주세요.')
+			}
+			else{
+				DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
+				dateLayer.style.display = 'none';
+				}
+		}
+		else if(hidMonth > BackMonth){
 			alert('돌아오는 날짜를 정확히 선택해 주세요.')
 		}
-		else{
-			DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
-			dateLayer.style.display = 'none';
-			}
-	}
-	else if(hidMonth > BackMonth){
-		alert('돌아오는 날짜를 정확히 선택해 주세요.')
 	}
 	else if(hidYear > BackYear){
 		alert('돌아오는 날짜를 정확히 선택해 주세요.')

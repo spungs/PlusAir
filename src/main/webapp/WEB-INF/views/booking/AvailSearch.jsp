@@ -703,18 +703,19 @@ function ComeBackDate(){
 	console.log(BackYear) 
 	console.log(BackMonth) 
 	console.log(BackDay)  */
-	
-	if(hidMonth == BackMonth){
-		if(hidDay > BackDay){
+	if(hidYear == BackYear){
+		if(hidMonth == BackMonth){
+			if(hidDay > BackDay){
+				alert('돌아오는 날짜를 정확히 선택해 주세요.')
+			}
+			else{
+				DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
+				dateLayer.style.display = 'none';
+				}
+		}
+		else if(hidMonth > BackMonth){
 			alert('돌아오는 날짜를 정확히 선택해 주세요.')
 		}
-		else{
-			DepartureDate.innerHTML= hidYear + '.' + hidMonth + '.' + hidDay + ' ~ ' + BackYear + '.' + BackMonth + '.' + BackDay
-			dateLayer.style.display = 'none';
-			}
-	}
-	else if(hidMonth > BackMonth){
-		alert('돌아오는 날짜를 정확히 선택해 주세요.')
 	}
 	else if(hidYear > BackYear){
 		alert('돌아오는 날짜를 정확히 선택해 주세요.')
@@ -917,6 +918,33 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		var backcheck = document.getElementById('backcheck')//돌아오는편 선택하기 버튼을 클릭시 히든태그backcheck의 값이 N 에서 Y로 변경됨
 		var selprice = $(this).find('.price_txt');//내가선택한 유형의 가격
 		var lastpirce = document.getElementById('pricetxt')//맨 하단 div에 내가 선택한 유형의 가격 띄워주기
+		//다음페이지로 데이터 넘겨줄것들
+		var selflightNo = $(this).find('.flightNo'); // 내가 선택한 항공편명
+		var seldepartTime = $(this).find('.departTime'); // 내가 선택한 항공편의 출발시간
+		var selflightTime = $(this).find('.flightTime'); // 내가 선택한 항공편의 이동시간
+		var selarrivalTime = $(this).find('.arrivalTime'); // 내가 선택한 항공편의 도착시간
+		/* console.log(test1.val())
+		console.log(test2.val()).
+		console.log(test3.val())
+		console.log(test4.val())
+		console.log(selprice.html()) */
+		var flightNo = document.getElementById('flightNo')//다음페이지러 넘겨줄 히든태그
+		var departTime = document.getElementById('departTime')//다음페이지러 넘겨줄 히든태그
+		var arrivalTime = document.getElementById('arrivalTime')//다음페이지러 넘겨줄 히든태그
+		var flightTime = document.getElementById('flightTime')//다음페이지러 넘겨줄 히든태그
+		var price = document.getElementById('price')//다음페이지러 넘겨줄 히든태그
+		var backprice = document.getElementById('backprice')//다음페이지러 넘겨줄 히든태그
+		
+		flightNo.value=selflightNo.val();
+		departTime.value=seldepartTime.val();
+		arrivalTime.value=selflightTime.val();
+		flightTime.value=selarrivalTime.val();
+		if(price.value !== ""){
+			backprice.value=selprice.html();
+		}else{
+			price.value=selprice.html();
+		}
+		
 		if(changeRout.value == "CHR"){
 			alert('항공권 정보가 변경되었습니다.항공권을 다시 검색해주세요.')
 		}
@@ -1418,33 +1446,48 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											</span>
 											<span class="remaining-seat">
 												매진</span>
-										</div>									
+										</div>
+										<input type="hidden" class="flightNo" value="${priceflight.flightNo}">									
+										<input type="hidden" class="departTime" value="${priceflight.departTime}">									
+										<input type="hidden" class="flightTime" value="${priceflight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${priceflight.arrivalTime}">									
+										<input type="hidden" class="price" value="${priceflight.price},000">									
 									</a>
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">																																			
 											<span class="grade fly">BUSINESS</span>																							
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">${priceflight.price+100},000</span>
+											<span class="price_txt">${priceflight.price+150},000</span>
 											<span class="unit">원</span>
 											</strong>															
 											</span>																		
 											<span class="remaining-seat">
 												8석</span>
 										</div>
+										<input type="hidden" class="flightNo" value="${priceflight.flightNo}">									
+										<input type="hidden" class="departTime" value="${priceflight.departTime}">									
+										<input type="hidden" class="flightTime" value="${priceflight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${priceflight.arrivalTime}">									
+										<input type="hidden" class="price" value="${priceflight.price},000">	
 									</a>																																																																												
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">
 											<span class="grade new-class">FIRST CLASS</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">${priceflight.price+210},000</span>
+											<span class="price_txt">${priceflight.price+410},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>
 											<span class="remaining-seat">
 												3석</span>
-										</div>									
+										</div>
+										<input type="hidden" class="flightNo" value="${priceflight.flightNo}">									
+										<input type="hidden" class="departTime" value="${priceflight.departTime}">									
+										<input type="hidden" class="flightTime" value="${priceflight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${priceflight.arrivalTime}">									
+										<input type="hidden" class="price" value="${priceflight.price},000">										
 									</a>
 									</div>								
 									<div class="grade-info fly-bag" style="">								
@@ -1527,33 +1570,48 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 											</span>
 											<span class="remaining-seat">
 												매진</span>
-										</div>									
+										</div>
+										<input type="hidden" class="flightNo" value="${flight.flightNo}">									
+										<input type="hidden" class="departTime" value="${flight.departTime}">									
+										<input type="hidden" class="flightTime" value="${flight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${flight.arrivalTime}">									
+										<input type="hidden" class="price" value="${flight.price},000">										
 									</a>
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">																																			
 											<span class="grade fly">BUSINESS</span>																							
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">${flight.price+100},000</span>
+											<span class="price_txt">${flight.price+150},000</span>
 											<span class="unit">원</span>
 											</strong>															
 											</span>																		
 											<span class="remaining-seat">
 												8석</span>
 										</div>
+										<input type="hidden" class="flightNo" value="${flight.flightNo}">									
+										<input type="hidden" class="departTime" value="${flight.departTime}">									
+										<input type="hidden" class="flightTime" value="${flight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${flight.arrivalTime}">									
+										<input type="hidden" class="price" value="${flight.price},000">	
 									</a>																																																																												
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">
 											<span class="grade new-class">FIRST CLASS</span>				
 											<span class="price">
 											<strong class="point">
-											<span class="price_txt">${flight.price+210},000</span>
+											<span class="price_txt">${flight.price+410},000</span>
 											<span class="unit">원</span>
 											</strong>
 											</span>
 											<span class="remaining-seat">
 												3석</span>
-										</div>									
+										</div>	
+										<input type="hidden" class="flightNo" value="${flight.flightNo}">									
+										<input type="hidden" class="departTime" value="${flight.departTime}">									
+										<input type="hidden" class="flightTime" value="${flight.flightTime}">									
+										<input type="hidden" class="arrivalTime" value="${flight.arrivalTime}">									
+										<input type="hidden" class="price" value="${flight.price},000">									
 									</a>
 									</div>								
 									<div class="grade-info fly-bag" style="">								
@@ -1575,11 +1633,34 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 				</c:choose>
 				
 			</div>
-			<input type="hidden" name="depLowestFareIdx" id="depLowestFareIdx" value="0">
-			<input type="hidden" name="currencyCode" id="currencyCode" value="KRW">
-			<input type="hidden" name="currencyCodeaaa" id="currencyCodeaaa" value="KRW">
+			
 		</div>
 		<div class="booking-sticky booking-sticky--reservation" style="display:none" id="divBottom">
+		<form action="PsList" method="post">
+			<!-- priceFlightDTO에 담을 값들 -->
+			<input type="hidden" id="flightNo" name="flightNo">
+			<input type="hidden" id="departTime" name="departTime">
+			<input type="hidden" id="arrivalTime" name="arrivalTime">
+			<input type="hidden" id="flightTime" name="flightTime">
+			<input type="hidden" id="price" name="price">
+			<input type="hidden" id="backprice" name="backprice">
+			<input type="hidden" name="hiddenItem" value="${param.hiddenItem}">	
+			<input type="hidden" name="kode" value="${param.kode}">	<!-- 출발지 한국어 -->	
+			<input type="hidden" name="koar" value="${param.koar}">	<!-- 도착지 한국어 -->	
+			<input type="hidden" name="departureData" value="${param.departureData}">
+			<input type="hidden" name="arrivalData" value="${param.arrivalData}">
+			<input type="hidden" name="hidYear" value="${param.hidYear}">
+			<input type="hidden" name="hidMonth" value="${param.hidMonth}">
+			<input type="hidden" name="hidDay" value="${param.hidDay}">
+			<input type="hidden" name="hidToYear" value="${param.hidToYear}">
+			<input type="hidden" name="hidToMonth" value="${param.hidToMonth}">
+			<input type="hidden" name="hidToDay" value="${param.hidToDay}">
+			<input type="hidden" name="BackYear" value="${param.BackYear}">
+			<input type="hidden" name="BackMonth" value="${param.BackMonth}">
+			<input type="hidden" name="BackDay" value="${param.BackDay}">
+			<input type="hidden" name="adtNum" value="${param.adtNum}">
+			<input type="hidden" name="chdNum" value="${param.chdNum}">
+			<input type="hidden" name="infNum" value="${param.infNum}">
 			<div class="reservation-container">
 				<div class="booking-sticky__top">
 					<div class="toggle-wrap toggle-wrap--button">									
@@ -1596,17 +1677,18 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 						<button type="button" class="button button--primary pc-only button--active" id="checkbackticket" name="btnAvailSch" onclick="CheckBackFlight()">
 							<span class="button__text">오는 편 선택하기</span><!--오는 편 선택하기 -->
 						</button>
-						<button type="button" class="button button--primary pc-only button--active" id="next" name="btnAvailSch" onclick="" style="display:none">
+						<button type="submit" class="button button--primary pc-only button--active" id="next" name="btnAvailSch" onclick="" style="display:none">
 							<span class="button__text">다음</span><!--오는 편 선택하기 -->
 						</button>	
 						</c:when>
 						<c:otherwise>
-						<button type="button" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
+						<button type="submit" class="button button--primary pc-only button--active" name="btnAvailSch" onclick="javascript:printAvailSchedule('ARR');">
 							<span class="button__text">다음</span><!--오는 편 선택하기 -->
 						</button>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
+			</form>
 		</div>
 		<%@ include file="../common/include/footer.jsp"%>

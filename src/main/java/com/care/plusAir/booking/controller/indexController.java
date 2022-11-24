@@ -1,6 +1,7 @@
 package com.care.plusAir.booking.controller;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.care.plusAir.booking.dto.DownDataDTO;
 import com.care.plusAir.booking.dto.PirceFlightDTO;
 import com.care.plusAir.booking.service.indexService;
 
@@ -72,5 +74,29 @@ public class indexController {
 
 		model.addAttribute("priceflights", priceflights);
 		return "booking/AvailSearch";
+	}
+	@PostMapping("PsList")
+	public String PsList(DownDataDTO downDto,Model model) {
+		int adt = Integer.parseInt(downDto.getAdtNum());
+		int chd = Integer.parseInt(downDto.getChdNum());
+		int inf = Integer.parseInt(downDto.getInfNum());
+		int backtotal = 0;
+		String test = downDto.getPrice().substring(0,3);
+		String test2 = downDto.getPrice().substring(4,7);
+		String test3 = test + test2;
+		if(!downDto.getBackprice().equals("")) {
+			String backtest = downDto.getBackprice().substring(0,3);
+			String backtest2 = downDto.getBackprice().substring(4,7);
+			String backtest3 = backtest + backtest2;
+			int backtest4 = Integer.parseInt(backtest3);
+			backtotal = backtest4*adt + backtest4*chd + backtest4*inf;
+		}
+		int test4 = Integer.parseInt(test3);
+		int gototal = test4*adt + test4*chd + test4*inf;
+		DecimalFormat decFormat = new DecimalFormat("###,###");
+		String totalprice = decFormat.format(gototal+backtotal);
+		model.addAttribute("downDto", downDto);
+		model.addAttribute("totalprice",totalprice);
+		return "booking/PsList";
 	}
 }
