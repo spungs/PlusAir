@@ -3,7 +3,7 @@
 
 <mapper namespace="com.care.plusAir.booking.repository.FlightDAO">
 	<select id="selectCityAll" parameterType="com.care.plusAir.booking.dto.SearchServiceDTO" resultType="com.care.plusAir.booking.dto.FlightDTO">
-		SELECT * FROM flight WHERE ${day}='Y'
+		SELECT * FROM flightRoute WHERE ${day}='Y'
 		<if test="flightRouteNo != null">AND flightRouteNo like '%'||#{flightRouteNo}||'%'</if>
 	</select>
 </mapper>

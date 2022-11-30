@@ -99,12 +99,12 @@ public class indexService {
 				int inttime = Integer.parseInt(stringtime);
 				
 				if(inttime > 13 && inttime <18) {
-					String stringprice = Integer.toString(DistancePrice + 50000);
+					String stringprice = Integer.toString(DistancePrice + 90000);
 					String lastprice = stringprice.substring(0,3);
 					priceflight.setPrice(lastprice);
 				}
 				else if(inttime >18) {
-					String stringprice = Integer.toString(DistancePrice + 80000);
+					String stringprice = Integer.toString(DistancePrice + 130000);
 					String lastprice = stringprice.substring(0,3);
 					priceflight.setPrice(lastprice);
 				}else {
@@ -214,12 +214,12 @@ public class indexService {
 				int inttime = Integer.parseInt(stringtime);
 				
 				if(inttime > 13 && inttime <18) {
-					String stringprice = Integer.toString(DistancePrice + 50000);
+					String stringprice = Integer.toString(DistancePrice + 90000);
 					String lastprice = stringprice.substring(0,3);
 					priceflight.setPrice(lastprice);
 				}
 				else if(inttime >18) {
-					String stringprice = Integer.toString(DistancePrice + 80000);
+					String stringprice = Integer.toString(DistancePrice + 130000);
 					String lastprice = stringprice.substring(0,3);
 					priceflight.setPrice(lastprice);
 				}else {

@@ -1,29 +1,34 @@
 package com.care.plusAir.booking.dto;
 
 public class DownDataDTO {
-	private String flightNo;
-	private String departTime;
-	private String arrivalTime;
-	private String flightTime;
+	private String flightNo; //항공편 명
+	private String BackflightNo;//돌아오는 항공편 명
+	private String departTime;//비행기 출발지 출발시간
+	private String backdepartTime;//돌아오는 비행기 출발지 출발시간
+	private String arrivalTime;//비행기 목적지 도착시간
+	private String backarrivalTime;//돌아오는 비행기 목적지 도착시간
+	private String flightTime;//비행 시간
+	private String backflightTime;//돌아오는 비행기 비행 시간
 	private String price;
 	private String backprice;
-	private String hiddenItem;
-	private String kode;
-	private String koar;
-	private String departureData;
-	private String arrivalData;
-	private String hidYear;
-	private String hidMonth;
-	private String hidDay;
-	private String hidToYear;
-	private String hidToMonth;
-	private String hidToDay;
-	private String BackYear;
-	private String BackMonth;
-	private String BackDay;
-	private String adtNum;
-	private String chdNum;
-	private String infNum;
+	private String hiddenItem;//선택한 운항(왕복 또는 편도)가 담겨있음
+	private String kode;//출발지 한국어(인천 또는 김포)
+	private String koar;//도착지 한국어(방콕,뉴욕 등등)
+	private String departureData;//출발지 영어(ICN 등)
+	private String arrivalData;//도착지 영어(BKK 등)
+	private String hidYear;//선택한 출발 년도
+	private String hidMonth;//선택한 출발 월
+	private String hidDay;//선택한 출발 일
+	private String hidToYear;//현제 년도
+	private String hidToMonth;//현제 월
+	private String hidToDay;//현제 일
+	private String BackYear;//왕복일 경우 돌아오는 년도
+	private String BackMonth;//왕복일 경우 돌아오는 월 
+	private String BackDay;//왕복일 경우 돌아오는 일
+	private String adtNum;//탑승 어른 수
+	private String chdNum;//탑승 소아 수
+	private String infNum;//탑승 유아 수
+	private String seatprice;
 	
 	public String getFlightNo() {
 		return flightNo;
@@ -162,5 +167,35 @@ public class DownDataDTO {
 	}
 	public void setBackprice(String backprice) {
 		this.backprice = backprice;
+	}
+	public String getBackflightNo() {
+		return BackflightNo;
+	}
+	public void setBackflightNo(String backflightNo) {
+		BackflightNo = backflightNo;
+	}
+	public String getBackdepartTime() {
+		return backdepartTime;
+	}
+	public void setBackdepartTime(String backdepartTime) {
+		this.backdepartTime = backdepartTime;
+	}
+	public String getBackarrivalTime() {
+		return backarrivalTime;
+	}
+	public void setBackarrivalTime(String backarrivalTime) {
+		this.backarrivalTime = backarrivalTime;
+	}
+	public String getBackflightTime() {
+		return backflightTime;
+	}
+	public void setBackflightTime(String backflightTime) {
+		this.backflightTime = backflightTime;
+	}
+	public String getSeatprice() {
+		return seatprice;
+	}
+	public void setSeatprice(String seatprice) {
+		this.seatprice = seatprice;
 	}
 }

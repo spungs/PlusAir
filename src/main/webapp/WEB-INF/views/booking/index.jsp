@@ -690,10 +690,10 @@ function ComeBackDate(){
 	var DepartureDate = document.getElementById('DepartureDate'); // 출발날짜 텍스트
 	var hidYear = document.getElementById('hidYear').value //출발 년도 히든 태그
 	var hidMonth = document.getElementById('hidMonth').value // 출발 월 히든 태그
-	var hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
+	const hidDay = document.getElementById('hidDay').value // 출발 일 히든 태그
 	var BackYear = document.getElementById('BackYear').value //출발 년도 히든 태그
 	var BackMonth = document.getElementById('BackMonth').value // 출발 월 히든 태그
-	var BackDay = document.getElementById('BackDay').value // 출발 일 히든 태그
+	const BackDay = document.getElementById('BackDay').value // 출발 일 히든 태그
 	const dateLayer = document.getElementById('dateLayer'); //달력 상위 div
 	/* console.log(hidYear) 
 	console.log(hidMonth) 
@@ -703,9 +703,9 @@ function ComeBackDate(){
 	console.log(BackDay)
 	console.log(hidDay)
 	console.log(BackDay) */
-	if(hidYear == BackYear){
-		if(hidMonth == BackMonth){
-			if(hidDay > BackDay){
+	if(parseInt(hidYear) == parseInt(BackYear)){
+		if(parseInt(hidMonth) == parseInt(BackMonth)){
+			if(parseInt(hidDay) > parseInt(BackDay)){
 				alert('돌아오는 날짜를 정확히 선택해 주세요.')
 			}
 			else{
@@ -713,11 +713,11 @@ function ComeBackDate(){
 				dateLayer.style.display = 'none';
 				}
 		}
-		else if(hidMonth > BackMonth){
+		else if(parseInt(hidMonth) > parseInt(BackMonth)){
 			alert('돌아오는 날짜를 정확히 선택해 주세요.')
 		}
 	}
-	else if(hidYear > BackYear){
+	else if(parseInt(hidYear) > parseInt(BackYear)){
 		alert('돌아오는 날짜를 정확히 선택해 주세요.')
 	}
 	else if(BackYear == ""){
