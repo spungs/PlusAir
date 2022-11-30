@@ -3,6 +3,13 @@
 <!DOCTYPE html>
 <html>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+function test(){
+	var paymentType = document.getElementById('paymentType')
+	$("input[name='inputRadio']:checked").val();
+	paymentType.value = $("input[name='inputRadio']:checked").val()
+}
+</script>
 <%@ include file="../common/include/header.jsp"%>
 	<div id="body">
 		<div class="wrap wrap--button NA NA_1_A">
@@ -262,7 +269,7 @@
 									<div class="radio-flex">
 										<div class="radio-item">
 											<span class="radio">
-												<input type="radio" id="inputRadioCC" name="inputRadio" class="radio__input" data-toggle="toggle__anchor" data-pay-type="KG" data-pay-type-detail="KG1" data-mid="JJAIR00002" aria-controls="inputRadioJP-8" aria-expanded="false">
+												<input type="radio" id="inputRadioCC" name="inputRadio" class="radio__input" value="카드 일반결제" onclick="test()">
 												<label for="inputRadioCC" class="radio__label">
 													<i aria-hidden="true" class="radio__ico"></i>
 													<span>카드 일반결제</span><!-- 카드 일반결제 -->
@@ -274,7 +281,7 @@
 								<div class="radio-wrap">
 									<div class="radio-item">
 										<span class="radio">
-											<input type="radio" id="inputRadioOC1" name="inputRadio" class="radio__input" data-pay-type="OC" data-pay-type-detail="OC1" data-mid="5CD0407B50" aria-controls="inputRadioJP-9" aria-expanded="false">
+											<input type="radio" id="inputRadioOC1" name="inputRadio" class="radio__input" value="해외카드 결제" onclick="test()">
 											<label for="inputRadioOC1" class="radio__label">
 												<i aria-hidden="true" class="radio__ico"></i>
 												<span>해외카드 결제</span><!-- 해외카드 결제 -->
@@ -286,7 +293,7 @@
 								<div class="radio-wrap">
 									<div class="radio-item">
 										<span class="radio">
-											<input type="radio" id="inputRadioKC" name="inputRadio" class="radio__input" data-toggle="toggle__anchor" data-pay-type="KC" data-pay-type-detail="KC1" data-mid="14001590" aria-controls="inputRadioJP-10" aria-expanded="false">
+											<input type="radio" id="inputRadioKC" name="inputRadio" class="radio__input" value="계좌이체" onclick="test()">
 											<label for="inputRadioKC" class="radio__label">
 												<i aria-hidden="true" class="radio__ico"></i>
 												<span>계좌이체</span><!-- 계좌이체 -->
@@ -321,6 +328,7 @@
 								</span>
 							</div>
 						</div>
+						<form action="payment" method="post">
 						     	<!-- 비행편 정보 -->
 								<input type="hidden" id="flightNo" name="flightNo" value="${downDto.flightNo}">
 								<input type="hidden" id="departTime" name="departTime" value="${downDto.departTime}">
@@ -338,6 +346,7 @@
 								<input type="hidden" id="hidToYear" name="hidToYear" value="${downDto.hidToYear}">
 								<input type="hidden" id="hidToMonth" name="hidToMonth" value="${downDto.hidToMonth}">
 								<input type="hidden" id="hidToDay" name="hidToDay" value="${downDto.hidToDay}">
+								<input type="hidden" id="flightRouteNo" name="flightRouteNo" value="${downDto.flightRouteNo}"><!-- 추가됨 -->
 								<c:choose>
 									<c:when test="${downDto.hiddenItem == '왕복'}">
 										<input type="hidden" id="BackYear" name="BackYear" value="${downDto.backYear}">
@@ -347,6 +356,7 @@
 										<input type="hidden" id="backdepartTime" name="backdepartTime" value="${downDto.backdepartTime}">
 										<input type="hidden" id="backarrivalTime" name="backarrivalTime" value="${downDto.backarrivalTime}">
 										<input type="hidden" id="backflightTime" name="backflightTime" value="${downDto.backflightTime}">
+										<input type="hidden" id="backflightRouteNo" name="backflightRouteNo" value="${downDto.backflightRouteNo}"><!-- 추가됨 -->
 									</c:when>
 								</c:choose>
 								<input type="hidden" id="adtNum" name="adtNum" value="${downDto.adtNum}">
@@ -427,9 +437,12 @@
 								<input type="hidden" id="strusagefee" name="strusagefee" value="${strusagefee}"><!--시설 이용료  -->
 								<input type="hidden" id="strlasttotal" name="strlasttotal" value="${strlasttotal}"><!--모든 수수료+항공 운임료 더한값  -->
 								
-						<button name="btnNext" type="button" class="button button--primary pc-only button--active">
+								<input type="hidden" id="paymentType" name="paymentType" value="">
+								
+						<button name="btnNext" type="submit" class="button button--primary pc-only button--active">
 							<span class="button__text">결제하기</span><!-- 결제하기 -->
 						</button>
+						</form>
 					</div>
 				</div>
 			</div>

@@ -4,6 +4,7 @@ package com.care.plusAir.booking.controller;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -87,6 +89,54 @@ public class indexController {
 		model.addAttribute("priceflights", priceflights);
 		return "booking/AvailSearch";
 	}
+//	@RequestMapping("PsList")
+//	   public String PsList(DownDataDTO downDto,Model model, RedirectAttributes ra, 
+//	         String userEmail, String backUrl) {
+//	      
+//	      if(backUrl != null && backUrl.equals("http://localhost:8085/plusAir/login")) {
+//	         session.setAttribute("email", userEmail);
+//	         return "redirect:index";
+//	      }
+//	      if(userEmail == null) {
+//	         System.out.println("ra에 담기 전:" + downDto.getFlightNo());
+//	         ra.addFlashAttribute("downDto", downDto);
+//	         return "redirect:nonUserLogin";
+//	      }
+//	      if(userEmail != null) {
+//	         session.setAttribute("email", userEmail);
+//	      }
+//	      //session.setAttribute("memberNo", 123);
+//	      //session.setAttribute("engFirstName", "KANG");
+//	      //session.setAttribute("engLastName", "MINJAE");
+//	      //session.setAttribute("mobile", "010-5919-7914");
+//	      //session.setAttribute("email", "rkdalswoahdl@naver.com");
+//	      System.out.println(downDto.getFlightNo());
+//	      System.out.println(downDto.getBackflightNo());
+//	      System.out.println(downDto.getArrivalData());
+//	      System.out.println(downDto.getDepartureData());
+//	      System.out.println(downDto.getPrice());
+//	      int adt = Integer.parseInt(downDto.getAdtNum());
+//	      int chd = Integer.parseInt(downDto.getChdNum());
+//	      int backtotal = 0;
+//	      String test = downDto.getPrice().substring(0,3);
+//	      String test2 = downDto.getPrice().substring(4,7);
+//	      String test3 = test + test2;
+//	      if(!downDto.getBackprice().equals("")) {
+//	         String backtest = downDto.getBackprice().substring(0,3);
+//	         String backtest2 = downDto.getBackprice().substring(4,7);
+//	         String backtest3 = backtest + backtest2;
+//	         int backtest4 = Integer.parseInt(backtest3);
+//	         backtotal = backtest4*adt + backtest4*chd;
+//	      }
+//	      int test4 = Integer.parseInt(test3);
+//	      int gototal = test4*adt + test4*chd;
+//	      DecimalFormat decFormat = new DecimalFormat("###,###");
+//	      String totalprice = decFormat.format(gototal+backtotal);
+//	      model.addAttribute("downDto", downDto);
+//	      model.addAttribute("totalprice",totalprice);
+//	      return "booking/PsList";
+//	   }
+	
 	@PostMapping("PsList")
 	public String PsList(DownDataDTO downDto,Model model) {
 		//session.setAttribute("memberNo", 123);
@@ -185,5 +235,43 @@ public class indexController {
 		model.addAttribute("strusagefee", strusagefee);//시설 이용료
 		model.addAttribute("strlasttotal", strlasttotal);//모든 수수료+항공 운임료 더한값
 		return "booking/PayPage";
+	}
+	@PostMapping("payment")
+	public String payment(MainPsgDTO mainpsgDto,Psg1DTO psg1Dto,Psg2DTO psg2Dto,
+			Psg3DTO psg3Dto,Psg4DTO psg4Dto,Psg5DTO psg5Dto,
+			Psg6DTO psg6Dto,Psg7DTO psg7Dto,DownDataDTO downDto,String totalprice,String strhid,
+			String strbackday,String strextramoney,String strusagefee,String strlasttotal,String paymentType,RedirectAttributes ra) {
+		Random rnd = new Random();
+		String regNo =""; //예약번호 8자리
+		String paymentNo = "";//승인번호 8자리
+		for(int i=0;i<=7;i++) {
+			int nom = rnd.nextInt(10);
+			String test = Integer.toString(nom);
+			regNo = regNo + test;
+		}
+		for(int i=0;i<=7;i++) {
+			int nom1 = rnd.nextInt(10);
+			String test1 = Integer.toString(nom1);
+			paymentNo = paymentNo + test1;
+		}
+		String[] price=strlasttotal.split(",");//총금액에서 ','를 빼기위한 작업
+		String strprice="";
+		for(int i=0;i<=price.length-1;i++) {
+			strprice=strprice+price[i];
+		}
+		int intlasttotal= Integer.parseInt(strprice);
+		System.out.println(intlasttotal);
+		String memberNo = Integer.toString(1111111111);//회원번호 예시
+		String couponNo = "dec001";//쿠폰번호 예시
+		int pointUsed = 20000;//마일리지 예시
+		String result = indexservice.reservation(regNo,memberNo,mainpsgDto,downDto,intlasttotal,couponNo,pointUsed,paymentType,paymentNo);
+		if(result.equals("예약 성공")) {
+			ra.addFlashAttribute("msg", result);
+			return "redirect:index";
+		}else {
+			ra.addFlashAttribute("msg", result);
+			return "redirect:index";
+		}
+		
 	}
 }

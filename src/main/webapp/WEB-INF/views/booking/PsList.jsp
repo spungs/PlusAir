@@ -654,6 +654,8 @@ function submit(){
 	form.appendChild(hiddenField);
 	hiddenField = document.getElementById('hidToDay')
 	form.appendChild(hiddenField);
+	hiddenField = document.getElementById('flightRouteNo')
+	form.appendChild(hiddenField);
 	if(${downDto.hiddenItem == '왕복'}){
 		hiddenField = document.getElementById('BackYear')
 		form.appendChild(hiddenField);
@@ -668,6 +670,8 @@ function submit(){
 		hiddenField = document.getElementById('backarrivalTime')
 		form.appendChild(hiddenField);
 		hiddenField = document.getElementById('backflightTime')
+		form.appendChild(hiddenField);
+		hiddenField = document.getElementById('backflightRouteNo')
 		form.appendChild(hiddenField);
 	}
 	hiddenField = document.getElementById('adtNum')
@@ -1543,6 +1547,7 @@ function handleOnInput(e)  {
 					<input type="hidden" id="hidToYear" name="hidToYear" value="${downDto.hidToYear}">
 					<input type="hidden" id="hidToMonth" name="hidToMonth" value="${downDto.hidToMonth}">
 					<input type="hidden" id="hidToDay" name="hidToDay" value="${downDto.hidToDay}">
+					<input type="hidden" id="flightRouteNo" name="flightRouteNo" value="${downDto.flightRouteNo}"><!-- 추가됨 -->
 					<c:choose>
 						<c:when test="${downDto.hiddenItem == '왕복'}">
 							<input type="hidden" id="BackYear" name="BackYear" value="${downDto.backYear}">
@@ -1552,6 +1557,7 @@ function handleOnInput(e)  {
 							<input type="hidden" id="backdepartTime" name="backdepartTime" value="${downDto.backdepartTime}">
 							<input type="hidden" id="backarrivalTime" name="backarrivalTime" value="${downDto.backarrivalTime}">
 							<input type="hidden" id="backflightTime" name="backflightTime" value="${downDto.backflightTime}">
+							<input type="hidden" id="backflightRouteNo" name="backflightRouteNo" value="${downDto.backflightRouteNo}"><!-- 추가됨 -->
 						</c:when>
 					</c:choose>
 					<input type="hidden" id="adtNum" name="adtNum" value="${downDto.adtNum}">

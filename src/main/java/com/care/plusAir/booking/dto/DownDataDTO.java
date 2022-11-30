@@ -29,6 +29,8 @@ public class DownDataDTO {
 	private String chdNum;//탑승 소아 수
 	private String infNum;//탑승 유아 수
 	private String seatprice;
+	private String flightRouteNo;
+	private String backflightRouteNo;
 	
 	public String getFlightNo() {
 		return flightNo;
@@ -197,5 +199,17 @@ public class DownDataDTO {
 	}
 	public void setSeatprice(String seatprice) {
 		this.seatprice = seatprice;
+	}
+	public String getBackflightRouteNo() {
+		return backflightRouteNo;
+	}
+	public void setBackflightRouteNo(String backflightRouteNo) {
+		this.backflightRouteNo = backflightRouteNo;
+	}
+	public String getFlightRouteNo() {
+		return flightRouteNo;
+	}
+	public void setFlightRouteNo(String flightRouteNo) {
+		this.flightRouteNo = flightRouteNo;
 	}
 }

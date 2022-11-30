@@ -9,15 +9,20 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.care.plusAir.booking.dto.DownDataDTO;
 import com.care.plusAir.booking.dto.FlightDTO;
+import com.care.plusAir.booking.dto.MainPsgDTO;
 import com.care.plusAir.booking.dto.PirceFlightDTO;
 import com.care.plusAir.booking.dto.SearchServiceDTO;
 import com.care.plusAir.booking.repository.FlightDAO;
+import com.care.plusAir.booking.repository.PayMentDAO;
+import com.care.plusAir.ibe.dto.ReservationDTO;
 
 
 @Service
 public class indexService {
 	@Autowired FlightDAO fightDao;
+	@Autowired PayMentDAO paymentDao;
 	public ArrayList<PirceFlightDTO> searchService(String departureData,String arrivalData,String hidYear,String hidMonth,String hidDay){
 		String flightRouteNo = departureData + arrivalData;
 		String stringYear = hidYear;
@@ -247,5 +252,32 @@ public class indexService {
 		}
 		return priceflights;
 		}
+	public String reservation(String regNo,String memberNo,MainPsgDTO mainpsgDto,DownDataDTO downDto,int intlasttotal,String couponNo,int pointUsed,String paymentType,String paymentNo) {
+		
+		String regDate = downDto.getHidToYear()+downDto.getHidToMonth()+downDto.getHidToDay();//예약일 년월일
+		String engLastName = mainpsgDto.getPsg0name();
+		String engFirstName = mainpsgDto.getPsg0fname();
+		String regType = downDto.getHiddenItem();
+		if(engLastName.isEmpty() || engFirstName.isEmpty() || paymentType.isEmpty()) {
+			return "예약 실패";
+		}
+		else {
+		ReservationDTO reserDto = new ReservationDTO();
+		reserDto.setRegNo(regNo);
+		reserDto.setMemberNo(memberNo);
+		reserDto.setEngLastName(engLastName);
+		reserDto.setEngFirstName(engFirstName);
+		reserDto.setRegDate(regDate);
+		reserDto.setRegType(regType);
+		reserDto.setPriceTotal(intlasttotal);
+		reserDto.setCouponNo(couponNo);
+		reserDto.setPointUsed(pointUsed);
+		reserDto.setPaymentDate(regDate);
+		reserDto.setPaymentType(paymentType);
+		reserDto.setPaymentNo(paymentNo);
+		paymentDao.insert(reserDto);
+		return "예약 성공";
+		}
+	}
 
 }

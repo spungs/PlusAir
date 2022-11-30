@@ -923,6 +923,7 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		var seldepartTime = $(this).find('.departTime'); // 내가 선택한 항공편의 출발시간
 		var selflightTime = $(this).find('.flightTime'); // 내가 선택한 항공편의 이동시간
 		var selarrivalTime = $(this).find('.arrivalTime'); // 내가 선택한 항공편의 도착시간
+		var selflightRouteNo = $(this).find('.flightRouteNo')//내가 선택한 항공편 항공노선번호
 		/* console.log(test1.val())
 		console.log(test2.val()).
 		console.log(test3.val())
@@ -938,7 +939,15 @@ $(function(){ //탑승(비지니스,퍼스트클래스 등)유형 버튼 클릭�
 		var backdepartTime = document.getElementById('backdepartTime')//다음페이지러 넘겨줄 돌아올 항공편 명 히든태그
 		var backarrivalTime = document.getElementById('backarrivalTime')//다음페이지러 넘겨줄 돌아올 항공편 명 히든태그
 		var backflightTime = document.getElementById('backflightTime')//다음페이지러 넘겨줄 돌아올 항공편 명 히든태그
-		
+		var flightRouteNo = document.getElementById('flightRouteNo')
+		var backflightRouteNo = document.getElementById('backflightRouteNo')
+		if(flightRouteNo.value !==""){
+			backflightRouteNo.value = selflightRouteNo.val();
+		}else{
+			flightRouteNo.value = selflightRouteNo.val();
+		}
+		console.log(flightRouteNo.value)
+		console.log(backflightRouteNo.value)
 		if(price.value !== ""){
 			backprice.value=selprice.html();
 		}else{
@@ -1472,7 +1481,8 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 										<input type="hidden" class="departTime" value="${priceflight.departTime}">									
 										<input type="hidden" class="flightTime" value="${priceflight.flightTime}">									
 										<input type="hidden" class="arrivalTime" value="${priceflight.arrivalTime}">									
-										<input type="hidden" class="price" value="${priceflight.price},000">	
+										<input type="hidden" class="price" value="${priceflight.price},000">
+										<input type="hidden" class="flightRouteNo" value="${priceflight.flightRouteNo}">
 									</a>																																																																												
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">
@@ -1490,7 +1500,8 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 										<input type="hidden" class="departTime" value="${priceflight.departTime}">									
 										<input type="hidden" class="flightTime" value="${priceflight.flightTime}">									
 										<input type="hidden" class="arrivalTime" value="${priceflight.arrivalTime}">									
-										<input type="hidden" class="price" value="${priceflight.price},000">										
+										<input type="hidden" class="price" value="${priceflight.price},000">
+										<input type="hidden" class="flightRouteNo" value="${priceflight.flightRouteNo}">										
 									</a>
 									</div>								
 									<div class="grade-info fly-bag" style="">								
@@ -1580,6 +1591,7 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 										<input type="hidden" class="flightTime" value="${flight.flightTime}">									
 										<input type="hidden" class="arrivalTime" value="${flight.arrivalTime}">									
 										<input type="hidden" class="price" value="${flight.price},000">	
+										<input type="hidden" class="flightRouteNo" value="${flight.flightRouteNo}">
 									</a>																																																																												
 									<a href="#" class="tab-btn grade-bag">
 										<div class="tab-btn-in">
@@ -1597,7 +1609,8 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 										<input type="hidden" class="departTime" value="${flight.departTime}">									
 										<input type="hidden" class="flightTime" value="${flight.flightTime}">									
 										<input type="hidden" class="arrivalTime" value="${flight.arrivalTime}">									
-										<input type="hidden" class="price" value="${flight.price},000">									
+										<input type="hidden" class="price" value="${flight.price},000">	
+										<input type="hidden" class="flightRouteNo" value="${flight.flightRouteNo}">								
 									</a>
 									</div>								
 									<div class="grade-info fly-bag" style="">								
@@ -1626,6 +1639,8 @@ function CheckBackFlight(){//돌아오는편 선택하기 버튼 클릭 이벤�
 			<!-- priceFlightDTO에 담을 값들 -->
 			<input type="hidden" id="flightNo" name="flightNo">
 			<input type="hidden" id="BackflightNo" name="BackflightNo">
+			<input type="hidden" id="flightRouteNo" name="flightRouteNo"><!-- 추가됨 -->
+			<input type="hidden" id="backflightRouteNo" name="backflightRouteNo"><!-- 추가됨 -->
 			<input type="hidden" id="departTime" name="departTime">
 			<input type="hidden" id="backdepartTime" name="backdepartTime">
 			<input type="hidden" id="arrivalTime" name="arrivalTime">

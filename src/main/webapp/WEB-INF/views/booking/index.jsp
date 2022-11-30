@@ -894,7 +894,11 @@ function changeText(){
 </script>
 <%@ include file="../common/include/header.jsp"%>
 	
-		
+		<c:choose>
+			<c:when test="${msg != null}">
+				<script>alert('${msg}')</script>
+			</c:when>
+		</c:choose>
 		<div id="body">
 			
 			<!-- Google Tag Manager (noscript) -->
